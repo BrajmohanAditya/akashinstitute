@@ -1,10 +1,12 @@
 import express from 'express';
+import { connectDB } from './src/config/db.js';
+import { ENV } from './src/config/env.js';
 
-const app = express();
+const app = express(); 
 
-app.get('/api', (req, res) => {
-  res.json({ message: 'Hello from the backend!' });
+app.listen(ENV.PORT, () => {
+  console.log(`Server running on port ${ENV.PORT}`);
+  connectDB();
 });
-
 
 
