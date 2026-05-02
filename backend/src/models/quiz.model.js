@@ -13,8 +13,6 @@ const quizSchema = new mongoose.Schema({
             ref:"Questions"
         }
     ],
-
-    
 },{
     timestamps:true
 })
