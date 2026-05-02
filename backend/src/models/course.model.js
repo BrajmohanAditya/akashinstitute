@@ -5,11 +5,11 @@ const courseSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
-  },
+  },// who created the course uski id
   title: {
     type: String,
     required: true,
-  },
+  },// course name
   description:{
     type:String,
     required:true
@@ -21,6 +21,13 @@ const courseSchema = new mongoose.Schema({
     type:Number,
     required:true
   },
+
+  modules:[
+    {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Modules"
+    },
+  ],
 
 }, {timestamps: true});
 
