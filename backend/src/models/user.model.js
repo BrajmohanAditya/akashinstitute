@@ -14,4 +14,18 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-});  
+    admin:{
+        type: Boolean,
+        default: false,
+    },
+    purchasedCourse:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Course",
+        }
+    ]
+
+}, {timestamps: true});  
+
+export const User = mongoose.model("User", userSchema);  
+
