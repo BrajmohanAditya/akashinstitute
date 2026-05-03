@@ -1,6 +1,7 @@
 import {User} from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
-import {ENV} from "../config/env.js"
+import {ENV} from "../config/env.js";
+import jwt from "jsonwebtoken";
 
 export const Register = async(req, res)=>{
     try {
