@@ -127,3 +127,27 @@ export const Login = async(req, res)=>{
         console.log(`error in login controller ${error}`)
     }
 }
+
+
+
+export const getUser = async(req, res)=>{
+    try {
+        const userId = req.user._id;
+        const user =  await User.findById(userId)
+
+        if(!user){
+            return res.status(401).json({
+                message : "User not found",
+                success : false
+            })
+        }
+        return res.status(201).json({
+            message : "User found",
+            success : true,
+            user : user
+        })
+    } catch (error) {
+        console.log(`error in get all users controller ${error}`)
+    }
+}
+
