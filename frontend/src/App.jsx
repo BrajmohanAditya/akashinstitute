@@ -1,8 +1,9 @@
 import React from 'react'
+import MainRoutes from './Routes/MainRoutes'
 
 function App() {
   return (
-    <div className='text-4xl font-bold underline text-red-500'>App</div>
+    <div><MainRoutes/></div>
   )
 }
 
