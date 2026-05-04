@@ -7,4 +7,7 @@ export const ENV = {
   PORT: process.env.PORT,
   JWT_SECRET: process.env.JWT_SECRET,
   ADMIN_EMAIL: process.env.ADMIN_EMAIL,
+  CLOUDINARY_NAME: process.env.CLOUDINARY_NAME,
+  CLOUDINARY_API: process.env.CLOUDINARY_API,
+  CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
 };
