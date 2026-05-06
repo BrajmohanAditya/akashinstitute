@@ -152,3 +152,13 @@ export const getUser = async(req, res)=>{
     }
 }
 
+export const logout=async(req,res)=>{
+    try {
+        return res.cookie("token","").status(201).json({
+            message:"User logged out",
+            success : true
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}

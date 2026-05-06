@@ -29,6 +29,19 @@ export const useLoginHook = () => {
     })
 }
 
+export const logoutHook=()=>{
+    return useMutation({
+        mutationFn:logOutApi,
+        onSuccess:(data)=>{
+            toast.success(data.message)
+        },
+        onError:(error)=>{
+            const message=error.response?.data?.message||"Something went wrong! Please check your connection.";
+            toast.error(message);
+        }
+    })
+}
+
 export const useGetUserHook = () => {
     return useQuery({
         queryKey: ["get-user"],

@@ -29,7 +29,7 @@ export const loginApi = async (payload) => {
 };
 
 
-export const getUser = async () => {
+export const getUserApi = async () => {
     const res = await axios.get(`${baseUrl}/profile`,
         {
             headers: {
@@ -41,3 +41,17 @@ export const getUser = async () => {
 
     return res.data
 };
+
+export const logOutApi = async () => {
+    const res = await axios.post(`${baseUrl}/logout`,
+        {},
+        {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            withCredentials: true,
+        }
+    )
+
+    return res.data
+}
