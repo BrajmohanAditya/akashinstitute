@@ -1,8 +1,8 @@
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { registerApi, loginApi, getUser } from "../api/user.api"
+import { registerApi, loginApi, getUserApi, logOutApi } from "../api/user.api"
 import { toast } from "sonner"
 
-export const useRegisterHook = () => {
+export const userRegisterHook = () => {
     return useMutation({
         mutationFn: registerApi,
         onSuccess: (data) => {
@@ -16,7 +16,7 @@ export const useRegisterHook = () => {
 }
 
 
-export const useLoginHook = () => {
+export const userLoginHook = () => {
     return useMutation({
         mutationFn: loginApi,
         onSuccess: (data) => {
@@ -29,7 +29,7 @@ export const useLoginHook = () => {
     })
 }
 
-export const logoutHook=()=>{
+export const userLogoutHook=()=>{
     return useMutation({
         mutationFn:logOutApi,
         onSuccess:(data)=>{
@@ -42,10 +42,10 @@ export const logoutHook=()=>{
     })
 }
 
-export const useGetUserHook = () => {
+export const GetUserHook = () => {
     return useQuery({
         queryKey: ["get-user"],
-        queryFn: getUser,
+        queryFn: getUserApi,
         onSuccess: (data) => {
             toast.success(data.message)
         },

@@ -1,4 +1,4 @@
-import { useLoginHook } from '@/hooks/User.hook'
+import { userLoginHook } from '@/hooks/User.hook'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
@@ -6,7 +6,7 @@ import { Mail, Lock, Loader2 } from 'lucide-react'
 
 const Login = () => {
   const { register, handleSubmit } = useForm()
-  const { mutate, isPending } = useLoginHook()
+  const { mutate, isPending } = userLoginHook()
 
   const loginFormHandler = (data) => {
     mutate(data)
@@ -78,7 +78,7 @@ const Login = () => {
             disabled={isPending}
             className="w-full py-3 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition-all disabled:opacity-60 flex items-center justify-center"
           >
-            {isPending ? <Loader2 className="animate-spin mr-2" size={20} /> : 'Create Account'}
+            {isPending ? <Loader2 className="animate-spin mr-2" size={20} /> : 'Login'}
           </button>
         </form>
 

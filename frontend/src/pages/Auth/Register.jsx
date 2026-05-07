@@ -1,4 +1,4 @@
-import { useRegisterHook } from '@/hooks/User.hook'
+import { userRegisterHook } from '@/hooks/User.hook'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
@@ -6,7 +6,7 @@ import { User, Mail, Lock, Loader2 } from 'lucide-react'
 
 const Register = () => {
   const { register, handleSubmit } = useForm()
-  const { mutate, isPending } = useRegisterHook()
+  const { mutate, isPending } = userRegisterHook()
 
   const registerFormHandler = (data) => {
     mutate(data)

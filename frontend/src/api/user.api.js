@@ -30,7 +30,7 @@ export const loginApi = async (payload) => {
 
 
 export const getUserApi = async () => {
-    const res = await axios.get(`${baseUrl}/profile`,
+    const res = await axios.get(`${baseUrl}/getUser`,
         {
             headers: {
                 "Content-Type": "application/json",
