@@ -65,7 +65,7 @@ const Navbar = () => {
 
             <div className="hidden md:block text-left">
               <p className="font-semibold text-sm text-slate-900 leading-tight">
-                {user?.name ? user.name.slice(0, 2).toUpperCase() : "User"}
+                {user?.name ? user.name.slice(0, 2).toUpperCase():" "}
               </p>
             </div>
 
