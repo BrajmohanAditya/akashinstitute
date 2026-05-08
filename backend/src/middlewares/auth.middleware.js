@@ -7,19 +7,19 @@ export const protectRoute = async (req, res, next) => {
     const token = req.cookies.token;
 
     if (!token) {
-      return res.status(401).json({ message: "Unauthorized" });
+      return res.status(401).json({ message: "Unauthorized - No Token Provided" });
     }
 
     const verifyToken = jwt.verify(token, ENV.JWT_SECRET);
 
     if (!verifyToken) {
-      return res.status(401).json({ message: "Unauthorized" });
+      return res.status(401).json({ message: "Unauthorized - Invalid Token" });
     }
 
     const user = await User.findById(verifyToken.userId).select("-password");
 
     if (!user) {
-      return res.status(401).json({ message: "Unauthorized" });
+      return res.status(401).json({ message: "Unauthorized - User Not Found" });
     }
 
     req.user = user;
@@ -34,9 +34,11 @@ export const adminRoute = async (req, res, next) => {
   try {
     if (req.user && req.user.email === ENV.ADMIN_EMAIL) {
       next();
+    } else {
+      return res.status(403).json({ message: "Forbidden - Admin Access Required" });
     }
-    
   } catch (error) {
     console.log(`error in admin route ${error}`);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };

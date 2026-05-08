@@ -6,7 +6,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const genAi = new GoogleGenerativeAI(ENV.GEMINI_API_KEY);
 const model = genAi.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-export const CreateCourse = async (req, res) => {
+export const createCourse = async (req, res) => {
   try {
     const { title, description, amount } = req.body;
     const thumbnail = req.file;
@@ -24,7 +24,7 @@ export const CreateCourse = async (req, res) => {
     });
     imageUrl = uploadRes.secure_url;
 
-    const newCourse = await Course.create({
+    const newCourse = await Course({
       userId: req.user._id,
       title,
       description,

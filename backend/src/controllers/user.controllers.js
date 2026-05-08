@@ -1,164 +1,163 @@
-import {User} from "../models/user.model.js";
+import { User } from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
-import {ENV} from "../config/env.js";
+import { ENV } from "../config/env.js";
 import jwt from "jsonwebtoken";
 
-export const Register = async(req, res)=>{
-    try {
-        const {name, email, password} = req.body;
+export const Register = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
 
-        if(!name || !email || !password){
-            return res.status(401).json({
-                message : "All fields are required",
-                success : false
-            });
-        }
-
-        const user = await User.findOne({email});
-
-        if(user){
-            return res.status(401).json({
-                message : "User already exists",
-                success : false
-            });
-        }
-
-        const hashPassword = await bcryptjs.hash(password, 10);
-
-        const newUser = await User.create({
-            name,
-            email,
-            password : hashPassword
-        })
-
-        const token = jwt.sign({userId: newUser._id}, ENV.JWT_SECRET, {
-            expiresIn : "1d"
-        })
-
-        if(newUser.email === ENV.ADMIN_EMAIL){
-            return res.status(201).cookie("token", token, {
-                maxAge : 24 * 60 * 60 * 1000,
-                httpOnly : true,
-                secure : true,
-                sameSite : "none"
-            }).json({
-                message : `welcome ${newUser.name} to Akash Institute, you are admin`,
-                success : true,
-                user : newUser,
-            })
-        }
-
-        return res.status(201).cookie("token", token, {
-            maxAge : 24 * 60 * 60 * 1000,
-            httpOnly : true,
-            secure : true,
-            sameSite : "none"
-        }).json({
-            message : `welcome ${newUser.name} to Akash Institute`,
-            success : true,
-            user : newUser
-        })
-        
-    } catch (error) {
-        console.log(`error in register controller ${error}`)
+    if (!name || !email || !password) {
+      return res.status(401).json({
+        message: "All fields are required",
+        success: false,
+      });
     }
-}
 
+    const user = await User.findOne({ email });
 
-export const Login = async(req, res)=>{
-    try {
-        const {email, password} = req.body;
-
-        if(!email || !password){
-            return res.status(401).json({
-                message : "All fields are required",
-                success : false
-            })
-        }
-
-        const user = await User.findOne({email});
-        if(!user){
-            return res.status(401).json({
-                message : "Invalid credentials",
-                success : false
-            })
-        }
-
-        const isPasswordCorrect = await bcryptjs.compare(password, user.password);
-
-        if(!isPasswordCorrect){
-            return res.status(401).json({
-                message : "Invalid credentials",
-                success : false
-            })
-        }
-
-        if(user.email === ENV.ADMIN_EMAIL){
-            user.admin = true,
-            await user.save()
-        }
-
-        const token = jwt.sign({userId: user._id}, ENV.JWT_SECRET, {
-            expiresIn : "1d"
-        })
-
-
-        res.cookie("token", token, {
-            maxAge : 24 * 60 * 60 * 1000,
-            httpOnly : true,
-            secure : true,
-            sameSite : "none"
-        })
-
-        if(user.admin){
-            return res.status(201).json({
-                message : `welcome ${user.name} to Akash Institute, you are admin`,
-                success : true,
-                user : user
-            })
-        }
-
-        return res.status(201).json({
-            message : `welcome ${user.name} to Akash Institute`,
-            success : true,
-            user : user
-        })
-
-    } catch (error) {
-        console.log(`error in login controller ${error}`)
+    if (user) {
+      return res.status(401).json({
+        message: "User already exists",
+        success: false,
+      });
     }
-}
 
+    const hashPassword = await bcryptjs.hash(password, 10);
 
+    const newUser = await User.create({
+      name,
+      email,
+      password: hashPassword,
+    });
 
-export const getUser = async(req, res)=>{
-    try {
-        const userId = req.user._id;
-        const user =  await User.findById(userId)
+    const token = jwt.sign({ userId: newUser._id }, ENV.JWT_SECRET, {
+      expiresIn: "1d",
+    });
 
-        if(!user){
-            return res.status(401).json({
-                message : "User not found",
-                success : false
-            })
-        }
-        return res.status(201).json({
-            message : "User found",
-            success : true,
-            user : user
+    if (newUser.email === ENV.ADMIN_EMAIL) {
+      return res
+        .status(201)
+        .cookie("token", token, {
+          maxAge: 24 * 60 * 60 * 1000,
+          httpOnly: true,
+          secure: true,
+          sameSite: "none",
         })
-    } catch (error) {
-        console.log(`error in get all users controller ${error}`)
+        .json({
+          message: `welcome ${newUser.name} to Akash Institute, you are admin`,
+          success: true,
+          user: newUser,
+        });
     }
-}
 
-export const logout=async(req,res)=>{
-    try {
-        return res.cookie("token","").status(201).json({
-            message:"User logged out",
-            success : true
-        })
-    } catch (error) {
-        console.log(error)
+    return res
+      .status(201)
+      .cookie("token", token, {
+        maxAge: 24 * 60 * 60 * 1000,
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      })
+      .json({
+        message: `welcome ${newUser.name} to Akash Institute`,
+        success: true,
+        user: newUser,
+      });
+  } catch (error) {
+    console.log(`error in register controller ${error}`);
+  }
+};
+
+export const Login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(401).json({
+        message: "All fields are required",
+        success: false,
+      });
     }
-}
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({
+        message: "Invalid credentials",
+        success: false,
+      });
+    }
+
+    const isPasswordCorrect = await bcryptjs.compare(password, user.password);
+
+    if (!isPasswordCorrect) {
+      return res.status(401).json({
+        message: "Invalid credentials",
+        success: false,
+      });
+    }
+
+    if (user.email === ENV.ADMIN_EMAIL) {
+      ((user.admin = true), await user.save());
+    }
+
+    const token = jwt.sign({ userId: user._id }, ENV.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+
+    res.cookie("token", token, {
+      maxAge: 24 * 60 * 60 * 1000,
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+
+    if (user.admin) {
+      return res.status(201).json({
+        message: `welcome ${user.name} to Akash Institute, you are admin`,
+        success: true,
+        user: user,
+      });
+    }
+
+    return res.status(201).json({
+      message: `welcome ${user.name} to Akash Institute`,
+      success: true,
+      user: user,
+    });
+  } catch (error) {
+    console.log(`error in login controller ${error}`);
+  }
+};
+
+export const getUser = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(401).json({
+        message: "User not found",
+        success: false,
+      });
+    }
+    return res.status(201).json({
+      message: "User found",
+      success: true,
+      user: user,
+    });
+  } catch (error) {
+    console.log(`error in get all users controller ${error}`);
+  }
+};
+
+export const logout = async (req, res) => {
+  try {
+    return res.cookie("token", "").status(201).json({
+      message: "User logged out",
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
