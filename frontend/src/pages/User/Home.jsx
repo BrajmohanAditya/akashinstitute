@@ -1,8 +1,11 @@
 import React from 'react'
-
+import CourseSection from '../../components/courseSection'
 const Home = () => {
   return (
-    <div className='text-4xl font-bold underline text-green-500'>Home</div>
+    <div className='min-h-screen bg-slate-50'>
+      <CourseSection/>
+
+    </div>
   )
 }
 

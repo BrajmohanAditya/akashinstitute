@@ -10,6 +10,10 @@ import { Loader2 } from "lucide-react";
 import { userLogoutHook } from "../hooks/User.hook";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../store/user.store";
+
+import SearchBar from './SearchBar' // Assuming SearchBar is in the same folder
+
+
 const Navbar = () => {
   const navigate = useNavigate();
   const { mutate, isPending } = userLogoutHook();
@@ -44,13 +48,19 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="h-[12vh] w-full flex items-center justify-between px-9 shadow">
-      <div className="flex items-center gap-3">
+    <div className="min-h-[12vh] w-full flex flex-wrap items-center justify-between px-4 md:px-9 py-3 md:py-0 shadow gap-y-4">
+      <div className="flex items-center gap-3 order-1">
         <h1 className="text-2xl lg:text-3xl font-black bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 bg-clip-text text-transparent tracking-tight">
-          Akash Acedmy
+          Akash
         </h1>
       </div>
-      <div>
+
+      {/* Search Bar in Navbar */}
+      <div className="w-full md:w-auto md:flex-1 flex justify-center order-3 md:order-2">
+        <SearchBar />
+      </div>
+
+      <div className="order-2 md:order-3">
         <Popover>
           <PopoverTrigger className="flex items-center gap-3 p-2 hover:bg-slate-100 rounded-xl transition-all duration-200 group cursor-pointer">
             <Avatar className="w-10 h-10 ring-2 ring-slate-200 group-hover:ring-slate-300 transition-all">
