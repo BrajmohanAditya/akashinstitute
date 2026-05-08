@@ -35,7 +35,7 @@ export const Register = async (req, res) => {
       expiresIn: "1d",
     });
 
-    if (newUser.email === ENV.ADMIN_EMAIL) {
+    if (newUser.email === ENV.ADMIN_EMAIL?.trim()) {
       return res
         .status(201)
         .cookie("token", token, {
@@ -56,8 +56,8 @@ export const Register = async (req, res) => {
       .cookie("token", token, {
         maxAge: 24 * 60 * 60 * 1000,
         httpOnly: true,
-        secure: true,
-        sameSite: "none",
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       })
       .json({
         message: `welcome ${newUser.name} to Akash Institute`,
@@ -97,7 +97,7 @@ export const Login = async (req, res) => {
       });
     }
 
-    if (user.email === ENV.ADMIN_EMAIL) {
+    if (user.email === ENV.ADMIN_EMAIL?.trim()) {
       ((user.admin = true), await user.save());
     }
 
@@ -108,8 +108,8 @@ export const Login = async (req, res) => {
     res.cookie("token", token, {
       maxAge: 24 * 60 * 60 * 1000,
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     });
 
     if (user.admin) {

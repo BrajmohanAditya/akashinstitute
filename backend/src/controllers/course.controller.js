@@ -42,10 +42,11 @@ export const createCourse = async (req, res) => {
   }
 };
 
+
 export const getCourse = async (req, res) => {
   try {
     const { search } = req.query;
-    if (!search || !search.trim() === "") {
+    if (!search || search.trim() === "") {
       const allCourses = await Course.find({});
       return res.status(200).json(allCourses);
     }
@@ -74,8 +75,8 @@ export const getCourse = async (req, res) => {
 
     const mongoQuery = {
       $or: [
-        { title: { $regex: search, $options: "i" } },
-        { description: { $regex: search, $options: "i" } },
+        { title: { $regex: searchTerm, $options: "i" } },
+        { description: { $regex: searchTerm, $options: "i" } },
       ],
     };
 
@@ -92,7 +93,7 @@ export const getCourse = async (req, res) => {
   }
 };
 
-export const getsingleCourse = async (req, res) => {
+export const getSingleCourse = async (req, res) => {
   try {
     const courseId = req.params.id;
 

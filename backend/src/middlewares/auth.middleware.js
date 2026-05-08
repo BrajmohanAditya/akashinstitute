@@ -7,7 +7,9 @@ export const protectRoute = async (req, res, next) => {
     const token = req.cookies.token;
 
     if (!token) {
-      return res.status(401).json({ message: "Unauthorized - No Token Provided" });
+      return res
+        .status(401)
+        .json({ message: "Unauthorized - No Token Provided" });
     }
 
     const verifyToken = jwt.verify(token, ENV.JWT_SECRET);
@@ -35,7 +37,9 @@ export const adminRoute = async (req, res, next) => {
     if (req.user && req.user.email === ENV.ADMIN_EMAIL) {
       next();
     } else {
-      return res.status(403).json({ message: "Forbidden - Admin Access Required" });
+      return res
+        .status(403)
+        .json({ message: "Forbidden - Admin Access Required" });
     }
   } catch (error) {
     console.log(`error in admin route ${error}`);
