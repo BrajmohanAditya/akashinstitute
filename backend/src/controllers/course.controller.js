@@ -42,7 +42,7 @@ export const createCourse = async (req, res) => {
   }
 };
 
-
+// ai search fiture
 export const getCourse = async (req, res) => {
   try {
     const { search } = req.query;
