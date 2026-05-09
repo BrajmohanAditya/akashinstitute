@@ -1,7 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { 
-  LayoutDashboard, 
   ShoppingBag, 
  
   Home,
@@ -12,7 +11,7 @@ const AdminDashboardSidebar = () => {
   const navItems = [
     { to: '/', label: 'Home', icon: Home },
     { to: '/dashboard', label: 'Analytics', icon: BarChart3 },
-    { to: '/dashboard/dashboardProduct', label: 'Courses', icon: ShoppingBag },
+    { to: '/admindashboard/dashboardProduct', label: 'Courses', icon: ShoppingBag },
     
   ]
 
