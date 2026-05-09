@@ -48,7 +48,11 @@ export const getCourse = async (req, res) => {
     const { search } = req.query;
     if (!search || search.trim() === "") {
       const allCourses = await Course.find({});
-      return res.status(200).json(allCourses);
+      return res.status(200).json({
+        success: true,
+        courses: allCourses,
+        count: allCourses.length
+      });
     }
 
     const prompt = `you are a intelligent assistant for a learning management 
