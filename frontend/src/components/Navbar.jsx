@@ -5,7 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { LayoutDashboard, User, BookOpen, LogOut } from "lucide-react";
+import { Shield, User, BookOpen, LogOut } from "lucide-react";
 import { Loader2 } from "lucide-react";
 import { userLogoutHook } from "../hooks/User.hook";
 import { useNavigate } from "react-router-dom";
@@ -25,9 +25,9 @@ const Navbar = () => {
 
   const navItems = [
     {
-      label: "Dashboard",
-      icon: LayoutDashboard,
-      onClick: () => navigate("/dashboard"),
+      label: "Admin Dashboard",
+      icon: Shield,
+      onClick: () => navigate("/admindashboard"),
     },
     {
       label: "Profile",
@@ -50,7 +50,7 @@ const Navbar = () => {
   return (
     <div className="sticky top-0 z-50 bg-white min-h-[12vh] w-full flex flex-wrap items-center justify-between px-4 md:px-9 py-3 md:py-0 shadow gap-y-4">
       <div className="flex items-center gap-3 order-1">
-        <h1 className="text-2xl lg:text-3xl font-black bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 bg-clip-text text-transparent tracking-tight">
+        <h1 className="text-2xl lg:text-3xl font-black bg-linear-to-r from-slate-900 via-blue-900 to-slate-900 bg-clip-text text-transparent tracking-tight">
           Akash
         </h1>
       </div>
@@ -68,7 +68,7 @@ const Navbar = () => {
                 src={user?.profilePhoto || "https://github.com/shadcn.png"}
                 className="object-cover"
               />
-              <AvatarFallback className="bg-gradient-to-br from-slate-200 to-slate-300 text-slate-700 font-semibold text-sm">
+              <AvatarFallback className="bg-linear-to-br from-slate-200 to-slate-300 text-slate-700 font-semibold text-sm">
                 {user?.name ? user.name.slice(0, 2).toUpperCase() : "CN"}
               </AvatarFallback>
             </Avatar>
@@ -112,7 +112,7 @@ const Navbar = () => {
                   disabled={item.loading}
                   className="group relative w-full flex items-center gap-3 px-4 py-3 text-left rounded-xl transition-all duration-200 hover:bg-slate-50 hover:shadow-md text-sm font-medium text-slate-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <item.icon className="w-4 h-4 text-slate-500 group-hover:text-slate-700 flex-shrink-0" />
+                  <item.icon className="w-4 h-4 text-slate-500 group-hover:text-slate-700 shrink-0" />
                   <span className="truncate">{item.label}</span>
 
                   {item.loading && (

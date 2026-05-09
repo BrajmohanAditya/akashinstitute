@@ -13,7 +13,7 @@ const Register = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 via-white to-indigo-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-indigo-50 via-white to-indigo-100 px-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
         
         {/* Header */}

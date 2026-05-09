@@ -5,7 +5,7 @@ import Navbar from './components/Navbar'
 
 function App() {
   const location = useLocation();
-  const hiddenRoutes = ["/login","/register"];
+  const hiddenRoutes = ["/login","/register", "/admindashboard"];
   const shouldHideNavbar = hiddenRoutes.some((route)=>location.pathname === route);
   return (
     <>
