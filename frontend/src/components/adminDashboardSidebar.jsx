@@ -8,7 +8,7 @@ import {
   BarChart3 
 } from 'lucide-react'
 
-const adminDashboardSidebar = () => {
+const AdminDashboardSidebar = () => {
   const navItems = [
     { to: '/', label: 'Home', icon: Home },
     { to: '/dashboard', label: 'Analytics', icon: BarChart3 },
@@ -45,4 +45,4 @@ const adminDashboardSidebar = () => {
   )
 }
 
-export default adminDashboardSidebar
+export default AdminDashboardSidebar
