@@ -19,7 +19,7 @@ const AdminDashboardSidebar = () => {
   return (
     <div className='w-64 bg-white shadow-xl border-r border-slate-200'>
       <div className='p-6 border-b border-slate-200'>
-        <h1 className='text-2xl font-black text-slate-900 tracking-tight'>EduSmart</h1>
+        <h1 className='text-2xl font-black text-slate-900 tracking-tight'>Akash academy</h1>
         <p className='text-xs text-slate-500 font-medium mt-1'>Admin Dashboard</p>
       </div>
 
