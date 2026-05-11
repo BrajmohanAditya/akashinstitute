@@ -1,7 +1,7 @@
 import React from "react";
 import { useGetCourseHook } from "../hooks/course.hook.js";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, Clock, Users, Star } from "lucide-react";
+import { BookOpen, Clock, Users, Star, ArrowRight, Zap } from "lucide-react";
 
 const courseSection = () => {
   const { data, error, isLoading } = useGetCourseHook();
@@ -34,16 +34,16 @@ const courseSection = () => {
           {data?.courses?.map((item) => (
             <div
               key={item._id}
-              className="group bg-white border border-slate-200 rounded-2xl p-6 hover:shadow-xl 
+              className="group flex flex-col h-full bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 hover:shadow-xl 
                         hover:-translate-y-2 hover:border-slate-300 cursor-pointer transition-all 
-                        duration-300 overflow-hidden max-w-sm mx-auto"
+                        duration-300 overflow-hidden w-full"
             >
               {/* Thumbnail */}
-              <div className="relative mb-6">
+              <div className="relative mb-6 rounded-xl overflow-hidden bg-slate-900 aspect-4/3 sm:aspect-video">
                 <img
                   src={item.thumbnail}
                   alt={item.title}
-                  className="w-full h-48 object-cover rounded-xl group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full shadow-lg">
                   <Star className="w-4 h-4 text-yellow-500 fill-current inline mr-1" />
@@ -55,7 +55,7 @@ const courseSection = () => {
 
               {/*content*/}
 
-              <div>
+              <div className="flex flex-col flex-1">
                 <h3 className="font-bold text-xl text-slate-900 leading-tight mb-3 line-clamp-2 group-hover:text-slate-700">
                   {item.title}
                 </h3>
@@ -72,10 +72,28 @@ const courseSection = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-4 border-t border-slate-200">
-                  <button className="px-4 py-2 bg-slate-900 text-white text-sm font-semibold rounded-xl hover:bg-slate-800 transition-colors group-hover:scale-105">
-                    View Course
-                  </button>
+                <div className="mt-auto pt-4 border-t border-slate-200">
+                  {/* Price Section */}
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <p className="text-xs text-slate-500 mb-1">Starting at</p>
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-xl font-bold text-slate-900">₹{item.amount || "20,000"}</span>
+                        <span className="text-sm text-slate-400 line-through">₹{(item.amount ? Math.round(item.amount * 1.25) : 25000)}</span>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  {/* Buttons Section */}
+                  <div className="flex items-center gap-3">
+                    <button className="flex-1 flex items-center justify-center gap-1 px-3 py-2.5 border-2 border-[#0a66c2] text-[#0a66c2] text-sm font-bold rounded-lg hover:bg-blue-50 transition-colors">
+                      Details <ArrowRight className="w-4 h-4" />
+                    </button>
+                    <button className="flex-[1.2] flex items-center justify-center gap-1 px-3 py-2.5 bg-[#0a66c2] text-white text-sm font-bold rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+                      <Zap className="w-4 h-4 fill-current" /> Enroll Now
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

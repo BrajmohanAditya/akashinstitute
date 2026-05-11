@@ -11,8 +11,7 @@ import { userLogoutHook } from "../hooks/User.hook";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../store/user.store";
 
-import SearchBar from './SearchBar' // Assuming SearchBar is in the same folder
-
+import SearchBar from "./searchBar"; // Assuming SearchBar is in the same folder
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -65,17 +64,25 @@ const Navbar = () => {
           <PopoverTrigger className="flex items-center gap-3 p-2 hover:bg-slate-100 rounded-xl transition-all duration-200 group cursor-pointer">
             <Avatar className="w-10 h-10 ring-2 ring-slate-200 group-hover:ring-slate-300 transition-all">
               <AvatarImage
-                src={user?.profilePhoto || "https://github.com/shadcn.png"}
+                src={user?.profilePhoto || ""}
                 className="object-cover"
               />
-              <AvatarFallback className="bg-linear-to-br from-slate-200 to-slate-300 text-slate-700 font-semibold text-sm">
-                {user?.name ? user.name.slice(0, 2).toUpperCase() : "CN"}
+              <AvatarFallback className="bg-blue-50 w-full h-full">
+                {/* Modern Student SVG Icon */}
+                <svg viewBox="0 0 100 100" className="w-full h-full">
+                  <path d="M 20 100 Q 50 50 80 100" fill="#3b82f6" />
+                  <circle cx="50" cy="40" r="18" fill="#fcd34d" />
+                  <path d="M 25 28 L 50 15 L 75 28 L 50 41 Z" fill="#1e3a8a" />
+                  <path d="M 35 34 L 35 48 Q 50 55 65 48 L 65 34" fill="none" stroke="#1e3a8a" strokeWidth="3.5" />
+                  <line x1="50" y1="28" x2="78" y2="38" stroke="#fbbf24" strokeWidth="2.5" />
+                  <circle cx="78" cy="38" r="3" fill="#fbbf24" />
+                </svg>
               </AvatarFallback>
             </Avatar>
 
             <div className="hidden md:block text-left">
               <p className="font-semibold text-sm text-slate-900 leading-tight">
-                {user?.name ? user.name.slice(0, 2).toUpperCase():" "}
+                {user?.name ? user.name.slice(0, 2).toUpperCase() : " "}
               </p>
             </div>
 
