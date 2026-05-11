@@ -6,19 +6,9 @@ import Home from "../pages/User/Home";
 import { ProtectedRoutes } from "./protectedRoute";
 import DashboardProducts from "../pages/Admin/DashboardProducts";
 import Dashboard from "../pages/Admin/dashboard";
-import Navbar from "../components/Navbar";
-
+import UserLayout from "../layout/userLayout";
 // UserLayout wraps routes that SHOULD have the top Navbar
-const UserLayout = () => {
-  return (
-    <>
-      <Navbar />
-      <div>
-        <Outlet />
-      </div>
-    </>
-  );
-};
+
 
 const MainRoutes = () => {
   return (
