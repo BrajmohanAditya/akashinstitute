@@ -7,7 +7,7 @@ import {
 } from "../api/course.api.js";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 // import { useQueryClient } from 'node_modules/@tanstack/react-query/build/legacy'
-export const useCreateCouseHook = () => {
+export const useCreateCourseHook = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: createCourseApi,

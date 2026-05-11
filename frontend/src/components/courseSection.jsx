@@ -6,7 +6,6 @@ import { BookOpen, Clock, Users, Star } from "lucide-react";
 const courseSection = () => {
   const { data, error, isLoading } = useGetCourseHook();
   const navigate = useNavigate();
-
   if (isLoading) {
     return (
       <div className="py-20 px-6">
