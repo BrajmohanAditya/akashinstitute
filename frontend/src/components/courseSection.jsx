@@ -52,6 +52,32 @@ const courseSection = () => {
                   </span>
                 </div>
               </div>
+
+              {/*content*/}
+
+              <div>
+                <h3 className="font-bold text-xl text-slate-900 leading-tight mb-3 line-clamp-2 group-hover:text-slate-700">
+                  {item.title}
+                </h3>
+
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center gap-2 text-sm text-slate-600">
+                    <Users className="w-4 h-4" />
+                    <span>{item.enrolled || "1.2k"} students</span>
+                  </div>
+
+                  <div className="flex items-center gap-2 text-sm text-slate-600">
+                    <Clock className="w-4 h-4" />
+                    <span>{item.duration || "12 hours"}</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between pt-4 border-t border-slate-200">
+                  <button className="px-4 py-2 bg-slate-900 text-white text-sm font-semibold rounded-xl hover:bg-slate-800 transition-colors group-hover:scale-105">
+                    View Course
+                  </button>
+                </div>
+              </div>
             </div>
           ))}
         </div>

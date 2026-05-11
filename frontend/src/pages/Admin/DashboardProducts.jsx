@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 const DashboardProducts = () => {
+  const [isOpen, setIsOpen] = React.useState(false);
   const { register, handleSubmit, reset: resetForm  } = useForm();
   const { mutate, isPending } = useCreateCourseHook();
 
@@ -27,7 +28,7 @@ const DashboardProducts = () => {
     mutate(formData, {
       onSuccess: (res) => {
         toast.success(res.message);
-        setOpenModule(false);
+        setIsOpen(false);
         resetForm();
       },
     });
@@ -38,7 +39,7 @@ const DashboardProducts = () => {
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Courses</h1>
 
-        <Dialog>
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger
             className="px-5 py-2 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition"
             disabled={isPending}
@@ -55,13 +56,13 @@ const DashboardProducts = () => {
                   onSubmit={handleSubmit(createCourseHandler)}
                 >
                   <input
-                    {...register("title")}
+                    {...register("title", { required: true })}
                     placeholder="Course Title"
                     className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   />
 
                   <textarea
-                    {...register("description")}
+                    {...register("description", { required: true })}
                     placeholder="Course Description"
                     rows={3}
                     className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
@@ -69,7 +70,7 @@ const DashboardProducts = () => {
 
                   <input
                     type="number"
-                    {...register("amount")}
+                    {...register("amount", { required: true })}
                     placeholder="Price"
                     className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
                   />
@@ -77,7 +78,7 @@ const DashboardProducts = () => {
                   <input
                     type="file"
                     accept="image/*"
-                    {...register("thumbnail")}
+                    {...register("thumbnail", { required: true })}
                     className="w-full text-sm"
                   />
 
@@ -86,7 +87,7 @@ const DashboardProducts = () => {
                     type="submit"
                     className="w-full py-3 bg-emerald-600 flex items-center justify-center text-white rounded-lg font-semibold hover:bg-emerald-700 transition"
                   >
-                    {isPending ? <Loader2 /> : "Create Course"}
+                    {isPending ? <Loader2 className="animate-spin" /> : "Create Course"}
                   </button>
                 </form>
               </DialogDescription>
