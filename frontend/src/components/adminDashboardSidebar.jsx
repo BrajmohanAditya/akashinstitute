@@ -31,6 +31,16 @@ const AdminDashboardSidebar = () => {
       </div>
 
 
+      {isOpen && (
+        <div 
+          className="lg:hidden fixed inset-0 bg-black/50 z-40 transition-opacity"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+
+
+
       <div
         className={`w-64 bg-white shadow-xl border-r border-slate-200 h-screen fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
