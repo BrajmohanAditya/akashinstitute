@@ -35,22 +35,6 @@ export const Register = async (req, res) => {
       expiresIn: "1d",
     });
 
-    if (newUser.email === ENV.ADMIN_EMAIL?.trim()) {
-      return res
-        .status(201)
-        .cookie("token", token, {
-          maxAge: 24 * 60 * 60 * 1000,
-          httpOnly: true,
-          secure: true,
-          sameSite: "none",
-        })
-        .json({
-          message: `welcome ${newUser.name} to Akash Institute, you are admin`,
-          success: true,
-          user: newUser,
-        });
-    }
-
     return res
       .status(201)
       .cookie("token", token, {
@@ -97,10 +81,6 @@ export const Login = async (req, res) => {
       });
     }
 
-    if (user.email === ENV.ADMIN_EMAIL?.trim()) {
-      ((user.admin = true), await user.save());
-    }
-
     const token = jwt.sign({ userId: user._id }, ENV.JWT_SECRET, {
       expiresIn: "1d",
     });
@@ -112,11 +92,11 @@ export const Login = async (req, res) => {
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     });
 
-    if (user.admin) {
+    if (user.role === "admin") {
       return res.status(201).json({
         message: `welcome ${user.name} to Akash Institute, you are admin`,
         success: true,
-        user: user,
+        user,
       });
     }
 

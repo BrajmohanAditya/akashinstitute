@@ -34,7 +34,7 @@ export const protectRoute = async (req, res, next) => {
 
 export const adminRoute = async (req, res, next) => {
   try {
-    if (req.user && req.user.email === ENV.ADMIN_EMAIL) {
+    if (req.user && req.user.role === "admin") {
       next();
     } else {
       return res
