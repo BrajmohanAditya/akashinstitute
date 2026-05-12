@@ -3,12 +3,9 @@ import { Loader2 } from "lucide-react";
 
 import { Navigate } from "react-router-dom";
 
-export const ProtectedRoutes = ({ children }) => {
+export const ProtectedRoutes = ({ children, requireAdmin = false }) => {
   const { data, isLoading, isError, error } = GetUserHook();
 
-
-
-  
   if (isLoading) {
     return (
       <div className="h-screen w-full flex items-center justify-center bg-linear-to-br from-slate-50 to-slate-100">
@@ -25,6 +22,11 @@ export const ProtectedRoutes = ({ children }) => {
   if (isError || !data) {
     console.error("Auth error:", error);
     return <Navigate to="/login" replace />;
+  }
+  
+  if (requireAdmin && data.user.role !== "admin") {
+    console.warn("Access Denied: You are not an admin!");
+    return <Navigate to="/" replace />; // Kick them back to the homepage
   }
 
   return children;

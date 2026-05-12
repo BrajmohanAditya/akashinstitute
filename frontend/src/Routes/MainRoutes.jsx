@@ -27,7 +27,7 @@ const MainRoutes = () => {
       <Route
         path="/admindashboard"
         element={
-          <ProtectedRoutes>
+          <ProtectedRoutes requireAdmin={true} >
             <Dashboard />
           </ProtectedRoutes>
         }
