@@ -1,12 +1,19 @@
-import React , {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Shield, User, BookOpen, LogOut } from "lucide-react";
-import { Loader2 } from "lucide-react";
+import {
+  Shield,
+  User,
+  BookOpen,
+  LogOut,
+  Loader2,
+  LogIn,
+  UserPlus,
+} from "lucide-react";
 import { userLogoutHook } from "../hooks/User.hook";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../store/user.store";
@@ -26,38 +33,67 @@ const Navbar = () => {
   useEffect(() => {
     if (data) {
       setUser(data?.user);
-    }else if (isError) {
-      setUser(null); 
+    } else if (isError) {
+      setUser(null);
     }
   }, [data, setUser]);
 
   const logoutHandler = () => {
-    mutate();
+    mutate(undefined, {
+      onSuccess: () => {
+        setUser(null); // This instantly clears the global state!
+        navigate("/login"); // Optional: send them to the login page
+      },
+    });
   };
 
-  const navItems = [
-    {
-      label: "Admin Dashboard",
-      icon: Shield,
-      onClick: () => navigate("/admindashboard"),
-    },
-    {
-      label: "Profile",
-      icon: User,
-      onClick: () => navigate("/profile"),
-    },
-    {
-      label: "Your Courses",
-      icon: BookOpen,
-      onClick: () => navigate("/YourCourse"),
-    },
-    {
-      label: "Logout",
-      icon: LogOut,
-      onClick: logoutHandler,
-      loading: isPending,
-    },
-  ];
+  let navItems = [];
+
+  if (user) {
+    // What to show if they ARE logged in
+    navItems = [
+      // Only show Admin Dashboard if they are an admin!
+      ...(user.role === "admin"
+        ? [
+            {
+              label: "Admin Dashboard",
+              icon: Shield,
+              onClick: () => navigate("/admindashboard"),
+            },
+          ]
+        : []),
+      {
+        label: "Profile",
+        icon: User,
+        onClick: () => navigate("/profile"),
+      },
+      {
+        label: "Your Courses",
+        icon: BookOpen,
+        onClick: () => navigate("/YourCourse"),
+      },
+      {
+        label: "Logout",
+        icon: LogOut,
+        onClick: logoutHandler,
+        loading: isPending,
+      },
+    ];
+  } else {
+    // What to show if they ARE NOT logged in
+    navItems = [
+      {
+        label: "Log in",
+        icon: LogIn,
+        onClick: () => navigate("/login"),
+      },
+      {
+        label: "Sign up",
+        icon: UserPlus,
+        onClick: () => navigate("/register"), // Change this to "/signup" if you have a separate signup page!
+      },
+    ];
+  }
 
   return (
     <div className="sticky top-0 z-50 bg-white min-h-[12vh] w-full flex flex-wrap items-center justify-between px-4 md:px-9 py-3 md:py-0 shadow gap-y-4">

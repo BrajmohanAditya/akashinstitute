@@ -94,14 +94,14 @@ export const Login = async (req, res) => {
 
     if (user.role === "admin") {
       return res.status(201).json({
-        message: `welcome ${user.name} to Akash Institute, you are admin`,
+        message: `welcome ${user.name}`,
         success: true,
         user,
       });
     }
 
     return res.status(201).json({
-      message: `welcome ${user.name} to Akash Institute`,
+      message: `welcome ${user.name}`,
       success: true,
       user: user,
     });

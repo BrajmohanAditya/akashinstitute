@@ -2,7 +2,7 @@ import { userRegisterHook } from '@/hooks/User.hook'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
-import { User, Mail, Lock, Loader2 } from 'lucide-react'
+import { User, Mail, Lock, Loader2, GraduationCap } from 'lucide-react'
 
 const Register = () => {
   const { register, handleSubmit } = useForm()
@@ -19,9 +19,9 @@ const Register = () => {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="w-14 h-14 mx-auto mb-3 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-2xl font-bold">
-            ⚡
+            <GraduationCap className="w-8 h-8 animate-bounce" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">Create Account</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Signup Account</h1>
           <p className="text-sm text-gray-500 mt-1">
             Join us and start your journey
           </p>
