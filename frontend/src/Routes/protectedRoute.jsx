@@ -1,20 +1,12 @@
 import { GetUserHook } from "@/hooks/User.hook";
-import { useUserStore } from "@/store/user.store";
 import { Loader2 } from "lucide-react";
-import { useEffect } from "react";
 
 import { Navigate } from "react-router-dom";
 
 export const ProtectedRoutes = ({ children }) => {
-  const setUser = useUserStore((state) => state.setUser);
   const { data, isLoading, isError, error } = GetUserHook();
 
-  
-  useEffect(() => {
-    if (data) {
-      setUser(data?.user);
-    }
-  }, [data, setUser]);
+
 
   
   if (isLoading) {

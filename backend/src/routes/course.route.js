@@ -8,8 +8,8 @@ const courseRoute = express.Router()
 
 
 courseRoute.post('/createCourse', protectRoute, adminRoute, upload.single("thumbnail"), createCourse)
-courseRoute.get('/getCourse', protectRoute, getCourse),
-courseRoute.get('/getSingleCourse/:id', protectRoute, getSingleCourse)
+courseRoute.get('/getCourse', getCourse),
+courseRoute.get('/getSingleCourse/:id', getSingleCourse)
 
 
 

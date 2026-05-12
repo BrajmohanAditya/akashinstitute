@@ -18,9 +18,7 @@ const MainRoutes = () => {
         <Route
           path="/"
           element={
-            <ProtectedRoutes>
               <Home />
-            </ProtectedRoutes>
           }
         />
       </Route>

@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useEffect} from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Popover,
@@ -11,13 +11,25 @@ import { userLogoutHook } from "../hooks/User.hook";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../store/user.store";
 import StudentIcon from "./icons/StudentIcon";
+import { GetUserHook } from "../hooks/User.hook"; // Make sure this path matches your setup!
 
 import SearchBar from "./searchBar"; // Assuming SearchBar is in the same folder
 
 const Navbar = () => {
+  const setUser = useUserStore((state) => state.setUser);
+  const { data, isLoading, isError, error } = GetUserHook();
+
   const navigate = useNavigate();
   const { mutate, isPending } = userLogoutHook();
   const { user } = useUserStore();
+
+  useEffect(() => {
+    if (data) {
+      setUser(data?.user);
+    }else if (isError) {
+      setUser(null); 
+    }
+  }, [data, setUser]);
 
   const logoutHandler = () => {
     mutate();
