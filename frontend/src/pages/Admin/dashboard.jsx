@@ -1,4 +1,4 @@
-import AdminDashboardSidebar from "../../components/adminDashboardSidebar";
+import DashboardSidebar from "../../components/AdminComponent/DashboardSidebar";
 
 
 import React from 'react'
@@ -8,7 +8,7 @@ const Dashboard = () => {
   return (
     <div className='flex flex-col lg:flex-row min-h-screen bg-slate-50'>
 
-      <AdminDashboardSidebar />
+      <DashboardSidebar />
       <main className='flex-1'>
         <Outlet />
       </main>

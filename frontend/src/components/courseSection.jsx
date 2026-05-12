@@ -63,7 +63,7 @@ const courseSection = () => {
                 <div className="space-y-3 mb-6">
                   <div className="flex items-center gap-2 text-sm text-slate-600">
                     <Users className="w-4 h-4" />
-                    <span>{item.enrolled || "1.2k"} students</span>
+                    <span>{item.enrolled || `${(Math.random() + 1).toFixed(1)}k`} students</span>
                   </div>
 
                   <div className="flex items-center gap-2 text-sm text-slate-600">
