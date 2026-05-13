@@ -39,6 +39,7 @@ export const createCourse = async (req, res) => {
     });
   } catch (error) {
     console.log(`error from create course.${error}`);
+    return res.status(500).json({ message: "Internal Server Error", success: false });
   }
 };
 
@@ -94,6 +95,7 @@ export const getCourse = async (req, res) => {
     });
   } catch (error) {
     console.log(`error from get courses.${error}`);
+    return res.status(500).json({ message: "Internal Server Error", success: false });
   }
 };
 
@@ -115,6 +117,7 @@ export const getSingleCourse = async (req, res) => {
     });
   } catch (error) {
     console.log(`error from getsingle course.${error}`);
+    return res.status(500).json({ message: "Internal Server Error", success: false });
   }
 };
 
@@ -147,6 +150,7 @@ export const getPurchasedCourse = async (req, res) => {
     return res.status(201).json(purchasedOrder);
   } catch (error) {
     console.log(error, "from getPurchased course");
+    return res.status(500).json({ message: "Internal Server Error", success: false });
   }
 };
 
@@ -165,5 +169,6 @@ export const getAllPurchasedCourse = async (req, res) => {
     return res.status(201).json(user);
   } catch (error) {
     console.log(error);
+    return res.status(500).json({ message: "Internal Server Error", success: false });
   }
 };
