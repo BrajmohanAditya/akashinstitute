@@ -1,19 +1,25 @@
 import CreateCourseDialog from "../../components/AdminComponent/CreateCourseDialog";
 import { useGetCourseHook } from "../../hooks/course.hook";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { Edit, Trash2, BookOpen } from "lucide-react";
 
 const DashboardProducts = () => {
   const { data } = useGetCourseHook();
   const navigate = useNavigate();
-
+  const getCourseId = (id) => {
+    navigate(`/dashboard/CourseModule/${id}`);
+  };
   return (
     <div className="min-h-screen bg-slate-50 p-4 sm:p-6 lg:p-8">
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Manage Courses</h1>
-          <p className="text-sm text-slate-500 mt-1">View, edit, and manage all active courses.</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">
+            Manage Courses
+          </h1>
+          <p className="text-sm text-slate-500 mt-1">
+            View, edit, and manage all active courses.
+          </p>
         </div>
         <CreateCourseDialog />
       </div>
@@ -31,11 +37,12 @@ const DashboardProducts = () => {
                 <th className="p-4 text-right whitespace-nowrap">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-100 cursor-pointer">
               {data?.courses?.map((item) => (
-                <tr 
-                  key={item._id} 
-                  className="hover:bg-slate-50 transition-colors group"
+                <tr
+                  key={item._id}
+                  onClick={() => getCourseId(item._id)}
+                  className="hover:bg-slate-50 transition-colors group "
                 >
                   <td className="p-4">
                     <div className="flex items-center gap-3">
@@ -47,31 +54,29 @@ const DashboardProducts = () => {
                       </div>
                     </div>
                   </td>
-                  
+
                   <td className="p-4 font-medium text-slate-700">
                     ₹{item.amount}
                   </td>
-                  
-                  <td className="p-4 text-slate-600">
-                    {item.enrolled || 0}
-                  </td>
-                  
+
+                  <td className="p-4 text-slate-600">{item.enrolled || 0}</td>
+
                   <td className="p-4">
                     <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
                       Active
                     </span>
                   </td>
-                  
+
                   <td className="p-4 text-right">
                     <div className="flex items-center justify-end gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
-                      <button 
+                      <button
                         onClick={() => console.log("Edit clicked", item._id)}
                         className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                         title="Edit Course"
                       >
                         <Edit className="w-4 h-4" />
                       </button>
-                      <button 
+                      <button
                         onClick={() => console.log("Delete clicked", item._id)}
                         className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                         title="Delete Course"
@@ -82,12 +87,13 @@ const DashboardProducts = () => {
                   </td>
                 </tr>
               ))}
-              
+
               {/* Empty State */}
               {(!data?.courses || data.courses.length === 0) && (
                 <tr>
                   <td colSpan="5" className="p-12 text-center text-slate-500">
-                    No courses found. Click "+ Add Course" to create your first one!
+                    No courses found. Click "+ Add Course" to create your first
+                    one!
                   </td>
                 </tr>
               )}
