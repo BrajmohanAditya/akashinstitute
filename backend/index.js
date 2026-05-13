@@ -17,6 +17,9 @@ app.use(cors({
 
 app.use('/api', userRoute)
 app.use('/api/course', courseRoute)
+app.get('/',(req,res) => {
+    res.send('Hello World!')
+});
 
 app.listen(ENV.PORT, () => {
   console.log(`Server running on port ${ENV.PORT}`);
