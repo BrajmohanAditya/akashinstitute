@@ -117,11 +117,24 @@
     --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* Fallback colors for older browsers/systems */
+:root {
+  --bg-fallback: white;
+  --text-fallback: black;
+}
+
+.dark {
+  --bg-fallback: #0f172a;
+  --text-fallback: white;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
     }
   body {
+    background-color: var(--bg-fallback);
+    color: var(--text-fallback);
     @apply bg-background text-foreground;
     }
   html {
