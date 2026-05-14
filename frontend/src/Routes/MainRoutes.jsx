@@ -7,6 +7,7 @@ import { ProtectedRoutes } from "./protectedRoute";
 import DashboardProducts from "../pages/Admin/DashboardProducts";
 import Dashboard from "../pages/Admin/dashboard";
 import UserLayout from "../layout/userLayout";
+import ModulePage from "../pages/Admin/module";
 // UserLayout wraps routes that SHOULD have the top Navbar
 
 
@@ -37,6 +38,14 @@ const MainRoutes = () => {
           element={
             <ProtectedRoutes>
               <DashboardProducts />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="module/:id"
+          element={
+            <ProtectedRoutes>
+              <ModulePage />
             </ProtectedRoutes>
           }
         />
