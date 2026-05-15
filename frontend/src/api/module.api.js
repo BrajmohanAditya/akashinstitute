@@ -13,3 +13,15 @@ export const createModuleApi = async(payload)=>{
 
     return res.data
 }
+
+export const getModuleApi = async(id)=>{
+    const res = await axios.get(`${baseUrl}/module/getModuel/${id}`,
+         {
+            headers:{'Content-Type':'Application/json'},
+            withCredentials:true
+        },
+    )
+
+    return res.data
+}
+

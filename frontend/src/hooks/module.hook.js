@@ -15,3 +15,11 @@ export const useCreateModuleHook = () => {
     },
   });
 };
+
+export const useGetModuleHook = (id)=>{
+    return useQuery({
+        queryFn:()=>getModuleApi(id),
+        queryKey:['getModule',id]
+    })
+}
+
