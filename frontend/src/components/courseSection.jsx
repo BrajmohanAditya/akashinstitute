@@ -1,7 +1,7 @@
 import React from "react";
 import { useGetCourseHook } from "../hooks/course.hook.js";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, Clock, Users, Star, ArrowRight, Zap } from "lucide-react";
+import {Clock, Users, Star, ArrowRight, Zap } from "lucide-react";
 
 const courseSection = () => {
   const { data, error, isLoading } = useGetCourseHook();

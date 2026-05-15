@@ -25,7 +25,7 @@ const DashboardProducts = () => {
       </div>
 
       {/* Admin List Section */}
-      <div className="w-full">
+      <div className="w-full max-h-[calc(100vh-180px)] overflow-y-auto pr-2">
         
         {/* Desktop Table View (Hidden on mobile) */}
         <div className="hidden md:block bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">

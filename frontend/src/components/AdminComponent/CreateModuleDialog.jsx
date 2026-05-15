@@ -13,8 +13,9 @@ import { useCreateModuleHook } from "@/hooks/module.hook";
 
 const CreateModuleDialog = () => {
   const { id } = useParams();
-  const { register, handleSubmit, reset } = useForm()
-  const { mutate, isPending } = useCreateModuleHook()
+  const { register, handleSubmit, reset } = useForm();
+  const { mutate, isPending } = useCreateModuleHook();
+  const [openModule, setOpenModule] = useState(false);
 
   const moduleFormHandler = (data) => {
     const formData = new FormData();
@@ -32,8 +33,18 @@ const CreateModuleDialog = () => {
 
   return (
     <div className="p-8 max-w-4xl mx-auto">
+      {/* Course Header */}
+      <div className="mb-12">
+        <h1 className="text-3xl font-black text-slate-900 mb-2">
+          {data?.title}
+        </h1>
+        <div className="flex items-center gap-2 text-sm text-slate-600">
+          <span>Total Modules: {data?.modules?.length || 0}</span>
+        </div>
+      </div>
+
       {/* Create Module Button */}
-      <Dialog >
+      <Dialog open={openModule} onOpenChange={setOpenModule}>
         <DialogTrigger className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200">
           <svg
             className="w-5 h-5"
