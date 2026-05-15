@@ -1,7 +1,7 @@
 import express from "express";
-import { adminRoute, protectRoute } from "../middleware/auth.middleware.js";
+import { adminRoute, protectRoute } from "../middlewares/auth.middleware.js";
 import { createModule } from "../controllers/module.controller.js";
-import { videoUpload } from "../middleware/videoUpload.js";
+import { videoUpload } from "../middlewares/videoUpload.js";
 
 const moduleRoute = express.Router()
 

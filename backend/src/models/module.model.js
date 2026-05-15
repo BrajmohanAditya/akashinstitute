@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+
 // How many modules in one course ?? -> 10
 // How many videos in one module ?? -> 10
 
@@ -21,4 +23,4 @@ const moduleSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-export const Module = mongoose.model("Modules", moduleSchema);
+export const Modules = mongoose.model("Modules", moduleSchema);

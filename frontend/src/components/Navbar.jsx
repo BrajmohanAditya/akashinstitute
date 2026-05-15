@@ -99,7 +99,7 @@ const Navbar = () => {
     <div className="sticky top-0 z-50 bg-white min-h-[12vh] w-full flex flex-wrap items-center justify-between px-4 md:px-9 py-3 md:py-0 shadow gap-y-4">
       <div className="flex items-center gap-3 order-1">
         <h1 className="text-2xl lg:text-3xl font-black bg-linear-to-r from-slate-900 via-blue-900 to-slate-900 bg-clip-text text-transparent tracking-tight">
-          Kirtimaan Classes
+          LMS
         </h1>
       </div>
 

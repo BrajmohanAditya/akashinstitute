@@ -5,6 +5,8 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import userRoute from './src/routes/user.route.js';
 import courseRoute from './src/routes/course.route.js';
+import moduleRoute from './src/routes/module.route.js';
+
 const app = express(); 
  
 app.use(express.json());
@@ -17,6 +19,7 @@ app.use(cors({
 
 app.use('/api', userRoute)
 app.use('/api/course', courseRoute)
+app.use('/api/module', moduleRoute)
 app.get('/',(req,res) => {
     res.send('Hello World!')
 });

@@ -1,18 +1,39 @@
-import { useGetSingleCourseHook } from '@/hooks/course.hook'
-import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import {
-  Dialog, DialogContent, DialogHeader, DialogTitle,DialogTrigger
-} from "@/components/ui/dialog"
-import { useForm } from 'react-hook-form'
-import { useCreateModule } from '@/hooks/module.hook'
-import { Loader2 } from 'lucide-react'
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { useForm } from "react-hook-form";
+import { Loader2 } from "lucide-react";
+import { useCreateModuleHook } from "@/hooks/module.hook";
 
 const CreateModuleDialog = () => {
+  const { id } = useParams();
+  const { register, handleSubmit, reset } = useForm()
+  const { mutate, isPending } = useCreateModuleHook()
+
+  const moduleFormHandler = (data) => {
+    const formData = new FormData();
+    formData.append("title", data.title);
+    formData.append("video", data.video[0]);
+    formData.append("courseId", id);
+
+    mutate(formData, {
+      onSuccess: () => {
+        setOpenModule(false);
+        reset();
+      },
+    });
+  };
+
   return (
     <div className="p-8 max-w-4xl mx-auto">
       {/* Create Module Button */}
-      <Dialog open={openModule} onOpenChange={setOpenModule}>
+      <Dialog >
         <DialogTrigger className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200">
           <svg
             className="w-5 h-5"
@@ -68,7 +89,7 @@ const CreateModuleDialog = () => {
               >
                 {isPending ? (
                   <>
-                    <Loader2 className='animate-spin' />
+                    <Loader2 className="animate-spin" />
                     Creating...
                   </>
                 ) : (
