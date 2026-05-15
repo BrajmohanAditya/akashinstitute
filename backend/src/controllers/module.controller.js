@@ -21,18 +21,21 @@ export const createModule = async(req,res)=>{
         const module = await Modules.create({
             courseId,
             title,
-            video:videoUrl,
-            videoPublicUrl :publicId
-        })
-        module.save()
+            Video: videoUrl,
+        });
 
-        await Course.findByIdAndUpdate(courseId,{
-            $push:{modules:module._id}
-        })
+        await Course.findByIdAndUpdate(courseId, {
+            $push: { modules: module._id }
+        });
 
-
-        return res.status(201).json(module)
+        return res.status(201).json({
+            message: "Module created successfully",
+            module
+        });
     } catch (error) {
-        console.log(`error from create module, ${error}`)
+        console.log(`error from create module, ${error}`);
+        return res.status(500).json({
+            message: "Internal server error"
+        });
     }
 }
