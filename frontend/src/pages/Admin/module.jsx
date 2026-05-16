@@ -26,7 +26,7 @@ const ModulePage = () => {
             className="group bg-white border border-slate-200 rounded-2xl p-8 hover:shadow-xl hover:-translate-y-1 transition-all duration-200 cursor-pointer hover:border-slate-300"
           >
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center flex-shrink-0">
+              <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center shrink-0">
                 <svg
                   className="w-6 h-6 text-emerald-600"
                   fill="none"
