@@ -1,11 +1,16 @@
 import React from "react";
 import { useGetCourseHook } from "../hooks/course.hook.js";
 import { useNavigate } from "react-router-dom";
-import {Clock, Users, Star, ArrowRight, Zap } from "lucide-react";
+import { Clock, Users, Star, ArrowRight, Zap } from "lucide-react";
 
 const courseSection = () => {
   const { data, error, isLoading } = useGetCourseHook();
   const navigate = useNavigate();
+
+  const navigateSinglecourse = (id) => {
+    navigate(`/singleCourse/${id}`);
+  };
+
   if (isLoading) {
     return (
       <div className="py-20 px-6">
@@ -35,7 +40,7 @@ const courseSection = () => {
             <div
               key={item._id}
               className="group flex flex-col h-full bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 hover:shadow-xl 
-                        hover:-translate-y-2 hover:border-slate-300 cursor-pointer transition-all 
+                        hover:-translate-y-2 hover:border-slate-300 transition-all 
                         duration-300 overflow-hidden w-full"
             >
               {/* Thumbnail */}
@@ -63,7 +68,10 @@ const courseSection = () => {
                 <div className="space-y-3 mb-6">
                   <div className="flex items-center gap-2 text-sm text-slate-600">
                     <Users className="w-4 h-4" />
-                    <span>{item.enrolled || `${(Math.random() + 1).toFixed(1)}k`} students</span>
+                    <span>
+                      {item.enrolled || `${(Math.random() + 1).toFixed(1)}k`}{" "}
+                      students
+                    </span>
                   </div>
 
                   <div className="flex items-center gap-2 text-sm text-slate-600">
@@ -78,19 +86,25 @@ const courseSection = () => {
                     <div>
                       <p className="text-xs text-slate-500 mb-1">Starting at</p>
                       <div className="flex items-baseline gap-2">
-                        <span className="text-xl font-bold text-slate-900">₹{item.amount || "20,000"}</span>
-                        <span className="text-sm text-slate-400 line-through">₹{(item.amount ? Math.round(item.amount * 1.25) : 25000)}</span>
+                        <span className="text-xl font-bold text-slate-900">
+                          ₹{item.amount || "20,000"}
+                        </span>
+                        <span className="text-sm text-slate-400 line-through">
+                          ₹
+                          {item.amount ? Math.round(item.amount * 1.25) : 25000}
+                        </span>
                       </div>
                     </div>
-
                   </div>
 
                   {/* Buttons Section */}
                   <div className="flex items-center gap-3">
-                    <button className="flex-1 flex items-center justify-center gap-1 px-3 py-2.5 border-2 border-[#0a66c2] text-[#0a66c2] text-sm font-bold rounded-lg hover:bg-blue-50 transition-colors">
+                    <button className="flex-1 cursor-pointer flex items-center justify-center gap-1 px-3 py-2.5 border-2 border-[#0a66c2] text-[#0a66c2] text-sm font-bold rounded-lg hover:bg-blue-50 transition-colors">
                       Details <ArrowRight className="w-4 h-4" />
                     </button>
-                    <button className="flex-[1.2] flex items-center justify-center gap-1 px-3 py-2.5 bg-[#0a66c2] text-white text-sm font-bold rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
+                    <button 
+                    onClick={() => navigateSinglecourse(item._id)}
+                    className="flex-[1.2] cursor-pointer  flex items-center justify-center gap-1 px-3 py-2.5 bg-[#0a66c2] text-white text-sm font-bold rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
                       <Zap className="w-4 h-4 fill-current" /> Enroll Now
                     </button>
                   </div>

@@ -14,6 +14,8 @@ import {
   LogIn,
   UserPlus,
 } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
+
 import { userLogoutHook } from "../hooks/User.hook";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../store/user.store";
@@ -23,6 +25,7 @@ import { GetUserHook } from "../hooks/User.hook"; // Make sure this path matches
 import SearchBar from "./searchBar"; // Assuming SearchBar is in the same folder
 
 const Navbar = () => {
+  const queryClient = useQueryClient();
   const setUser = useUserStore((state) => state.setUser);
   const { data, isLoading, isError, error } = GetUserHook();
 
@@ -41,6 +44,7 @@ const Navbar = () => {
   const logoutHandler = () => {
     mutate(undefined, {
       onSuccess: () => {
+        queryClient.removeQueries(["get-user"]);
         setUser(null); // This instantly clears the global state!
         navigate("/login"); // Optional: send them to the login page
       },

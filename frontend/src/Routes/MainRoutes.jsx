@@ -8,18 +8,23 @@ import DashboardProducts from "../pages/Admin/DashboardProducts";
 import Dashboard from "../pages/Admin/dashboard";
 import UserLayout from "../layout/userLayout";
 import ModulePage from "../pages/Admin/module";
-// UserLayout wraps routes that SHOULD have the top Navbar
+import SingleCourse from "@/pages/User/SingleCourse";
 
+// UserLayout wraps routes that SHOULD have the top Navbar
 
 const MainRoutes = () => {
   return (
     <Routes>
       {/* --- User Routes (Wrapped with Navbar) --- */}
       <Route element={<UserLayout />}>
+        <Route path="/" element={<Home />} />
+
         <Route
-          path="/"
+          path="/singleCourse/:id"
           element={
-              <Home />
+            <ProtectedRoutes>
+              <SingleCourse />
+            </ProtectedRoutes>
           }
         />
       </Route>
@@ -28,7 +33,7 @@ const MainRoutes = () => {
       <Route
         path="/admindashboard"
         element={
-          <ProtectedRoutes requireAdmin={true} >
+          <ProtectedRoutes requireAdmin={true}>
             <Dashboard />
           </ProtectedRoutes>
         }
@@ -54,7 +59,6 @@ const MainRoutes = () => {
       {/* --- Auth Routes (No Navbar) --- */}
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
-
     </Routes>
   );
 };

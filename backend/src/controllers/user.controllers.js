@@ -133,7 +133,12 @@ export const getUser = async (req, res) => {
 
 export const logout = async (req, res) => {
   try {
-    return res.cookie("token", "").status(201).json({
+    // Use clearCookie with the exact same options you used in Login/Register
+    return res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    }).status(200).json({
       message: "User logged out",
       success: true,
     });
@@ -141,3 +146,4 @@ export const logout = async (req, res) => {
     console.log(error);
   }
 };
+
