@@ -2,10 +2,24 @@ import { useGetSingleCourseHook } from "@/hooks/course.hook";
 import { Loader2 } from "lucide-react";
 import React from "react";
 import { useParams } from "react-router-dom";
+import { usePayment } from "@/hooks/payment.hook";
 
 const SingleCourse = () => {
   const { id } = useParams();
   const { data, isLoading } = useGetSingleCourseHook(id);
+  const { mutate, isPending } = usePayment();
+
+  const purchaseHandler = (course) => {
+    const product = {
+      products: {
+        _id: course._id,
+        name: course.title,
+        price: course.amount,
+        image: course.thumbnail,
+      },
+    };
+    mutate(product);
+  };
 
   if (isLoading) {
     return (
@@ -51,10 +65,12 @@ const SingleCourse = () => {
 
           {/* CTA */}
           <button
+            disabled={isPending}
+            onClick={() => purchaseHandler(data?.course)}
             className="w-full py-4 rounded-xl bg-emerald-600 text-white font-semibold text-lg
             hover:bg-emerald-700 transition-all disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center"
           >
-            Buy Now
+            {isPending ? <Loader2 className="animate-spin"/> : "Buy Now"}
           </button>
         </div>
       </div>

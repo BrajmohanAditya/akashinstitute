@@ -11,4 +11,6 @@ export const ENV = {
   CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
   GEMINI_API_KEY: process.env.GEMINI_API_KEY,
   CLIENT_URL: process.env.CLIENT_URL,
+  RAZORPAY_KEY_ID: process.env.Live_RAZORPAY_API_Key,
+  RAZORPAY_KEY_SECRET: process.env.Live_RAZORPAY_Key_Secret,
 };
