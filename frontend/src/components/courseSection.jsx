@@ -53,7 +53,7 @@ const courseSection = () => {
                 <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full shadow-lg">
                   <Star className="w-4 h-4 text-yellow-500 fill-current inline mr-1" />
                   <span className="text-sm font-bold text-slate-800">
-                    {item.rating || "4.8"}
+                    {item.rating || (Math.random() + 4).toFixed(1)}
                   </span>
                 </div>
               </div>

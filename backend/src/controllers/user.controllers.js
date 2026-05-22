@@ -5,9 +5,9 @@ import jwt from "jsonwebtoken";
 
 export const Register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password,mobileNo } = req.body;
 
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !mobileNo) {
       return res.status(401).json({
         message: "All fields are required",
         success: false,
@@ -28,6 +28,7 @@ export const Register = async (req, res) => {
     const newUser = await User.create({
       name,
       email,
+      mobileNo,
       password: hashPassword,
     });
 
