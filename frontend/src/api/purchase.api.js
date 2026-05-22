@@ -11,3 +11,16 @@ export const purchaseCourseApi = async(payload)=>{
     )
     return res.data
 }
+
+
+export const checkOutSuccessApi = async(paymentData)=>{
+    const res = await axios.post(`${baseUrl}/payment/checkout-success`,
+        paymentData,
+        {
+           headers: { 'Content-Type': 'application/json' },
+            withCredentials:true  
+        }
+    )
+
+    return res.data
+}

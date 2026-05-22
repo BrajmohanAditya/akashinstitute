@@ -2,12 +2,12 @@ import { useGetSingleCourseHook } from "@/hooks/course.hook";
 import { Loader2 } from "lucide-react";
 import React from "react";
 import { useParams } from "react-router-dom";
-import { usePayment } from "@/hooks/payment.hook";
+import { usePaymentHook } from "@/hooks/payment.hook";
 
 const SingleCourse = () => {
   const { id } = useParams();
   const { data, isLoading } = useGetSingleCourseHook(id);
-  const { mutate, isPending } = usePayment();
+  const { mutate, isPending } = usePaymentHook();
 
   const purchaseHandler = (course) => {
     const product = {

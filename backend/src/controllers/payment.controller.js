@@ -1,5 +1,6 @@
 import { razorpay } from "../config/razorpay.js";
 import { Course } from "../models/course.model.js";
+import crypto from "crypto";
 
 export const createCheckOutSession = async (req, res) => {
   try {
@@ -10,7 +11,7 @@ export const createCheckOutSession = async (req, res) => {
         message: "Please provide course",
       });
     }
-
+ 
     const courseId = products._id;
 
     const course = await Course.findById(courseId);
@@ -46,4 +47,68 @@ export const createCheckOutSession = async (req, res) => {
   } catch (error) {
     console.log(error, "from create checkout session");
   }
+};
+
+
+ // Ye file ke sabse upar import karna zaroori hai
+
+export const checkoutSuccess = async (req, res) => {
+    try {
+        const { paymentId, orderId, signature } = req.body;
+        
+        if (!paymentId || !orderId || !signature) {
+            return res.status(401).json({ message: "Payment Data not found" });
+        }
+
+        // 1. Duplicate check (stripeSessionId wale column mein ab hum paymentId store kar lenge)
+        const existingOrder = await Order.findOne({ stripeSessionId: paymentId });
+
+        if (existingOrder) {
+            return res.status(201).json({ message: "Order already created" });
+        }
+
+        // 2. Signature Verify karna (Razorpay Security - Yeh zaroori hai!)
+        const body = orderId + "|" + paymentId;
+        const expectedSignature = crypto
+            .createHmac("sha256", process.env.RAZORPAY_SECRET) // Apni .env file mein RAZORPAY_SECRET zaroor daalein
+            .update(body.toString())
+            .digest("hex");
+
+        if (expectedSignature !== signature) {
+            return res.status(400).json({ message: "Payment verification failed (Invalid Signature)" });
+        }
+
+        // 3. Razorpay se order fetch karke notes (courseId, userId) nikalna
+        const session = await razorpay.orders.fetch(orderId);
+
+        if (session.status === "paid") {
+            const courseId = session.notes.courseId; // Razorpay mein 'notes' hota hai 'metadata' nahi
+            const userId = session.notes.userId;
+
+            const newOrder = new Order({
+                user: userId,
+                course: courseId,
+                totalAmount: session.amount / 100, // amount_total nahi hota
+                stripeSessionId: paymentId // Unique id ki tarah ise use kar rahe hain
+            });
+
+            await newOrder.save();
+
+            await User.findByIdAndUpdate(
+                userId,
+                { $push: { purchasedCourse: courseId } }
+            );
+
+            return res.status(201).json({
+                message: "Payment successful",
+                orderId: newOrder._id
+            });
+        }
+
+        return res.status(401).json({ message: "Payment failed at gateway" });
+
+    } catch (error) {
+        console.log(error, "from checkout success");
+        return res.status(500).json({ message: "Internal server error" });
+    }
 };

@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { useUserStore } from "../store/user.store.jsx";
 
 
-export const usePayment = () => {
+export const usePaymentHook = () => {
   const {user} = useUserStore()
   return useMutation({
     mutationFn: purchaseCourseApi,
@@ -44,3 +44,17 @@ export const usePayment = () => {
     },
   });
 };
+
+
+export const useCheckoutSuccessHook=()=>{
+    return useMutation({
+        // sessionId ki jagah paymentData aayega
+        mutationFn: (paymentData) => checkOutSuccessApi(paymentData),
+        onSuccess: (data)=>{
+            toast.success(data.message)
+        },
+        onError: (err)=>{
+            console.log(err)
+        }
+    })
+}
