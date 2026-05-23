@@ -37,7 +37,7 @@ const SingleCourse = () => {
           <img
             src={data?.course?.thumbnail}
             alt={data?.course?.title}
-            className="w-full max-h-[320px] object-contain rounded-xl"
+            className="w-full max-h-80 object-contain rounded-xl"
           />
         </div>
 

@@ -30,7 +30,7 @@ const PaymenSuccess = () => {
   }, [isSuccess, navigate]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-green-50 flex items-center justify-center px-6 py-12">
+    <div className="min-h-screen bg-linear-to-br from-emerald-50 to-green-50 flex items-center justify-center px-6 py-12">
       <div className="max-w-2xl w-full bg-white rounded-3xl shadow-2xl p-12 text-center border border-emerald-200">
         <div className="w-28 h-28 bg-emerald-100 rounded-3xl flex items-center justify-center mx-auto mb-8 p-6">
           <CheckCircle className="w-16 h-16 text-emerald-600" />
