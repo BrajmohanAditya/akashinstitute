@@ -87,11 +87,11 @@ const courseSection = () => {
                       <p className="text-xs text-slate-500 mb-1">Starting at</p>
                       <div className="flex items-baseline gap-2">
                         <span className="text-xl font-bold text-slate-900">
-                          ₹{item.amount || "20,000"}
+                          ₹{item.amount !== undefined ? item.amount : "20,000"}
                         </span>
                         <span className="text-sm text-slate-400 line-through">
                           ₹
-                          {item.amount ? Math.round(item.amount * 1.25) : 25000}
+                          {item.amount !== undefined ? Math.round(item.amount * 1.25) : 25000}
                         </span>
                       </div>
                     </div>

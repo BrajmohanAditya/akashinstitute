@@ -72,7 +72,7 @@ export const checkoutSuccess = async (req, res) => {
     // 2. Signature Verify karna (Razorpay Security - Yeh zaroori hai!)
     const body = orderId + "|" + paymentId;
     const expectedSignature = crypto
-      .createHmac("sha256", process.env.RAZORPAY_SECRET) // Apni .env file mein RAZORPAY_SECRET zaroor daalein
+      .createHmac("sha256", process.env.Live_RAZORPAY_Key_Secret) // Apni .env file mein RAZORPAY_SECRET zaroor daalein
       .update(body.toString())
       .digest("hex");
 
