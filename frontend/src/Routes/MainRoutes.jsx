@@ -9,6 +9,7 @@ import Dashboard from "../pages/Admin/dashboard";
 import UserLayout from "../layout/userLayout";
 import ModulePage from "../pages/Admin/module";
 import SingleCourse from "@/pages/User/SingleCourse";
+import PaymenSuccess from "@/pages/User/PaymenSuccess";
 
 // UserLayout wraps routes that SHOULD have the top Navbar
 
@@ -59,6 +60,14 @@ const MainRoutes = () => {
       {/* --- Auth Routes (No Navbar) --- */}
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
+      <Route
+        path="/payment-success"
+        element={
+          <ProtectedRoutes>
+            <PaymenSuccess />
+          </ProtectedRoutes>
+        }
+      />
     </Routes>
   );
 };
