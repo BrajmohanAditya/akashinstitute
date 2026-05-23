@@ -10,7 +10,7 @@ export const ProtectedRoutes = ({ children, requireAdmin = false }) => {
     return (
       <div className="h-screen w-full flex items-center justify-center bg-linear-to-br from-slate-50 to-slate-100">
         <div className="flex flex-col items-center gap-4">
-          <Loader2 className="w-12 h-12 text-emerald-600 animate-spin" />
+          <Loader2 className="w-20 h-20 text-emerald-600 animate-spin" />
           <h1 className="text-xl font-bold text-slate-900 tracking-tight">
             Loading ...
           </h1>
