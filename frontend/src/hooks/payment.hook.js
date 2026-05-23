@@ -3,9 +3,8 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useUserStore } from "../store/user.store.jsx";
 
-
 export const usePaymentHook = () => {
-  const {user} = useUserStore()
+  const { user } = useUserStore();
   return useMutation({
     mutationFn: purchaseCourseApi,
     onSuccess: (data) => {
@@ -18,9 +17,20 @@ export const usePaymentHook = () => {
           description: "Course Purchase",
           order_id: data.order.id,
           handler: function (response) {
-            toast.success("Payment Successful!");
-            console.log("Payment Details:", response);
+            // Payment response se data nikalo
+            const paymentData = {
+              paymentId: response.razorpay_payment_id,
+              orderId: response.razorpay_order_id,
+              signature: response.razorpay_signature,
+            };
+
+            // Ye hook initialize karna padega upar
+            const checkoutSuccessMutation = useCheckoutSuccessHook();
+
+            // Backend ko verify karne ke liye call karo
+            checkoutSuccessMutation.mutate(paymentData);
           },
+
           prefill: {
             name: user?.name,
             email: user?.email,
@@ -45,16 +55,15 @@ export const usePaymentHook = () => {
   });
 };
 
-
-export const useCheckoutSuccessHook=()=>{
-    return useMutation({
-        // sessionId ki jagah paymentData aayega
-        mutationFn: (paymentData) => checkOutSuccessApi(paymentData),
-        onSuccess: (data)=>{
-            toast.success(data.message)
-        },
-        onError: (err)=>{
-            console.log(err)
-        }
-    })
-}
+export const useCheckoutSuccessHook = () => {
+  return useMutation({
+    // sessionId ki jagah paymentData aayega
+    mutationFn: (paymentData) => checkOutSuccessApi(paymentData),
+    onSuccess: (data) => {
+      toast.success(data.message);
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+};

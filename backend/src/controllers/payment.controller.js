@@ -1,5 +1,6 @@
 import { razorpay } from "../config/razorpay.js";
 import { Course } from "../models/course.model.js";
+import { Order } from "../models/order.model.js";
 import crypto from "crypto";
 
 export const createCheckOutSession = async (req, res) => {
@@ -50,7 +51,7 @@ export const createCheckOutSession = async (req, res) => {
 };
 
 
- // Ye file ke sabse upar import karna zaroori hai
+// Ye file ke sabse upar import karna zaroori hai
 
 export const checkoutSuccess = async (req, res) => {
     try {
@@ -60,8 +61,9 @@ export const checkoutSuccess = async (req, res) => {
             return res.status(401).json({ message: "Payment Data not found" });
         }
 
-        // 1. Duplicate check (stripeSessionId wale column mein ab hum paymentId store kar lenge)
-        const existingOrder = await Order.findOne({ stripeSessionId: paymentId });
+        const existingOrder = await Order.findOne({
+          razorpayPaymentId: paymentId,
+        });
 
         if (existingOrder) {
             return res.status(201).json({ message: "Order already created" });
@@ -89,7 +91,7 @@ export const checkoutSuccess = async (req, res) => {
                 user: userId,
                 course: courseId,
                 totalAmount: session.amount / 100, // amount_total nahi hota
-                stripeSessionId: paymentId // Unique id ki tarah ise use kar rahe hain
+                razorpayPaymentId: paymentId // Unique id ki tarah ise use kar rahe hain
             });
 
             await newOrder.save();
