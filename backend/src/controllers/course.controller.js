@@ -2,6 +2,7 @@ import cloudinary from "../config/cloudinary.js";
 import { ENV } from "../config/env.js";
 import { Course } from "../models/course.model.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { User } from "../models/user.model.js";
 
 const genAi = new GoogleGenerativeAI(ENV.GEMINI_API_KEY);
 const model = genAi.getGenerativeModel({ model: "gemini-2.5-flash" });

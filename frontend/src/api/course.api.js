@@ -52,8 +52,8 @@ export const getPurchaseCourseApi = async(courseId)=>{
     return res.data
 }
 
-export const getAllPurchaseCourseApi = async()=>{
-    const res = await axios.get(`${baseUrl}/course/getAllCoursePurchase`,
+export const getAllPurchasedCourseApi = async()=>{
+    const res = await axios.get(`${baseUrl}/course/getAllPurchasedCourse`,
         {
             
             headers:{'Content-Type':'Application/json'},

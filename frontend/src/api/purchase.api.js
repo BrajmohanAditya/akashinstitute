@@ -24,3 +24,18 @@ export const checkOutSuccessApi = async(paymentData)=>{
 
     return res.data
 }
+
+
+
+export const getAllPurchasedCourseApi = async()=>{
+    const res = await axios.get(`${baseUrl}/course/getAllPurchasedCourse`,
+        {
+            
+            headers:{'Content-Type':'Application/json'},
+            withCredentials:true
+        }
+    )
+
+    return res.data
+}
+

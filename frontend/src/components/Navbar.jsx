@@ -74,7 +74,7 @@ const Navbar = () => {
       {
         label: "Your Courses",
         icon: BookOpen,
-        onClick: () => navigate("/YourCourse"),
+        onClick: () => navigate("/yourAllPurchasedCourse"),
       },
       {
         label: "Logout",

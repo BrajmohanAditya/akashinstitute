@@ -1,6 +1,6 @@
 import {
   createCourseApi,
-  getAllPurchaseCourseApi,
+  getAllPurchasedCourseApi,
   getCourseApi,
   getPurchaseCourseApi,
   getSingleCourseApi,
@@ -42,9 +42,12 @@ export const useGetPurchaseCourse = (courseId) => {
   });
 };
 
-export const useGetAllPurchaseCourse = () => {
+export const useGetAllPurchasedCourse = () => {
   return useQuery({
-    queryFn: getAllPurchaseCourseApi,
+    queryFn: getAllPurchasedCourseApi,
     queryKey: ["getAllPurchaseCourse"],
   });
 };
+
+
+

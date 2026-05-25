@@ -10,6 +10,7 @@ import UserLayout from "../layout/userLayout";
 import ModulePage from "../pages/Admin/module";
 import SingleCourse from "@/pages/User/SingleCourse";
 import PaymenSuccess from "@/pages/User/PaymenSuccess";
+import YourAllPurchasedCourse from "@/pages/User/yourPurchasedCourse";
 
 // UserLayout wraps routes that SHOULD have the top Navbar
 
@@ -25,6 +26,15 @@ const MainRoutes = () => {
           element={
             <ProtectedRoutes>
               <SingleCourse />
+            </ProtectedRoutes>
+          }
+        />
+
+        <Route
+          path="/yourAllPurchasedCourse"
+          element={
+            <ProtectedRoutes>
+              <YourAllPurchasedCourse />
             </ProtectedRoutes>
           }
         />

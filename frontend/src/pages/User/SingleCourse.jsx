@@ -24,7 +24,7 @@ const SingleCourse = () => {
   if (isLoading) {
     return (
       <div className="h-screen flex items-center justify-center">
-        <Loader2 />
+        <Loader2 className="animate-spin h-20 w-20 text-emerald-600"/>
       </div>
     );
   }
