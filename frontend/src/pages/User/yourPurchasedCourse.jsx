@@ -1,15 +1,17 @@
-import { useGetAllPurchasedCourse } from '@/hooks/course.hook'
-import { BookOpen, Clock, Play, ChevronRight } from 'lucide-react'
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-
-
+import { useGetAllPurchasedCourse } from "@/hooks/course.hook";
+import { BookOpen, Clock, Play, ChevronRight } from "lucide-react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const YourAllPurchasedCourse = () => {
-  const { data, isLoading } = useGetAllPurchasedCourse()
-  const navigate = useNavigate()
+  const { data, isLoading } = useGetAllPurchasedCourse();
+  const navigate = useNavigate();
+  
+  const navigateSinglePurchaseCourse = (id) => {
+    navigate(id);
+  };
 
-  console.log(data)
+  console.log(data);
 
   if (isLoading) {
     return (
@@ -18,7 +20,10 @@ const YourAllPurchasedCourse = () => {
           <div className="h-12 w-64 bg-slate-200 rounded-lg animate-pulse mb-8"></div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="bg-white rounded-2xl overflow-hidden border border-slate-200">
+              <div
+                key={i}
+                className="bg-white rounded-2xl overflow-hidden border border-slate-200"
+              >
                 <div className="h-48 bg-slate-200 animate-pulse"></div>
                 <div className="p-4 space-y-3">
                   <div className="h-6 bg-slate-200 rounded animate-pulse"></div>
@@ -29,7 +34,7 @@ const YourAllPurchasedCourse = () => {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -49,12 +54,14 @@ const YourAllPurchasedCourse = () => {
         {!data?.purchasedCourse?.length ? (
           <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center">
             <BookOpen className="w-20 h-20 text-slate-300 mx-auto mb-6" />
-            <h2 className="text-2xl font-bold text-slate-900 mb-3">No courses yet</h2>
+            <h2 className="text-2xl font-bold text-slate-900 mb-3">
+              No courses yet
+            </h2>
             <p className="text-slate-600 mb-8 max-w-md mx-auto">
               Start learning today by exploring our course catalog
             </p>
-            <button 
-              onClick={() => navigate('/courses')}
+            <button
+              onClick={() => navigate("/courses")}
               className="px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
             >
               Browse Courses
@@ -65,7 +72,8 @@ const YourAllPurchasedCourse = () => {
             {/* Course Count */}
             <div className="mb-6 flex items-center justify-between">
               <p className="text-sm font-semibold text-slate-600">
-                {data.purchasedCourse.length} {data.purchasedCourse.length === 1 ? 'Course' : 'Courses'}
+                {data.purchasedCourse.length}{" "}
+                {data.purchasedCourse.length === 1 ? "Course" : "Courses"}
               </p>
             </div>
 
@@ -87,7 +95,10 @@ const YourAllPurchasedCourse = () => {
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
                       <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-2xl">
-                          <Play className="w-7 h-7 text-emerald-600 ml-1" fill="currentColor" />
+                          <Play
+                            className="w-7 h-7 text-emerald-600 ml-1"
+                            fill="currentColor"
+                          />
                         </div>
                       </div>
                     </div>
@@ -129,7 +140,7 @@ const YourAllPurchasedCourse = () => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default YourAllPurchasedCourse
+export default YourAllPurchasedCourse;
