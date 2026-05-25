@@ -10,7 +10,7 @@ import UserLayout from "../layout/userLayout";
 import ModulePage from "../pages/Admin/module";
 import SingleCourse from "@/pages/User/SingleCourse";
 import PaymenSuccess from "@/pages/User/PaymenSuccess";
-import YourAllPurchasedCourse from "@/pages/User/yourPurchasedCourse";
+import YourAllPurchasedCourse from "@/pages/User/yourAllPurchasedCourse";
 
 // UserLayout wraps routes that SHOULD have the top Navbar
 

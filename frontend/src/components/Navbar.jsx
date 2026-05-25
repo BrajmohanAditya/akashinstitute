@@ -101,9 +101,12 @@ const Navbar = () => {
 
   return (
     <div className="sticky top-0 z-50 bg-white min-h-[12vh] w-full flex flex-wrap items-center justify-between px-4 md:px-9 py-3 md:py-0 shadow gap-y-4">
-      <div className="flex items-center gap-3 order-1">
-        <h1 className="text-2xl lg:text-3xl font-black bg-linear-to-r from-slate-900 via-blue-900 to-slate-900 bg-clip-text text-transparent tracking-tight">
-          Kirtimaan Classes
+      <div className="flex items-center gap-3 order-1 cursor-pointer" onClick={() => navigate("/")}>
+        <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30">
+          <span className="text-white font-extrabold text-xl">K</span>
+        </div>
+        <h1 className="text-2xl lg:text-3xl font-black tracking-tight text-slate-900">
+          Kritimaan<span className="text-blue-600">Classes</span>
         </h1>
       </div>
 
