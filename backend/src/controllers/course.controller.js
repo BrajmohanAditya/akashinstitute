@@ -3,6 +3,7 @@ import { ENV } from "../config/env.js";
 import { Course } from "../models/course.model.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { User } from "../models/user.model.js";
+import { Modules } from "../models/module.model.js";
 
 const genAi = new GoogleGenerativeAI(ENV.GEMINI_API_KEY);
 const model = genAi.getGenerativeModel({ model: "gemini-2.5-flash" });
@@ -166,5 +167,36 @@ export const getAllPurchasedCourse = async (req, res) => {
     return res.status(201).json(user);
   } catch (error) {
     console.log(error);
+  }
+};
+
+
+export const deleteCourse = async (req, res) => {
+  try {
+    const courseId = req.params.id;
+
+    // 1. Delete all video modules associated with this course so they don't take up space!
+    await Modules.deleteMany({ courseId: courseId });
+
+    // 2. Delete the actual course document
+    const deletedCourse = await Course.findByIdAndDelete(courseId);
+
+    if (!deletedCourse) {
+      return res.status(404).json({
+        success: false,
+        message: "Course not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Course and all its modules deleted completely!",
+    });
+  } catch (error) {
+    console.log(`Error from delete course: ${error}`);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
   }
 };

@@ -64,6 +64,16 @@ export const getAllPurchasedCourseApi = async()=>{
     return res.data
 }
 
+export const deleteCourseApi = async (courseId) => {
+    const res = await axios.delete(`${baseUrl}/course/deleteCourse/${courseId}`,
+        {
+            headers: { 'Content-Type': 'Application/json' },
+            withCredentials: true
+        }
+    )
+    return res.data;
+}
+
 
 
 

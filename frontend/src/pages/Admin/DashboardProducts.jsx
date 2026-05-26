@@ -1,5 +1,5 @@
 import CreateCourseDialog from "../../components/AdminComponent/CreateCourseDialog";
-import { useGetCourseHook } from "../../hooks/course.hook";
+import { useGetCourseHook, useDeleteCourseHook } from "../../hooks/course.hook";
 import { useNavigate } from "react-router-dom";
 import { Edit, Trash2, BookOpen } from "lucide-react";
 
@@ -9,6 +9,16 @@ const DashboardProducts = () => {
   const getCourseId = (id) => {
     navigate(`/admindashboard/module/${id}`);
   };
+  const { mutate: deleteCourse } = useDeleteCourseHook();
+
+  const handleDelete = (id, title) => {
+    if (
+      window.confirm(`Are you sure you want to completely delete "${title}"?`)
+    ) {
+      deleteCourse(id);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 p-4 sm:p-6 lg:p-8">
       {/* Header Section */}
@@ -26,7 +36,6 @@ const DashboardProducts = () => {
 
       {/* Admin List Section */}
       <div className="w-full max-h-[calc(100vh-180px)] overflow-y-auto pr-2">
-        
         {/* Desktop Table View (Hidden on mobile) */}
         <div className="hidden md:block bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
           <div className="overflow-x-auto">
@@ -73,14 +82,20 @@ const DashboardProducts = () => {
                     <td className="p-4 text-right">
                       <div className="flex items-center justify-end gap-2">
                         <button
-                          onClick={(e) => { e.stopPropagation(); console.log("Edit clicked", item._id); }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            console.log("Edit clicked", item._id);
+                          }}
                           className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                           title="Edit Course"
                         >
                           <Edit className="w-4 h-4" />
                         </button>
                         <button
-                          onClick={(e) => { e.stopPropagation(); console.log("Delete clicked", item._id); }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDelete(item._id, item.title);
+                          }}
                           className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                           title="Delete Course"
                         >
@@ -95,8 +110,8 @@ const DashboardProducts = () => {
                 {(!data?.courses || data.courses.length === 0) && (
                   <tr>
                     <td colSpan="5" className="p-12 text-center text-slate-500">
-                      No courses found. Click "+ Add Course" to create your first
-                      one!
+                      No courses found. Click "+ Add Course" to create your
+                      first one!
                     </td>
                   </tr>
                 )}
@@ -137,25 +152,35 @@ const DashboardProducts = () => {
               <div className="bg-slate-50 rounded-lg p-3 flex justify-between items-center text-sm border border-slate-100">
                 <div className="flex flex-col">
                   <span className="text-slate-500 text-xs">Students</span>
-                  <span className="font-semibold text-slate-700">{item.enrolled || 0} Enrolled</span>
+                  <span className="font-semibold text-slate-700">
+                    {item.enrolled || 0} Enrolled
+                  </span>
                 </div>
                 <div className="h-8 w-px bg-slate-200"></div>
                 <div className="flex flex-col items-end">
                   <span className="text-slate-500 text-xs">Price</span>
-                  <span className="font-semibold text-slate-900">₹{item.amount}</span>
+                  <span className="font-semibold text-slate-900">
+                    ₹{item.amount}
+                  </span>
                 </div>
               </div>
 
               {/* Card Actions */}
               <div className="flex items-center gap-2 pt-1">
                 <button
-                  onClick={(e) => { e.stopPropagation(); console.log("Edit clicked", item._id); }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    console.log("Edit clicked", item._id);
+                  }}
                   className="flex-1 flex justify-center items-center gap-2 py-2 px-3 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-blue-50 hover:text-blue-700 rounded-lg transition-colors border border-transparent hover:border-blue-100"
                 >
                   <Edit className="w-4 h-4" /> Edit
                 </button>
                 <button
-                  onClick={(e) => { e.stopPropagation(); console.log("Delete clicked", item._id); }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(item._id, item.title);
+                  }}
                   className="flex-1 flex justify-center items-center gap-2 py-2 px-3 text-sm font-medium text-slate-600 bg-slate-100 hover:bg-red-50 hover:text-red-700 rounded-lg transition-colors border border-transparent hover:border-red-100"
                 >
                   <Trash2 className="w-4 h-4" /> Delete

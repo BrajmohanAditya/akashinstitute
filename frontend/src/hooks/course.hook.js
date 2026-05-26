@@ -4,6 +4,7 @@ import {
   getCourseApi,
   getSinglePurchaseCourseApi,
   getSingleCourseApi,
+  deleteCourseApi
 } from "../api/course.api.js";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 // import { useQueryClient } from 'node_modules/@tanstack/react-query/build/legacy'
@@ -51,3 +52,17 @@ export const useGetAllPurchasedCourseHook = () => {
 
 
 
+export const useDeleteCourseHook = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: deleteCourseApi,
+    onSuccess: (data) => {
+      // This is the magic line! It tells React Query to instantly refresh the course list on your screen
+      queryClient.invalidateQueries(["getCourse"]); 
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+};
