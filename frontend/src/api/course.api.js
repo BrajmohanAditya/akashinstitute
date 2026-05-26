@@ -41,7 +41,7 @@ export const getSingleCourseApi =async(id)=>{
 
 
 export const getSinglePurchaseCourseApi = async(courseId)=>{
-    const res = await axios.get(`${baseUrl}/course/purchasedCourse/${courseId}`,
+    const res = await axios.get(`${baseUrl}/course/getSinglePurchasedCourse/${courseId}`,
         {
             
             headers:{'Content-Type':'Application/json'},

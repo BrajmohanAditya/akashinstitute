@@ -127,7 +127,7 @@ export const getSingleCourse = async (req, res) => {
 
 */
 
-export const getPurchasedCourse = async (req, res) => {
+export const getSinglePurchasedCourse = async (req, res) => {
   try {
     const courseId = req.params.id;
 
@@ -147,7 +147,6 @@ export const getPurchasedCourse = async (req, res) => {
 
     return res.status(201).json(purchasedOrder);
   } catch (error) {
-    console.log(error, "from getPurchased course");
   }
 };
 
