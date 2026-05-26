@@ -9,8 +9,9 @@ const ModulePage = () => {
   const { data } = useGetSingleCourseHook(id);
 
   return (
-    <div className="p-8 max-w-4xl mx-auto">
-      <div className="mb-12">
+    <div className="w-full h-[calc(100vh-80px)] overflow-y-auto custom-scrollbar">
+      <div className="p-8 max-w-4xl mx-auto pb-20">
+        <div className="mb-12">
         <h1 className="text-3xl font-black text-slate-900 mb-2">
           {data?.course?.title}
         </h1>
@@ -55,6 +56,7 @@ const ModulePage = () => {
         ))}
       </div>
     </div>
+  </div>
   );
 };
 
