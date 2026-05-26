@@ -52,7 +52,7 @@ export const getCourse = async (req, res) => {
       return res.status(200).json({
         success: true,
         courses: allCourses,
-        count: allCourses.length
+        count: allCourses.length,
       });
     }
 
@@ -102,7 +102,9 @@ export const getSingleCourse = async (req, res) => {
   try {
     const courseId = req.params.id;
 
-    const course = await Course.findById(courseId).populate("userId").populate("modules");
+    const course = await Course.findById(courseId)
+      .populate("userId")
+      .populate("modules");
 
     if (!course) {
       return res.status(404).json({
@@ -146,15 +148,14 @@ export const getSinglePurchasedCourse = async (req, res) => {
     }
 
     return res.status(201).json(purchasedOrder);
-  } catch (error) {
-  }
+  } catch (error) {}
 };
 
 export const getAllPurchasedCourse = async (req, res) => {
   try {
     const userId = req.user._id;
 
-    const user = await User.findById(userId).populate("purchasedCourse");
+    const user = await User.findById(userId).select("-password").populate("purchasedCourse");
 
     if (!user) {
       return res.status(401).json({

@@ -93,18 +93,22 @@ export const Login = async (req, res) => {
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     });
 
+    // Remove password before sending to frontend
+    const userWithoutPassword = user.toObject();
+    delete userWithoutPassword.password;
+
     if (user.role === "admin") {
       return res.status(201).json({
         message: `welcome ${user.name}`,
         success: true,
-        user,
+        user: userWithoutPassword,
       });
     }
 
     return res.status(201).json({
       message: `welcome ${user.name}`,
       success: true,
-      user: user,
+      user: userWithoutPassword,
     });
   } catch (error) {
     console.log(`error in login controller ${error}`);
@@ -114,7 +118,7 @@ export const Login = async (req, res) => {
 export const getUser = async (req, res) => {
   try {
     const userId = req.user._id;
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).select("-password");
 
     if (!user) {
       return res.status(401).json({

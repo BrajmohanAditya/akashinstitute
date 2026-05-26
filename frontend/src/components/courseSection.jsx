@@ -10,6 +10,8 @@ const courseSection = () => {
   const { data, error, isLoading } = useGetCourseHook();
   const navigate = useNavigate();
   const { data: purchasedData } = useGetAllPurchasedCourseHook();
+
+  
   const navigateSinglecourse = (id) => {
     navigate(`/singleCourse/${id}`);
   };
