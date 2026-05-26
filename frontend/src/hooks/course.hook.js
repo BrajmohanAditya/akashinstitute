@@ -2,7 +2,7 @@ import {
   createCourseApi,
   getAllPurchasedCourseApi,
   getCourseApi,
-  getPurchaseCourseApi,
+  getSinglePurchaseCourseApi,
   getSingleCourseApi,
 } from "../api/course.api.js";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -35,14 +35,14 @@ export const useGetSingleCourseHook = (id) => {
   });
 };
 
-export const useGetPurchaseCourse = (courseId) => {
+export const useGetSinglePurchasedCourseHook = (courseId) => {
   return useQuery({
-    queryFn: () => getPurchaseCourseApi(courseId),
-    queryKey: ["getPurchaseCourse", courseId],
+    queryFn: () => getSinglePurchaseCourseApi(courseId),
+    queryKey: ["getSinglePurchaseCourse", courseId],
   });
 };
 
-export const useGetAllPurchasedCourse = () => {
+export const useGetAllPurchasedCourseHook = () => {
   return useQuery({
     queryFn: getAllPurchasedCourseApi,
     queryKey: ["getAllPurchaseCourse"],

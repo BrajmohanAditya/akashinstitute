@@ -1,17 +1,16 @@
-import { useGetAllPurchasedCourse } from "@/hooks/course.hook";
+import { useGetAllPurchasedCourseHook } from "@/hooks/course.hook";
 import { BookOpen, Clock, Play, ChevronRight } from "lucide-react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const YourAllPurchasedCourse = () => {
-  const { data, isLoading } = useGetAllPurchasedCourse();
+  const { data, isLoading } = useGetAllPurchasedCourseHook();
   const navigate = useNavigate();
   
   const navigateSinglePurchaseCourse = (id) => {
-    navigate(id);
+    navigate(`/SinglePurchasedCourse/${id}`);
   };
 
-  console.log(data);
 
   if (isLoading) {
     return (
