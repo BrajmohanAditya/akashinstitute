@@ -1,12 +1,15 @@
 import React from "react";
-import { useGetCourseHook } from "../hooks/course.hook.js";
+import {
+  useGetCourseHook,
+  useGetAllPurchasedCourseHook,
+} from "../hooks/course.hook.js";
 import { useNavigate } from "react-router-dom";
 import { Clock, Users, Star, ArrowRight, Zap } from "lucide-react";
 
 const courseSection = () => {
   const { data, error, isLoading } = useGetCourseHook();
   const navigate = useNavigate();
-
+  const { data: purchasedData } = useGetAllPurchasedCourseHook();
   const navigateSinglecourse = (id) => {
     navigate(`/singleCourse/${id}`);
   };
@@ -91,7 +94,9 @@ const courseSection = () => {
                         </span>
                         <span className="text-sm text-slate-400 line-through">
                           ₹
-                          {item.amount !== undefined ? Math.round(item.amount * 1.25) : 25000}
+                          {item.amount !== undefined
+                            ? Math.round(item.amount * 1.25)
+                            : 25000}
                         </span>
                       </div>
                     </div>
@@ -102,11 +107,26 @@ const courseSection = () => {
                     <button className="flex-1 cursor-pointer flex items-center justify-center gap-1 px-3 py-2.5 border-2 border-[#0a66c2] text-[#0a66c2] text-sm font-bold rounded-lg hover:bg-blue-50 transition-colors">
                       Details <ArrowRight className="w-4 h-4" />
                     </button>
-                    <button 
-                    onClick={() => navigateSinglecourse(item._id)}
-                    className="flex-[1.2] cursor-pointer  flex items-center justify-center gap-1 px-3 py-2.5 bg-[#0a66c2] text-white text-sm font-bold rounded-lg hover:bg-blue-700 transition-colors shadow-sm">
-                      <Zap className="w-4 h-4 fill-current" /> Enroll Now
-                    </button>
+
+                    {purchasedData?.purchasedCourse?.some(
+                      (pc) => pc._id === item._id,
+                    ) ? (
+                      <button
+                        onClick={() =>
+                          navigate(`/SinglePurchasedCourse/${item._id}`)
+                        }
+                        className="flex-[1.2] cursor-pointer flex items-center justify-center gap-1 px-3 py-2.5 bg-emerald-600 text-white text-sm font-bold rounded-lg hover:bg-emerald-700 transition-colors shadow-sm"
+                      >
+                        Continue
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => navigateSinglecourse(item._id)}
+                        className="flex-[1.2] cursor-pointer flex items-center justify-center gap-1 px-3 py-2.5 bg-[#0a66c2] text-white text-sm font-bold rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+                      >
+                        <Zap className="w-4 h-4 fill-current" /> Enroll Now
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

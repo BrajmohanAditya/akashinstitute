@@ -45,7 +45,7 @@ export const useGetSinglePurchasedCourseHook = (courseId) => {
 export const useGetAllPurchasedCourseHook = () => {
   return useQuery({
     queryFn: getAllPurchasedCourseApi,
-    queryKey: ["getAllPurchaseCourse"],
+    queryKey: ["getAllPurchasedCourseApi"],
   });
 };
 
