@@ -26,7 +26,7 @@ const DashboardSidebar = () => {
           <Menu className="w-6 h-6" />
         </button>
         <h1 className="text-xl font-black text-slate-900 tracking-tight">
-          Akash academy
+          Kritimaan Classes
         </h1>
       </div>
 
@@ -43,13 +43,24 @@ const DashboardSidebar = () => {
         }`}
       >
         <div className="p-6 border-b border-slate-200 flex justify-between items-center">
-          <div>
-            <h1 className="text-2xl font-black text-slate-900 tracking-tight">
-              Akash academy
-            </h1>
-            <p className="text-xs text-slate-500 font-medium mt-1">
-              Admin Dashboard
-            </p>
+          <div className="flex items-center gap-3">
+            {/* The Stylized 'K' Monogram */}
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center shadow-lg shadow-blue-200/50 shrink-0">
+              <span className="text-white font-black text-xl font-sans tracking-tighter">K</span>
+            </div>
+            
+            {/* Title and Subtitle */}
+            <div className="flex flex-col">
+              <h1 className="text-lg font-black text-slate-900 tracking-tight whitespace-nowrap leading-none">
+                Kritimaan Classes
+              </h1>
+              <div className="flex items-center gap-1.5 mt-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
+                <p className="text-[10px] text-slate-500 font-bold tracking-widest uppercase leading-none">
+                  Admin Panel
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* 3. Add a Close button for mobile */}
