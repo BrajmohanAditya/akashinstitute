@@ -2,7 +2,7 @@ import React from "react";
 import {
   useGetCourseHook,
   useGetAllPurchasedCourseHook,
-} from "../hooks/course.hook.js";
+} from "../../hooks/course.hook.js";
 import { useNavigate } from "react-router-dom";
 import { Clock, Users, Star, ArrowRight, Zap } from "lucide-react";
 
@@ -11,7 +11,6 @@ const courseSection = () => {
   const navigate = useNavigate();
   const { data: purchasedData } = useGetAllPurchasedCourseHook();
 
-  
   const navigateSinglecourse = (id) => {
     navigate(`/singleCourse/${id}`);
   };

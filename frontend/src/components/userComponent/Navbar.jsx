@@ -16,18 +16,18 @@ import {
 } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { userLogoutHook } from "../hooks/User.hook";
+import { userLogoutHook } from "../../hooks/User.hook";
 import { useNavigate } from "react-router-dom";
-import { useUserStore } from "../store/user.store";
-import StudentIcon from "./icons/StudentIcon";
-import { GetUserHook } from "../hooks/User.hook"; // Make sure this path matches your setup!
+import { useUserStore } from "../../store/user.store";
+import StudentIcon from "../icons/StudentIcon";
+import { GetUserHook } from "../../hooks/User.hook"; // Make sure this path matches your setup!
 
 import SearchBar from "./searchBar"; // Assuming SearchBar is in the same folder
 
 const Navbar = () => {
   const queryClient = useQueryClient();
   const setUser = useUserStore((state) => state.setUser);
-  const { data,  isError } = GetUserHook();
+  const { data, isError } = GetUserHook();
 
   const navigate = useNavigate();
   const { mutate, isPending } = userLogoutHook();
@@ -101,7 +101,10 @@ const Navbar = () => {
 
   return (
     <div className="sticky top-0 z-50 bg-white min-h-[12vh] w-full flex flex-wrap items-center justify-between px-4 md:px-9 py-3 md:py-0 shadow gap-y-4">
-      <div className="flex items-center gap-3 order-1 cursor-pointer" onClick={() => navigate("/")}>
+      <div
+        className="flex items-center gap-3 order-1 cursor-pointer"
+        onClick={() => navigate("/")}
+      >
         <div className="w-10 h-10 bg-blue-600 rounded-md  flex items-center justify-center shadow-lg shadow-blue-500/30">
           <span className="text-white font-extrabold text-xl">K</span>
         </div>

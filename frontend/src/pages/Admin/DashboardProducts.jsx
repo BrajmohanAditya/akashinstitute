@@ -2,6 +2,8 @@ import CreateCourseDialog from "../../components/AdminComponent/CreateCourseDial
 import { useGetCourseHook, useDeleteCourseHook } from "../../hooks/course.hook";
 import { useNavigate } from "react-router-dom";
 import { Edit, Trash2, BookOpen } from "lucide-react";
+import DeleteAlertbox from "@/components/ui/DeleteAlertbox";
+import { useState } from "react";
 
 const DashboardProducts = () => {
   const { data } = useGetCourseHook();
@@ -11,12 +13,10 @@ const DashboardProducts = () => {
   };
   const { mutate: deleteCourse } = useDeleteCourseHook();
 
+  const [deleteConfirm, setDeleteConfirm] = useState(null);
+
   const handleDelete = (id, title) => {
-    if (
-      window.confirm(`Are you sure you want to completely delete "${title}"?`)
-    ) {
-      deleteCourse(id);
-    }
+    setDeleteConfirm({ id, title });
   };
 
   return (
@@ -197,6 +197,16 @@ const DashboardProducts = () => {
           )}
         </div>
       </div>
+
+      <DeleteAlertbox 
+        isOpen={!!deleteConfirm} 
+        itemName={deleteConfirm?.title} 
+        onCancel={() => setDeleteConfirm(null)} 
+        onConfirm={() => {
+          deleteCourse(deleteConfirm.id);
+          setDeleteConfirm(null);
+        }} 
+      />
     </div>
   );
 };
