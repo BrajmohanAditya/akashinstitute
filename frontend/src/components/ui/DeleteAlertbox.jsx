@@ -1,6 +1,6 @@
-import { AlertCircle, Trash2 } from "lucide-react";
+import { AlertCircle, Trash2, Loader2 } from "lucide-react";
 
-const DeleteAlertbox = ({ isOpen, itemName, onConfirm, onCancel }) => {
+const DeleteAlertbox = ({ isOpen, itemName, onConfirm, onCancel, isDeleting }) => {
   if (!isOpen) return null; // Agar isOpen false hai, toh kuch mat dikhao
 
   return (
@@ -25,9 +25,18 @@ const DeleteAlertbox = ({ isOpen, itemName, onConfirm, onCancel }) => {
 
           <button 
             onClick={onConfirm} 
-            className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 flex items-center gap-2 transition-colors"
+            disabled={isDeleting}
+            className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 flex items-center gap-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <Trash2 size={18} /> Delete
+            {isDeleting ? (
+              <>
+                <Loader2 size={18} className="animate-spin" /> Deleting...
+              </>
+            ) : (
+              <>
+                <Trash2 size={18} /> Delete
+              </>
+            )}
           </button>
 
         </div>

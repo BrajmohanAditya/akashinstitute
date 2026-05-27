@@ -81,7 +81,7 @@ const DashboardSidebar = () => {
                 `group flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer
               ${
                 isActive
-                  ? "bg-emerald-600 text-white shadow-lg hover:bg-emerald-700"
+                  ? "bg-blue-600 text-white shadow-lg hover:bg-blue-700"
                   : "text-slate-700 hover:bg-slate-100 hover:text-slate-900 hover:shadow-md"
               }`
               }

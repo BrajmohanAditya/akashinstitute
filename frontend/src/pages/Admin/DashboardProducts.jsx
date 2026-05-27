@@ -11,7 +11,7 @@ const DashboardProducts = () => {
   const getCourseId = (id) => {
     navigate(`/admindashboard/module/${id}`);
   };
-  const { mutate: deleteCourse } = useDeleteCourseHook();
+  const { mutate: deleteCourse, isPending } = useDeleteCourseHook();
 
   const [deleteConfirm, setDeleteConfirm] = useState(null);
 
@@ -58,7 +58,7 @@ const DashboardProducts = () => {
                   >
                     <td className="p-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-700 shrink-0">
+                        <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-blue-700 shrink-0">
                           <BookOpen className="w-5 h-5" />
                         </div>
                         <div className="font-semibold text-slate-900 line-clamp-1">
@@ -74,7 +74,7 @@ const DashboardProducts = () => {
                     <td className="p-4 text-slate-600">{item.enrolled || 0}</td>
 
                     <td className="p-4">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                         Active
                       </span>
                     </td>
@@ -130,7 +130,7 @@ const DashboardProducts = () => {
             >
               {/* Card Header */}
               <div className="flex items-start gap-3">
-                <div className="w-12 h-12 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-700 shrink-0">
+                <div className="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center text-blue-700 shrink-0">
                   <BookOpen className="w-6 h-6" />
                 </div>
                 <div className="flex-1 min-w-0 pt-1">
@@ -138,7 +138,7 @@ const DashboardProducts = () => {
                     {item.title}
                   </div>
                   <div className="mt-1.5 flex items-center gap-2">
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-100 text-emerald-800">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-100 text-blue-800">
                       Active
                     </span>
                     <span className="text-xs text-slate-500 font-medium">
@@ -198,14 +198,20 @@ const DashboardProducts = () => {
         </div>
       </div>
 
-      <DeleteAlertbox 
-        isOpen={!!deleteConfirm} 
-        itemName={deleteConfirm?.title} 
-        onCancel={() => setDeleteConfirm(null)} 
+      <DeleteAlertbox
+        isOpen={!!deleteConfirm}
+        itemName={deleteConfirm?.title}
+        isDeleting={isPending}
+        onCancel={() => setDeleteConfirm(null)}
         onConfirm={() => {
-          deleteCourse(deleteConfirm.id);
-          setDeleteConfirm(null);
-        }} 
+          // Yahan comma (,) laga kar onSuccess ko andar daalna hai
+          deleteCourse(deleteConfirm.id, {
+            onSuccess: () => {
+              // Jab successfully delete ho jayega, tabhi modal band hoga
+              setDeleteConfirm(null);
+            },
+          });
+        }}
       />
     </div>
   );

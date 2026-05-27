@@ -36,7 +36,7 @@ const CreateCourseDialog = () => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger
-        className="px-5 py-2 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition"
+        className="px-5 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition"
         disabled={isPending}
       >
         + Add Course
@@ -53,21 +53,21 @@ const CreateCourseDialog = () => {
               <input
                 {...register("title", { required: true })}
                 placeholder="Course Title"
-                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
 
               <textarea
                 {...register("description", { required: true })}
                 placeholder="Course Description"
                 rows={3}
-                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
 
               <input
                 type="number"
                 {...register("amount", { required: true })}
                 placeholder="Price"
-                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
 
               <input
@@ -80,7 +80,7 @@ const CreateCourseDialog = () => {
               <button
                 disabled={isPending}
                 type="submit"
-                className="w-full py-3 bg-emerald-600 flex items-center justify-center text-white rounded-lg font-semibold hover:bg-emerald-700 transition"
+                className="w-full py-3 bg-blue-600 flex items-center justify-center text-white rounded-lg font-semibold hover:bg-blue-700 transition"
               >
                 {isPending ? <Loader2 className="animate-spin" /> : "Create Course"}
               </button>
