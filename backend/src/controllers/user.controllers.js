@@ -2,10 +2,12 @@ import { User } from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
 import { ENV } from "../config/env.js";
 import jwt from "jsonwebtoken";
+import otpGenerator from "otp-generator";
+import { sendEmail } from "../config/sendEmail.js";
 
 export const Register = async (req, res) => {
   try {
-    const { name, email, password,mobileNo } = req.body;
+    const { name, email, password, mobileNo } = req.body;
 
     if (!name || !email || !password || !mobileNo) {
       return res.status(401).json({
@@ -24,31 +26,32 @@ export const Register = async (req, res) => {
     }
 
     const hashPassword = await bcryptjs.hash(password, 10);
+    const otp = otpGenerator.generate(4, {
+      upperCaseAlphabets: false,
+      specialChars: false,
+      lowerCaseAlphabets: false,
+    });
+    const otpExpiry = new Date(Date.now() + 10 * 60 * 1000);
 
     const newUser = await User.create({
       name,
       email,
       mobileNo,
       password: hashPassword,
+      otp: otp,
+      otpExpiry: otpExpiry,
     });
+    await sendEmail(
+      email,
+      "Kritimaan Classes",
+      `Hi ${name},\n\nYour OTP to complete registration is: ${otp}\n\nIt will expire in 10 minute`,
+    );
 
-    const token = jwt.sign({ userId: newUser._id }, ENV.JWT_SECRET, {
-      expiresIn: "1d",
+    return res.status(201).json({
+      message: `OTP has been sent to ${email}. Please verify your account.`,
+      success: true,
+      user: { _id: newUser._id, email: newUser.email },
     });
-
-    return res
-      .status(201)
-      .cookie("token", token, {
-        maxAge: 24 * 60 * 60 * 1000,
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      })
-      .json({
-        message: `welcome ${newUser.name} to Akash Institute`,
-        success: true,
-        user: newUser,
-      });
   } catch (error) {
     console.log(`error in register controller ${error}`);
   }
@@ -139,16 +142,79 @@ export const getUser = async (req, res) => {
 export const logout = async (req, res) => {
   try {
     // Use clearCookie with the exact same options you used in Login/Register
-    return res.clearCookie("token", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    }).status(200).json({
-      message: "User logged out",
-      success: true,
-    });
+    return res
+      .clearCookie("token", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      })
+      .status(200)
+      .json({
+        message: "User logged out",
+        success: true,
+      });
   } catch (error) {
     console.log(error);
   }
 };
 
+
+
+export const verifyOTP = async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+
+    if (!email || !otp) {
+      return res.status(400).json({ message: "Email and OTP are required", success: false });
+    }
+
+    // 1. Database mein user ko uske email se dhundein
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found", success: false });
+    }
+
+    // 2. Check karein ki jo OTP aaya hai, kya wo database wale se match karta hai?
+    if (user.otp !== String(otp)) {
+      return res.status(400).json({ message: "Invalid OTP", success: false });
+    }
+
+    // 3. Check karein ki OTP 10 minute ke baad Expire toh nahi ho gaya?
+    if (user.otpExpiry < new Date()) {
+      return res.status(400).json({ message: "OTP has expired. Please register again.", success: false });
+    }
+
+    // 4. Agar OTP sahi hai, toh User ko Verify kardo aur purana OTP hata do
+    user.isVerified = true;
+    user.otp = null;
+    user.otpExpiry = null;
+    await user.save(); // Database me save karo
+
+    // 5. Ab unhe Login karwane ke liye Token (Cookie) de do
+    const token = jwt.sign({ userId: user._id }, ENV.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    const userWithoutPassword = user.toObject();
+    delete userWithoutPassword.password;
+
+    return res
+      .status(200)
+      .cookie("token", token, {
+        maxAge: 24 * 60 * 60 * 1000,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      })
+      .json({
+        message: `Welcome ${user.name}! Your account is now verified.`,
+        success: true,
+        user: userWithoutPassword,
+      });
+
+  } catch (error) {
+    console.log(`error in verify otp controller ${error}`);
+    return res.status(500).json({ message: "Internal server error", success: false });
+  }
+};
