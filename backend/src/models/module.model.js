@@ -13,6 +13,10 @@ const moduleSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    Video_id: {
+      type: String,
+      required: true,
+    },
     title: {
       type: String,
       required: true,

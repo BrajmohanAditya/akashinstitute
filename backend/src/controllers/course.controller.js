@@ -26,12 +26,15 @@ export const createCourse = async (req, res) => {
     });
     imageUrl = uploadRes.secure_url;
 
+    const imageId = uploadRes.public_id;
+
     const newCourse = await Course({
       userId: req.user._id,
       title,
       description,
       amount,
       thumbnail: imageUrl,
+      thumbnail_id: imageId,
     });
 
     await newCourse.save();
@@ -156,7 +159,9 @@ export const getAllPurchasedCourse = async (req, res) => {
   try {
     const userId = req.user._id;
 
-    const user = await User.findById(userId).select("-password").populate("purchasedCourse");
+    const user = await User.findById(userId)
+      .select("-password")
+      .populate("purchasedCourse");
 
     if (!user) {
       return res.status(401).json({
@@ -170,15 +175,32 @@ export const getAllPurchasedCourse = async (req, res) => {
   }
 };
 
-
 export const deleteCourse = async (req, res) => {
   try {
     const courseId = req.params.id;
 
-    // 1. Delete all video modules associated with this course so they don't take up space!
-    await Modules.deleteMany({ courseId: courseId });
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Course not found" });
+    }
 
-    // 2. Delete the actual course document
+    if (course.thumbnail_id) {
+      await cloudinary.uploader.destroy(course.thumbnail_id);
+    }
+    const modules = await Modules.find({ courseId: courseId });
+
+    for (let i = 0; i < modules.length; i++) {
+      if (modules[i].Video_id) {
+        // Video udhane ke liye resource_type batana zaruri hai
+        await cloudinary.uploader.destroy(modules[i].Video_id, {
+          resource_type: "video",
+        });
+      }
+    }
+
+    await Modules.deleteMany({ courseId: courseId });
     const deletedCourse = await Course.findByIdAndDelete(courseId);
 
     if (!deletedCourse) {
@@ -187,7 +209,6 @@ export const deleteCourse = async (req, res) => {
         message: "Course not found",
       });
     }
-
     return res.status(200).json({
       success: true,
       message: "Course and all its modules deleted completely!",

@@ -17,6 +17,9 @@ const courseSchema = new mongoose.Schema({
   thumbnail:{
     type:String,
   },
+  thumbnail_id: {  // Naya field
+  type: String,
+},
   amount:{
     type:Number,
     required:true

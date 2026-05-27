@@ -16,12 +16,13 @@ export const createModule = async (req, res) => {
     }
 
     const videoUrl = req.file.path;
-    const publicId = req.file.filename;
+    const videoId = req.file.filename;
 
     const module = await Modules.create({
       courseId,
       title,
       Video: videoUrl,
+      Video_id: videoId,
     });
 
     await Course.findByIdAndUpdate(courseId, {
