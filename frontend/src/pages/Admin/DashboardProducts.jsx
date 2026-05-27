@@ -1,7 +1,7 @@
 import CreateCourseDialog from "../../components/AdminComponent/CreateCourseDialog";
 import { useGetCourseHook, useDeleteCourseHook } from "../../hooks/course.hook";
 import { useNavigate } from "react-router-dom";
-import { Edit, Trash2, BookOpen } from "lucide-react";
+import { Edit, Trash2, BookOpen, Video } from "lucide-react";
 import DeleteAlertbox from "@/components/ui/DeleteAlertbox";
 import { useState } from "react";
 
@@ -49,11 +49,10 @@ const DashboardProducts = () => {
                   <th className="p-4 text-right whitespace-nowrap">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 cursor-pointer">
+              <tbody className="divide-y divide-slate-100">
                 {data?.courses?.map((item) => (
                   <tr
                     key={item._id}
-                    onClick={() => getCourseId(item._id)}
                     className="hover:bg-slate-50 transition-colors group"
                   >
                     <td className="p-4">
@@ -81,6 +80,13 @@ const DashboardProducts = () => {
 
                     <td className="p-4 text-right">
                       <div className="flex items-center justify-end gap-2">
+                        <button
+                          onClick={() => getCourseId(item._id)}
+                          className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors border border-transparent"
+                          title="Add Video Modules"
+                        >
+                          <Video className="w-4 h-4" /> Add Video
+                        </button>
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
@@ -125,8 +131,7 @@ const DashboardProducts = () => {
           {data?.courses?.map((item) => (
             <div
               key={item._id}
-              onClick={() => getCourseId(item._id)}
-              className="bg-white border border-slate-200 rounded-xl p-4 flex flex-col gap-4 shadow-sm cursor-pointer hover:border-slate-300 transition-colors"
+              className="bg-white border border-slate-200 rounded-xl p-4 flex flex-col gap-4 shadow-sm hover:border-slate-300 transition-colors"
             >
               {/* Card Header */}
               <div className="flex items-start gap-3">
@@ -167,6 +172,12 @@ const DashboardProducts = () => {
 
               {/* Card Actions */}
               <div className="flex items-center gap-2 pt-1">
+                <button
+                  onClick={() => getCourseId(item._id)}
+                  className="flex-1 flex justify-center items-center gap-2 py-2 px-3 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 rounded-lg transition-colors border border-transparent hover:border-blue-200"
+                >
+                  <Video className="w-4 h-4" /> Video
+                </button>
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
