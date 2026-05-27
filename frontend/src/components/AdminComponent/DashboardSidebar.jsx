@@ -38,25 +38,27 @@ const DashboardSidebar = () => {
       )}
 
       <div
-        className={`w-64 bg-white shadow-xl border-r border-slate-200 h-screen fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 ${
+        className={`w-64 lg:w-72 bg-white shadow-xl border-r border-slate-200 h-screen fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="p-6 border-b border-slate-200 flex justify-between items-center">
-          <div className="flex items-center gap-3">
+        <div className="p-4 lg:p-6 border-b border-slate-200 flex justify-between items-center">
+          <div className="flex items-center gap-2 lg:gap-3 min-w-0">
             {/* The Stylized 'K' Monogram */}
-            <div className="w-10 h-10 rounded-md bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center shadow-lg shadow-blue-200/50 shrink-0">
-              <span className="text-white font-black text-xl font-sans tracking-tighter">K</span>
+            <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-md bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center shadow-lg shadow-blue-200/50 shrink-0">
+              <span className="text-white font-black text-lg lg:text-xl font-sans tracking-tighter">
+                K
+              </span>
             </div>
-            
+
             {/* Title and Subtitle */}
-            <div className="flex flex-col">
-              <h1 className="text-lg font-black text-slate-900 tracking-tight whitespace-nowrap leading-none">
+            <div className="flex flex-col min-w-0">
+              <h1 className="text-base lg:text-lg font-black text-slate-900 tracking-tight truncate lg:overflow-visible lg:whitespace-nowrap leading-none">
                 Kritimaan Classes
               </h1>
               <div className="flex items-center gap-1.5 mt-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
-                <p className="text-[10px] text-slate-500 font-bold tracking-widest uppercase leading-none">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse shrink-0"></span>
+                <p className="text-[10px] text-slate-500 font-bold tracking-widest uppercase leading-none truncate lg:overflow-visible">
                   Admin Panel
                 </p>
               </div>
@@ -66,7 +68,7 @@ const DashboardSidebar = () => {
           {/* 3. Add a Close button for mobile */}
           <button
             onClick={() => setIsOpen(false)}
-            className="lg:hidden p-2 text-slate-500 hover:bg-slate-100 rounded-md"
+            className="lg:hidden p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-md shrink-0 ml-2"
           >
             <X className="w-5 h-5" />
           </button>
