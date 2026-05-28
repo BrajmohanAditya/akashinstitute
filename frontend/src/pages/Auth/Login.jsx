@@ -3,6 +3,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { Mail, Lock, Loader2, GraduationCap } from "lucide-react";
+import { GoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
@@ -25,11 +26,36 @@ const Login = () => {
           <div className="w-14 h-14 mx-auto mb-3 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-2xl font-bold">
             <GraduationCap className="w-8 h-8 animate-bounce" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">Login  Account</h1>
-          <p className="text-sm text-gray-500 mt-1">
-            Join us and start your journey
-          </p>
+          <h1 className="text-2xl font-bold text-gray-900">Login Account</h1>
         </div>
+
+        {/* Google Signin Button */}
+        <GoogleLogin
+          onSuccess={async (credentialResponse) => {
+            try {
+              // Send the token to your backend
+              const res = await axios.post(
+                "http://localhost:5000/api/user/google",
+                {
+                  token: credentialResponse.credential,
+                },
+                {
+                  withCredentials: true, // Important for setting the cookie!
+                },
+              );
+
+              if (res.data.success) {
+                // Redirect user to dashboard
+                navigate("/");
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          }}
+          onError={() => {
+            console.log("Login Failed");
+          }}
+        />
 
         {/* Form */}
         <form onSubmit={handleSubmit(loginFormHandler)} className="space-y-5">
