@@ -12,7 +12,7 @@ import SingleCourse from "@/pages/User/SingleCourse";
 import PaymenSuccess from "@/pages/User/PaymenSuccess";
 import YourAllPurchasedCourse from "@/pages/User/yourAllPurchasedCourse";
 import SinglePurchasedCourse from "@/pages/User/SinglePurchasedCourse";
-import VerifyOtp from "@/pages/Auth/VerifyOtp";
+import verifyOtp from "@/pages/Auth/VerifyOtp";
 
 // UserLayout wraps routes that SHOULD have the top Navbar
 
