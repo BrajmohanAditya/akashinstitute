@@ -3,15 +3,19 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { User, Mail, Lock, Loader2, GraduationCap, Phone } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const { register, handleSubmit } = useForm();
   const { mutate, isPending } = userRegisterHook();
-
+  const navigate = useNavigate();
   const registerFormHandler = (data) => {
-    mutate(data);
+    mutate(data, {
+      onSuccess: () => {
+        navigate("/verify-otp", { state: { email: data.email } });
+      }
+    })
   };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-indigo-50 via-white to-indigo-100 px-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-100 p-8">

@@ -55,3 +55,16 @@ export const logOutApi = async () => {
 
     return res.data
 }
+
+export const verifyOtpApi = async (payload) => {
+    // payload should contain { email, otp }
+    const res = await axios.post(`${baseUrl}/verify-otp`, payload,
+        {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            withCredentials: true,
+        }
+    )
+    return res.data;
+};

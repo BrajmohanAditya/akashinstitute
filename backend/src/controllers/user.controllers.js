@@ -16,9 +16,9 @@ export const Register = async (req, res) => {
       });
     }
 
-    const user = await User.findOne({ email });
+    let user = await User.findOne({ email });
 
-    if (user) {
+    if (user && user.isVerified) {
       return res.status(401).json({
         message: "User already exists",
         success: false,
@@ -33,14 +33,28 @@ export const Register = async (req, res) => {
     });
     const otpExpiry = new Date(Date.now() + 10 * 60 * 1000);
 
-    const newUser = await User.create({
-      name,
-      email,
-      mobileNo,
-      password: hashPassword,
-      otp: otp,
-      otpExpiry: otpExpiry,
-    });
+    let newUser;
+    if (user) {
+      user.name = name;
+      user.password = hashPassword;
+      user.mobileNo = mobileNo;
+      user.otp = otp;
+      user.otpExpiry = otpExpiry;
+
+      await user.save(); // UPDATE kiya, Naya create nahi kiya
+      newUser = user;
+    } else {
+      // Ye aapka purana likha hua code hai jab user sach me naya ho
+      newUser = await User.create({
+        name,
+        email,
+        mobileNo,
+        password: hashPassword,
+        otp: otp,
+        otpExpiry: otpExpiry,
+      });
+    }
+
     await sendEmail(
       email,
       "Kritimaan Classes",
@@ -48,7 +62,7 @@ export const Register = async (req, res) => {
     );
 
     return res.status(201).json({
-      message: `OTP has been sent to ${email}. Please verify your account.`,
+      message: `OTP has been sent`,
       success: true,
       user: { _id: newUser._id, email: newUser.email },
     });
@@ -158,21 +172,23 @@ export const logout = async (req, res) => {
   }
 };
 
-
-
 export const verifyOTP = async (req, res) => {
   try {
     const { email, otp } = req.body;
 
     if (!email || !otp) {
-      return res.status(400).json({ message: "Email and OTP are required", success: false });
+      return res
+        .status(400)
+        .json({ message: "Email and OTP are required", success: false });
     }
 
     // 1. Database mein user ko uske email se dhundein
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(404).json({ message: "User not found", success: false });
+      return res
+        .status(404)
+        .json({ message: "User not found", success: false });
     }
 
     // 2. Check karein ki jo OTP aaya hai, kya wo database wale se match karta hai?
@@ -182,7 +198,10 @@ export const verifyOTP = async (req, res) => {
 
     // 3. Check karein ki OTP 10 minute ke baad Expire toh nahi ho gaya?
     if (user.otpExpiry < new Date()) {
-      return res.status(400).json({ message: "OTP has expired. Please register again.", success: false });
+      return res.status(400).json({
+        message: "OTP has expired. Please register again.",
+        success: false,
+      });
     }
 
     // 4. Agar OTP sahi hai, toh User ko Verify kardo aur purana OTP hata do
@@ -212,9 +231,10 @@ export const verifyOTP = async (req, res) => {
         success: true,
         user: userWithoutPassword,
       });
-
   } catch (error) {
     console.log(`error in verify otp controller ${error}`);
-    return res.status(500).json({ message: "Internal server error", success: false });
+    return res
+      .status(500)
+      .json({ message: "Internal server error", success: false });
   }
 };

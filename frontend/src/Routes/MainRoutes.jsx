@@ -12,6 +12,7 @@ import SingleCourse from "@/pages/User/SingleCourse";
 import PaymenSuccess from "@/pages/User/PaymenSuccess";
 import YourAllPurchasedCourse from "@/pages/User/yourAllPurchasedCourse";
 import SinglePurchasedCourse from "@/pages/User/SinglePurchasedCourse";
+import VerifyOtp from "@/pages/Auth/VerifyOtp";
 
 // UserLayout wraps routes that SHOULD have the top Navbar
 
@@ -80,6 +81,7 @@ const MainRoutes = () => {
       {/* --- Auth Routes (No Navbar) --- */}
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/verify-otp" element={<VerifyOtp />} />
       <Route
         path="/payment-success"
         element={
