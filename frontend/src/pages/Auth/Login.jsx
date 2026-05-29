@@ -1,4 +1,4 @@
-import { userLoginHook } from "@/hooks/User.hook";
+import { userLoginHook, userGoogleLoginHook } from "@/hooks/User.hook";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,6 +8,8 @@ import { GoogleLogin } from "@react-oauth/google";
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const { mutate, isPending } = userLoginHook();
+  const { mutate: googleMutate } = userGoogleLoginHook();
+
   const navigate = useNavigate();
 
   const loginFormHandler = (data) => {
@@ -31,26 +33,16 @@ const Login = () => {
 
         {/* Google Signin Button */}
         <GoogleLogin
-          onSuccess={async (credentialResponse) => {
-            try {
-              // Send the token to your backend
-              const res = await axios.post(
-                "http://localhost:5000/api/user/google",
-                {
-                  token: credentialResponse.credential,
+          onSuccess={(credentialResponse) => {
+            googleMutate(
+              { token: credentialResponse.credential },
+              {
+                onSuccess: () => {
+                  // Redirect user to dashboard on success
+                  navigate("/");
                 },
-                {
-                  withCredentials: true, // Important for setting the cookie!
-                },
-              );
-
-              if (res.data.success) {
-                // Redirect user to dashboard
-                navigate("/");
-              }
-            } catch (error) {
-              console.log(error);
-            }
+              },
+            );
           }}
           onError={() => {
             console.log("Login Failed");

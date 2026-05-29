@@ -30,26 +30,16 @@ const Register = () => {
 
         {/* Google Signin Button */}
         <GoogleLogin
-          onSuccess={async (credentialResponse) => {
-            try {
-              // Send the token to your backend
-              const res = await axios.post(
-                "http://localhost:5000/api/user/google",
-                {
-                  token: credentialResponse.credential,
+          onSuccess={(credentialResponse) => {
+            googleMutate(
+              { token: credentialResponse.credential },
+              {
+                onSuccess: () => {
+                  // Redirect user to dashboard on success
+                  navigate("/");
                 },
-                {
-                  withCredentials: true, // Important for setting the cookie!
-                },
-              );
-
-              if (res.data.success) {
-                // Redirect user to dashboard
-                navigate("/");
-              }
-            } catch (error) {
-              console.log(error);
-            }
+              },
+            );
           }}
           onError={() => {
             console.log("Login Failed");

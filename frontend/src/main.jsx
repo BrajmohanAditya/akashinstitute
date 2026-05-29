@@ -8,13 +8,13 @@ import { BrowserRouter } from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const queryClient = new QueryClient()
-const google_auth_Client_ID = import.meta.env.google_auth_Client_ID;
+const VITE_GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
     <QueryClientProvider client={queryClient}>
     <Toaster position="top-right" richColors />
-    <GoogleOAuthProvider clientId={google_auth_Client_ID}>
+    <GoogleOAuthProvider clientId={VITE_GOOGLE_CLIENT_ID}>
     <App />
     </GoogleOAuthProvider>
     </QueryClientProvider>

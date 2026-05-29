@@ -5,6 +5,7 @@ import {
   getUserApi,
   logOutApi,
   verifyOtpApi,
+   googleLoginApi,
 } from "../api/user.api";
 import { toast } from "sonner";
 
@@ -78,6 +79,21 @@ export const userVerifyOtpHook = () => {
     onError: (error) => {
       const message =
         error.response?.data?.message
+      toast.error(message);
+    },
+  });
+};
+
+export const userGoogleLoginHook = () => {
+  return useMutation({
+    mutationFn: googleLoginApi,
+    onSuccess: (data) => {
+      toast.success(data.message);
+    },
+    onError: (error) => {
+      const message =
+        error.response?.data?.message ||
+        "Something went wrong! Please check your connection.";
       toast.error(message);
     },
   });

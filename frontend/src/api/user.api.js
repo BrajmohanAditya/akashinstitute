@@ -68,3 +68,17 @@ export const verifyOtpApi = async (payload) => {
     )
     return res.data;
 };
+
+export const googleLoginApi = async (payload) => {
+    // payload should contain { token }
+    const res = await axios.post(`${baseUrl}/google`, payload,
+        {
+            headers: {
+                "Content-Type": "application/json",
+            },
+            withCredentials: true,
+        }
+    )
+    return res.data;
+};
+

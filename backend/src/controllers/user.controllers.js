@@ -4,6 +4,8 @@ import { ENV } from "../config/env.js";
 import jwt from "jsonwebtoken";
 import otpGenerator from "otp-generator";
 import { sendEmail } from "../config/sendEmail.js";
+import { OAuth2Client } from "google-auth-library";
+const client = new OAuth2Client(ENV.GOOGLE_CLIENT_ID);
 
 export const Register = async (req, res) => {
   try {
@@ -236,5 +238,65 @@ export const verifyOTP = async (req, res) => {
     return res
       .status(500)
       .json({ message: "Internal server error", success: false });
+  }
+};
+
+export const googleLogin = async (req, res) => {
+  try {
+    const { token } = req.body;
+    
+    // 1. Verify the token with Google
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience:ENV.GOOGLE_CLIENT_ID,
+    });
+
+    // 2. Extract user info from Google's payload
+    const { email, name } = ticket.getPayload();
+
+    // 3. Check if user already exists in your database
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      // 4. If new user, create them. 
+      // We give a random password and dummy mobile number to satisfy your schema requirements.
+      const randomPassword = Math.random().toString(36).slice(-8); 
+      const hashPassword = await bcryptjs.hash(randomPassword, 10);
+      
+      user = await User.create({
+        name,
+        email,
+        password: hashPassword,
+        mobileNo: 0, // Dummy number
+        isVerified: true, // Google emails are already verified! No OTP needed.
+      });
+    }
+
+    // 5. Generate JWT Token
+    const jwtToken = jwt.sign({ userId: user._id }, ENV.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    const userWithoutPassword = user.toObject();
+    delete userWithoutPassword.password;
+
+    // 6. Set the Cookie and send response
+    return res
+      .status(200)
+      .cookie("token", jwtToken, {
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      })
+      .json({
+        message: `Welcome ${user.name}`,
+        success: true,
+        user: userWithoutPassword,
+      });
+
+  } catch (error) {
+    console.log(`error in google login controller ${error}`);
+    return res.status(500).json({ message: "Google login failed", success: false });
   }
 };
