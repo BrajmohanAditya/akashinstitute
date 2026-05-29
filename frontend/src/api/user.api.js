@@ -4,7 +4,7 @@ const baseUrl = import.meta.env.VITE_BASE_URL;
 
 
 export const registerApi = async (payload) => {
-    const res = await axios.post(`${baseUrlProd}/register`, payload,
+    const res = await axios.post(`${baseUrl}/register`, payload,
         {
             headers: {
                 "Content-Type": "application/json",
