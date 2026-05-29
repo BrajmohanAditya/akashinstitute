@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { User, Mail, Lock, Loader2, GraduationCap, Phone } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
+import Divider from "@/components/userComponent/Divider"; 
 
 const Register = () => {
   const { register, handleSubmit } = useForm();
@@ -30,6 +31,7 @@ const Register = () => {
 
         {/* Google Signin Button */}
         <GoogleLogin
+          theme="filled_blue"
           onSuccess={(credentialResponse) => {
             googleMutate(
               { token: credentialResponse.credential },
@@ -45,7 +47,7 @@ const Register = () => {
             console.log("Login Failed");
           }}
         />
-
+        <Divider text="Or continue with Email" />
         {/* Form */}
         <form
           onSubmit={handleSubmit(registerFormHandler)}
