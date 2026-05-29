@@ -1,28 +1,19 @@
-import nodemailer from "nodemailer";
-import dns from "dns";
+import { Resend } from "resend";
+import { ENV } from "./env.js";
 
-dns.setDefaultResultOrder("ipv4first");
+const resend = new Resend(ENV.Resend_api_key);
 
 export const sendEmail = async (email, subject, message) => {
   try {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS, 
-      },
-    });
-
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
+    await resend.emails.send({
+      from: ENV.EMAIL_FROM,
       to: email,
       subject: subject,
       text: message,
-    };
-
-    await transporter.sendMail(mailOptions);
+    });
     console.log("✅ Email sent successfully to:", email);
   } catch (error) {
     console.error("❌ Email sending failed:", error);
   }
 };
+
