@@ -69,7 +69,7 @@ const Navbar = () => {
       {
         label: "Profile",
         icon: User,
-        onClick: () => navigate("/profile"),
+        onClick: () => navigate("/#"),
       },
       {
         label: "Your Courses",
