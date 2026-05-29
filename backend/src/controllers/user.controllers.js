@@ -229,7 +229,7 @@ export const verifyOTP = async (req, res) => {
         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       })
       .json({
-        message: `Welcome ${user.name}! Your account is now verified.`,
+        message: `Welcome ${user.name}`,
         success: true,
         user: userWithoutPassword,
       });

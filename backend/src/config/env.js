@@ -15,5 +15,4 @@ export const ENV = {
   RAZORPAY_KEY_SECRET: process.env.Live_RAZORPAY_Key_Secret,
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   Resend_api_key:process.env.Resend_api_key,
-  EMAIL_FROM:process.env.EMAIL_FROM
 };
