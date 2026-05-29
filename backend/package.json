@@ -29,5 +29,10 @@
     "otp-generator": "^4.0.1",
     "razorpay": "^2.9.6",
     "resend": "^6.12.4"
+  },
+  "overrides": {
+    "multer-storage-cloudinary": {
+      "cloudinary": "$cloudinary"
+    }
   }
 }
