@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { User, Mail, Lock, Loader2, GraduationCap, Phone } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
-import Divider from "@/components/userComponent/Divider"; 
+import Divider from "@/components/userComponent/Divider";
 
 const Register = () => {
   const { register, handleSubmit } = useForm();
@@ -30,23 +30,26 @@ const Register = () => {
         </div>
 
         {/* Google Signin Button */}
-        <GoogleLogin
-          theme="filled_blue"
-          onSuccess={(credentialResponse) => {
-            googleMutate(
-              { token: credentialResponse.credential },
-              {
-                onSuccess: () => {
-                  // Redirect user to dashboard on success
-                  navigate("/");
+        <div className="flex justify-center w-full">
+          <GoogleLogin
+            theme="filled_blue"
+            onSuccess={(credentialResponse) => {
+              googleMutate(
+                { token: credentialResponse.credential },
+                {
+                  onSuccess: () => {
+                    // Redirect user to dashboard on success
+                    navigate("/");
+                  },
                 },
-              },
-            );
-          }}
-          onError={() => {
-            console.log("Login Failed");
-          }}
-        />
+              );
+            }}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+          />
+        </div>
+
         <Divider text="Or continue with Email" />
         {/* Form */}
         <form
