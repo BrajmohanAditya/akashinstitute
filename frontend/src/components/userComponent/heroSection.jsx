@@ -10,7 +10,7 @@ const HeroSection = () => {
           {/* ========================================= */}
           {/* LEFT SIDE: Upcoming Exams (40% width)     */}
           {/* ========================================= */}
-          <div className="w-full lg:w-[40%] bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+          <div className="w-full lg:w-[50%] bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
             {/* Header */}
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-lg font-bold text-slate-800">
@@ -42,7 +42,7 @@ const HeroSection = () => {
           {/* ========================================= */}
           {/* RIGHT SIDE: Offer Banner (60% width)      */}
           {/* ========================================= */}
-          <div className="w-full lg:w-[60%] bg-slate-900 rounded-2xl overflow-hidden relative min-h-[200px] flex items-center justify-center">
+          <div className="w-full lg:w-[50%] bg-slate-900 rounded-2xl overflow-hidden relative min-h-[200px] flex items-center justify-center">
             {/* Yahan aap apna banner image lagayenge */}
             {/* <img src="banner.jpg" alt="Offer" className="w-full h-full object-cover" /> */}
 
