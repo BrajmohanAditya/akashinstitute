@@ -161,6 +161,9 @@ const HeroSectionManagement = () => {
                           <span className="font-semibold">Click to upload</span>{" "}
                           Banner
                         </p>
+                        <p className="text-xs text-slate-400 mt-1">
+                          Recommended: 1200 x 480px (Wide)
+                        </p>
                       </div>
                       <input
                         type="file"
@@ -193,6 +196,9 @@ const HeroSectionManagement = () => {
                         <p className="text-sm text-slate-500">
                           <span className="font-semibold">Click to upload</span>{" "}
                           logo
+                        </p>
+                        <p className="text-xs text-slate-400 mt-1">
+                          Recommended: 512 x 512px (Square)
                         </p>
                       </div>
                       <input
