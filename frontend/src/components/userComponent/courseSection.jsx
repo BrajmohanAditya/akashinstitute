@@ -48,7 +48,7 @@ const courseSection = () => {
                         duration-300 overflow-hidden w-full"
             >
               {/* Thumbnail */}
-              <div className="relative mb-6 rounded-xl overflow-hidden bg-slate-900 aspect-16/9 sm:aspect-video">
+              <div className="relative mb-6 rounded-xl overflow-hidden bg-slate-900 aspect-16/9 aspect-video">
                 <img
                   src={item.thumbnail}
                   alt={item.title}

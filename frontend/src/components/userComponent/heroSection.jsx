@@ -26,7 +26,7 @@ const HeroSection = () => {
           {/* ========================================= */}
           {/* LEFT SIDE: Upcoming Exams (50% width)     */}
           {/* ========================================= */}
-          <div className="w-full lg:w-[50%] bg-white rounded-2xl shadow-sm border border-slate-200 p-5 aspect-video overflow-y-auto">
+          <div className="w-full lg:w-[50%] bg-white rounded-2xl shadow-sm border border-slate-200 p-5 lg:h-[240px] flex flex-col">
             {/* Header */}
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-lg font-bold text-slate-800">
@@ -40,20 +40,27 @@ const HeroSection = () => {
             {/* Exam Icons Grid (4 columns) */}
             <div className="grid grid-cols-4 gap-3">
               {isLoading ? (
-                <p className="text-sm text-slate-500 col-span-4 text-center py-4">Loading exams...</p>
+                <p className="text-sm text-slate-500 col-span-4 text-center py-4">
+                  Loading exams...
+                </p>
               ) : exams.length === 0 ? (
-                <p className="text-sm text-slate-500 col-span-4 text-center py-4">No upcoming exams available.</p>
+                <p className="text-sm text-slate-500 col-span-4 text-center py-4">
+                  No upcoming exams available.
+                </p>
               ) : (
                 exams.map((exam) => (
-                  <div key={exam._id} className="flex flex-col items-center justify-center p-3 border border-slate-200 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 cursor-pointer">
-                    <div className="w-12 h-12 mb-2 flex items-center justify-center">
+                  <div
+                    key={exam._id}
+                    className="flex flex-col items-center justify-center p-3 border border-slate-200 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+                  >
+                    <div className="w-full h-16 mb-2 flex items-center justify-center">
                       <img
                         src={exam.imageUrl}
                         alt={exam.title}
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-contain scale-[1.35] mix-blend-multiply"
                       />
                     </div>
-                    <span className="text-[10px] font-bold text-center text-slate-700 leading-tight">
+                    <span className="text-sm font-bold text-center text-slate-700 leading-tight">
                       {exam.title}
                     </span>
                   </div>
@@ -65,18 +72,22 @@ const HeroSection = () => {
           {/* ========================================= */}
           {/* RIGHT SIDE: Offer Banner (50% width)      */}
           {/* ========================================= */}
-          <div className="w-full lg:w-[50%] bg-slate-900 rounded-2xl overflow-hidden relative aspect-video flex items-center justify-center">
+          <div className="w-full lg:w-[50%] bg-slate-900 rounded-2xl overflow-hidden relative lg:h-[240px] min-h-[240px] flex items-center justify-center">
             {isLoading ? (
-              <h2 className="text-white text-xl font-bold z-10">Loading banner...</h2>
+              <h2 className="text-white text-xl font-bold z-10">
+                Loading banner...
+              </h2>
             ) : banners.length > 0 ? (
-              <img 
+              <img
                 key={banners[currentBanner]._id}
-                src={banners[currentBanner].imageUrl} 
-                alt={banners[currentBanner].title || "Offer Banner"} 
-                className="w-full h-full object-cover absolute inset-0 transition-opacity duration-500 ease-in-out" 
+                src={banners[currentBanner].imageUrl}
+                alt={banners[currentBanner].title || "Offer Banner"}
+                className="w-full h-full object-cover absolute inset-0 transition-opacity duration-500 ease-in-out"
               />
             ) : (
-              <h2 className="text-white text-2xl font-bold z-10">Your Offer Banner Here</h2>
+              <h2 className="text-white text-2xl font-bold z-10">
+                Your Offer Banner Here
+              </h2>
             )}
 
             {/* Carousel Dots */}
@@ -87,7 +98,9 @@ const HeroSection = () => {
                     key={idx}
                     onClick={() => setCurrentBanner(idx)}
                     className={`h-2 rounded-full transition-all duration-300 ${
-                      currentBanner === idx ? "w-8 bg-pink-500" : "w-2 bg-white/50"
+                      currentBanner === idx
+                        ? "w-8 bg-pink-500"
+                        : "w-2 bg-white/50"
                     }`}
                   />
                 ))}
