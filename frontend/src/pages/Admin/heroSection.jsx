@@ -10,6 +10,7 @@ import {
   Upload,
   Save,
 } from "lucide-react";
+import { TabButton, RadioButton } from "@/components/ui/HeroButton";
 
 const HeroSectionManagement = () => {
   const [activeTab, setActiveTab] = useState("create");
@@ -30,41 +31,24 @@ const HeroSectionManagement = () => {
 
         {/* Tabs Container */}
         <div className="bg-white border border-slate-200 rounded-xl p-1.5 flex flex-wrap gap-2 mb-6 shadow-sm w-full max-w-fit">
-          <button
+          <TabButton
+            active={activeTab === "create"}
             onClick={() => setActiveTab("create")}
-            className={`flex items-center px-4 py-2 cursor-pointer rounded-lg text-sm font-medium transition-all ${
-              activeTab === "create"
-                ? "bg-indigo-600 text-white shadow-sm"
-                : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-            }`}
-          >
-            <Plus className="w-4 h-4 mr-2" />
-            Create Banner/Exam
-          </button>
-
-          <button
+            icon={Plus}
+            label="Create Banner/Exam"
+          />
+          <TabButton
+            active={activeTab === "banners"}
             onClick={() => setActiveTab("banners")}
-            className={`flex items-center px-4 py-2 cursor-pointer rounded-lg text-sm font-medium transition-all ${
-              activeTab === "banners"
-                ? "bg-indigo-600 text-white shadow-sm"
-                : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-            }`}
-          >
-            <ImageIcon className="w-4 h-4 mr-2" />
-            Banners
-          </button>
-
-          <button
+            icon={ImageIcon}
+            label="Banners"
+          />
+          <TabButton
+            active={activeTab === "exams"}
             onClick={() => setActiveTab("exams")}
-            className={`flex items-center px-4 py-2 cursor-pointer rounded-lg text-sm font-medium transition-all ${
-              activeTab === "exams"
-                ? "bg-indigo-600 text-white shadow-sm"
-                : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-            }`}
-          >
-            <Newspaper className="w-4 h-4 mr-2" />
-            Exams
-          </button>
+            icon={Newspaper}
+            label="Exams"
+          />
         </div>
 
         {/* We will add the Form Content here in Step 3 */}
@@ -89,36 +73,22 @@ const HeroSectionManagement = () => {
                   <FileText className="w-4 h-4 mr-2 text-indigo-600" />
                   Type <span className="text-red-500 ml-1">*</span>
                 </label>
-                <div className="flex space-x-6">
-                  {/* Banner Radio */}
-                  <label className="flex items-center cursor-pointer group">
-                    <input
-                      type="radio"
-                      name="type"
-                      value="banner"
-                      checked={type === "banner"}
-                      onChange={() => setType("banner")}
-                      className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-600 cursor-pointer"
-                    />
-                    <span className="ml-2 text-slate-700 text-sm group-hover:text-slate-900">
-                      Banner
-                    </span>
-                  </label>
 
-                  {/* Exam Radio */}
-                  <label className="flex items-center cursor-pointer group">
-                    <input
-                      type="radio"
-                      name="type"
-                      value="exam"
-                      checked={type === "exam"}
-                      onChange={() => setType("exam")}
-                      className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-600 cursor-pointer"
-                    />
-                    <span className="ml-2 text-slate-700 text-sm group-hover:text-slate-900">
-                      Upcoming Exam
-                    </span>
-                  </label>
+                <div className="flex space-x-6">
+                  <RadioButton
+                    name="type"
+                    value="banner"
+                    checked={type === "banner"}
+                    onChange={() => setType("banner")}
+                    label="Banner"
+                  />
+                  <RadioButton
+                    name="type"
+                    value="exam"
+                    checked={type === "exam"}
+                    onChange={() => setType("exam")}
+                    label="Upcoming Exam"
+                  />
                 </div>
               </div>
 
