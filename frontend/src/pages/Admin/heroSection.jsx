@@ -83,7 +83,6 @@ const HeroSectionManagement = () => {
 
             {/* Form Body */}
             <div className="p-6 md:p-8 space-y-6">
-              
               {/* 1. Type Selection */}
               <div>
                 <label className="flex items-center text-sm font-semibold text-slate-700 mb-3">
@@ -91,7 +90,6 @@ const HeroSectionManagement = () => {
                   Type <span className="text-red-500 ml-1">*</span>
                 </label>
                 <div className="flex space-x-6">
-                  
                   {/* Banner Radio */}
                   <label className="flex items-center cursor-pointer group">
                     <input
@@ -106,7 +104,7 @@ const HeroSectionManagement = () => {
                       Banner
                     </span>
                   </label>
-                  
+
                   {/* Exam Radio */}
                   <label className="flex items-center cursor-pointer group">
                     <input
@@ -121,19 +119,13 @@ const HeroSectionManagement = () => {
                       Upcoming Exam
                     </span>
                   </label>
-
                 </div>
               </div>
 
               {/* We will add Title and Image inputs here in Step 5 */}
-
             </div>
-
           </div>
         )}
-
-
-
 
         {/* Placeholders for the other tabs */}
         {activeTab === "banners" && (
