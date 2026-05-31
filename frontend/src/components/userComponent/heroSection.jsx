@@ -37,8 +37,8 @@ const HeroSection = () => {
               </button>
             </div>
 
-            {/* Exam Icons Grid (4 columns) */}
-            <div className="grid grid-cols-4 gap-3">
+            {/* Exam Icons Grid (Responsive) */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {isLoading ? (
                 <p className="text-sm text-slate-500 col-span-4 text-center py-4">
                   Loading exams...
