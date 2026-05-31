@@ -1,6 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useGetHeroSectionHook } from "@/hooks/hero.hook";
 
 const HeroSection = () => {
+  const { data, isLoading } = useGetHeroSectionHook();
+  const exams = data?.upcomingExams || [];
+  const banners = data?.banners || [];
+
+  const [currentBanner, setCurrentBanner] = useState(0);
+
+  useEffect(() => {
+    if (banners.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentBanner((prev) => (prev + 1) % banners.length);
+      }, 2000);
+      return () => clearInterval(interval);
+    }
+  }, [banners.length]);
+
   return (
     // Main Container
     <div className="pt-8 pb-4 px-6">
@@ -8,9 +24,9 @@ const HeroSection = () => {
         {/* Flex row banayenge jo badi screen par side-by-side hoga, aur mobile par upar-neeche */}
         <div className="flex flex-col lg:flex-row gap-6">
           {/* ========================================= */}
-          {/* LEFT SIDE: Upcoming Exams (40% width)     */}
+          {/* LEFT SIDE: Upcoming Exams (50% width)     */}
           {/* ========================================= */}
-          <div className="w-full lg:w-[50%] bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
+          <div className="w-full lg:w-[50%] bg-white rounded-2xl shadow-sm border border-slate-200 p-5 aspect-video overflow-y-auto">
             {/* Header */}
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-lg font-bold text-slate-800">
@@ -23,39 +39,60 @@ const HeroSection = () => {
 
             {/* Exam Icons Grid (4 columns) */}
             <div className="grid grid-cols-4 gap-3">
-              {/* Exam Item 1 */}
-              <div className="flex flex-col items-center justify-center p-3 border border-slate-200 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 cursor-pointer">
-                <div className="w-12 h-12 mb-2 flex items-center justify-center">
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/en/3/39/Reserve_Bank_of_India_logo.svg"
-                    alt="RBI"
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <span className="text-[10px] font-bold text-center text-slate-700 leading-tight">
-                  RBI Assistant
-                </span>
-              </div>
+              {isLoading ? (
+                <p className="text-sm text-slate-500 col-span-4 text-center py-4">Loading exams...</p>
+              ) : exams.length === 0 ? (
+                <p className="text-sm text-slate-500 col-span-4 text-center py-4">No upcoming exams available.</p>
+              ) : (
+                exams.map((exam) => (
+                  <div key={exam._id} className="flex flex-col items-center justify-center p-3 border border-slate-200 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 cursor-pointer">
+                    <div className="w-12 h-12 mb-2 flex items-center justify-center">
+                      <img
+                        src={exam.imageUrl}
+                        alt={exam.title}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <span className="text-[10px] font-bold text-center text-slate-700 leading-tight">
+                      {exam.title}
+                    </span>
+                  </div>
+                ))
+              )}
             </div>
           </div>
 
           {/* ========================================= */}
-          {/* RIGHT SIDE: Offer Banner (60% width)      */}
+          {/* RIGHT SIDE: Offer Banner (50% width)      */}
           {/* ========================================= */}
-          <div className="w-full lg:w-[50%] bg-slate-900 rounded-2xl overflow-hidden relative min-h-[200px] flex items-center justify-center">
-            {/* Yahan aap apna banner image lagayenge */}
-            {/* <img src="banner.jpg" alt="Offer" className="w-full h-full object-cover" /> */}
+          <div className="w-full lg:w-[50%] bg-slate-900 rounded-2xl overflow-hidden relative aspect-video flex items-center justify-center">
+            {isLoading ? (
+              <h2 className="text-white text-xl font-bold z-10">Loading banner...</h2>
+            ) : banners.length > 0 ? (
+              <img 
+                key={banners[currentBanner]._id}
+                src={banners[currentBanner].imageUrl} 
+                alt={banners[currentBanner].title || "Offer Banner"} 
+                className="w-full h-full object-cover absolute inset-0 transition-opacity duration-500 ease-in-out" 
+              />
+            ) : (
+              <h2 className="text-white text-2xl font-bold z-10">Your Offer Banner Here</h2>
+            )}
 
-            <h2 className="text-white text-2xl font-bold">
-              Your Offer Banner Here
-            </h2>
-
-            {/* Carousel Dots (Neeche ki pink lines) */}
-            <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-1">
-              <div className="w-8 h-1 bg-pink-500 rounded-full"></div>
-              <div className="w-8 h-1 bg-pink-200 rounded-full"></div>
-              <div className="w-8 h-1 bg-pink-200 rounded-full"></div>
-            </div>
+            {/* Carousel Dots */}
+            {banners.length > 1 && (
+              <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
+                {banners.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentBanner(idx)}
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      currentBanner === idx ? "w-8 bg-pink-500" : "w-2 bg-white/50"
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -11,6 +11,9 @@ import {
   Save,
 } from "lucide-react";
 import { TabButton, RadioButton } from "@/components/ui/HeroButton";
+import { toast } from "sonner";
+import { createHeroSectionApi } from "@/api/hero.api.js";
+import { useCreateHeroSectionHook } from "@/hooks/hero.hook";
 
 const HeroSectionManagement = () => {
   const [activeTab, setActiveTab] = useState("create");
@@ -18,6 +21,38 @@ const HeroSectionManagement = () => {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(null);
   const [logo, setLogo] = useState(null);
+  const { mutateAsync: createHero, isPending } = useCreateHeroSectionHook();
+
+  const handleSave = async () => {
+    // 1. Validation
+    if (!title) return toast.error("Please enter a title");
+    if (type === "banner" && !image) return toast.error("Please upload a banner image");
+    if (type === "exam" && !logo) return toast.error("Please upload an exam logo");
+
+    // 2. Prepare Data
+    const formData = new FormData();
+    // Backend expects 'upcoming_exam' instead of 'exam'
+    const backendType = type === "exam" ? "upcoming_exam" : "banner";
+    formData.append("type", backendType);
+    formData.append("title", title);
+    
+    // Backend expects the file to be named 'image' in the form data
+    if (type === "banner" && image) {
+      formData.append("image", image);
+    } else if (type === "exam" && logo) {
+      formData.append("image", logo); // Send logo as 'image'
+    }
+
+    // 3. Call Hook
+    await createHero(formData, {
+      onSuccess: () => {
+        // Clear the form after a successful save
+        setTitle("");
+        setImage(null);
+        setLogo(null);
+      }
+    });
+  };
 
   return (
     <div className="h-screen overflow-y-auto bg-slate-50 p-6 md:p-8 font-sans pb-24">
@@ -93,7 +128,7 @@ const HeroSectionManagement = () => {
                     label="Upcoming Exam"
                   />
                 </div>
-                
+
               </div>
 
               {/* 2. Title Input */}
@@ -116,7 +151,7 @@ const HeroSectionManagement = () => {
                 <div>
                   <label className="flex items-center text-sm font-semibold text-slate-700 mb-2">
                     <ImageIcon className="w-4 h-4 mr-2 text-indigo-600" />
-                    Main Image <span className="text-red-500 ml-1">*</span>
+                    Banner <span className="text-red-500 ml-1">*</span>
                   </label>
                   <div className="flex items-center justify-center w-full">
                     <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-lg cursor-pointer bg-slate-50 hover:bg-slate-100">
@@ -124,7 +159,7 @@ const HeroSectionManagement = () => {
                         <Upload className="w-8 h-8 mb-2 text-slate-400" />
                         <p className="text-sm text-slate-500">
                           <span className="font-semibold">Click to upload</span>{" "}
-                          main image
+                          Banner
                         </p>
                       </div>
                       <input
@@ -179,7 +214,7 @@ const HeroSectionManagement = () => {
 
               {/* 5. Save Button */}
               <div className="pt-4 border-t border-slate-200">
-                <button className="w-full flex items-center justify-center px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-all shadow-sm">
+                <button onClick={handleSave} className="w-full flex cursor-pointer items-center justify-center px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-all shadow-sm">
                   <Save className="w-5 h-5 mr-2" />
                   Save {type === "banner" ? "Banner" : "Exam"}
                 </button>
