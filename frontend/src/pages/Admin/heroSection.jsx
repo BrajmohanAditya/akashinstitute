@@ -9,10 +9,10 @@ import {
   Link as LinkIcon,
   Upload,
   Save,
+  Loader2,
 } from "lucide-react";
 import { TabButton, RadioButton } from "@/components/ui/HeroButton";
 import { toast } from "sonner";
-import { createHeroSectionApi } from "@/api/hero.api.js";
 import { useCreateHeroSectionHook } from "@/hooks/hero.hook";
 
 const HeroSectionManagement = () => {
@@ -214,9 +214,22 @@ const HeroSectionManagement = () => {
 
               {/* 5. Save Button */}
               <div className="pt-4 border-t border-slate-200">
-                <button onClick={handleSave} className="w-full flex cursor-pointer items-center justify-center px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-all shadow-sm">
-                  <Save className="w-5 h-5 mr-2" />
-                  Save {type === "banner" ? "Banner" : "Exam"}
+                <button 
+                  onClick={handleSave} 
+                  disabled={isPending}
+                  className="w-full flex cursor-pointer items-center justify-center px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-all shadow-sm disabled:bg-indigo-400 disabled:cursor-not-allowed"
+                >
+                  {isPending ? (
+                    <>
+                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                      Saving...
+                    </>
+                  ) : (
+                    <>
+                      <Save className="w-5 h-5 mr-2" />
+                      Save {type === "banner" ? "Banner" : "Exam"}
+                    </>
+                  )}
                 </button>
               </div>
             </div>

@@ -8,13 +8,13 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { useCreateCourseHook } from "../../hooks/course.hook";
-import { Loader2 } from "lucide-react";
+import { Loader2, UploadCloud } from "lucide-react";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 
 const CreateCourseDialog = () => {
   const [isOpen, setIsOpen] = React.useState(false);
-  const { register, handleSubmit, reset: resetForm  } = useForm();
+  const { register, handleSubmit, reset: resetForm } = useForm();
   const { mutate, isPending } = useCreateCourseHook();
 
   const createCourseHandler = (data) => {
@@ -70,19 +70,36 @@ const CreateCourseDialog = () => {
                 className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
 
-              <input
-                type="file"
-                accept="image/*"
-                {...register("thumbnail", { required: true })}
-                className="w-full text-sm"
-              />
+              {/* Modern Image Upload Placeholder */}
+              <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-xl cursor-pointer bg-slate-50 hover:bg-blue-50 hover:border-blue-300 transition-colors">
+                <div className="flex flex-col items-center justify-center pt-5 pb-6 text-center">
+                  <UploadCloud className="w-8 h-8 mb-3 text-slate-400" />
+                  <p className="text-sm text-slate-600 font-semibold mb-1">
+                    Click to upload course thumbnail
+                  </p>
+                  <p className="text-xs text-slate-400">
+                    Recommended ratio: 16:9 (e.g., 1280x720px)
+                  </p>
+                </div>
+                {/* The actual input is hidden, but clicking the label triggers it! */}
+                <input
+                  type="file"
+                  accept="image/*"
+                  {...register("thumbnail", { required: true })}
+                  className="hidden"
+                />
+              </label>
 
               <button
                 disabled={isPending}
                 type="submit"
                 className="w-full py-3 bg-blue-600 flex items-center justify-center text-white rounded-lg font-semibold hover:bg-blue-700 transition"
               >
-                {isPending ? <Loader2 className="animate-spin" /> : "Create Course"}
+                {isPending ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  "Create Course"
+                )}
               </button>
             </form>
           </DialogDescription>
