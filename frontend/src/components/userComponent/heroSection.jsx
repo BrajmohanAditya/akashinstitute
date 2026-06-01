@@ -45,7 +45,7 @@ const HeroSection = () => {
                   No upcoming exams available.
                 </p>
               ) : (
-                exams.map((exam) => (
+                exams.slice(0, 4).map((exam) => (
                   <div
                     key={exam._id}
                     className="flex flex-col items-center justify-center p-3 border border-slate-200 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 cursor-pointer"
