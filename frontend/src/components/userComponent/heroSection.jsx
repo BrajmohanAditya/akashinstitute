@@ -97,9 +97,9 @@ const HeroSection = () => {
                   <button
                     key={idx}
                     onClick={() => setCurrentBanner(idx)}
-                    className={`h-2 rounded-full transition-all duration-300 ${
+                    className={`h-2 rounded-full transition-all duration-800 ${
                       currentBanner === idx
-                        ? "w-8 bg-pink-500"
+                        ? "w-8 bg-blue-500"
                         : "w-2 bg-white/50"
                     }`}
                   />
