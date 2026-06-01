@@ -26,7 +26,7 @@ const HeroSection = () => {
           {/* ========================================= */}
           {/* LEFT SIDE: Upcoming Exams (50% width)     */}
           {/* ========================================= */}
-          <div className="w-full lg:w-[50%] bg-white rounded-2xl shadow-sm border border-slate-200 p-5 lg:h-[240px] flex flex-col">
+          <div className=" w-full lg:w-[50%] bg-white rounded-2xl shadow-sm border border-slate-200 p-5 lg:h-[240px] flex flex-col">
             {/* Header */}
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-lg font-bold text-slate-800">
@@ -72,7 +72,7 @@ const HeroSection = () => {
           {/* ========================================= */}
           {/* RIGHT SIDE: Offer Banner (50% width)      */}
           {/* ========================================= */}
-          <div className="w-full lg:w-[50%] bg-slate-900 rounded-2xl overflow-hidden relative lg:h-[240px] min-h-[240px] flex items-center justify-center">
+          <div className=" w-full lg:w-[50%] bg-slate-900 rounded-2xl overflow-hidden relative lg:h-[240px] min-h-[240px] flex items-center justify-center">
             {isLoading ? (
               <h2 className="text-white text-xl font-bold z-10">
                 Loading banner...

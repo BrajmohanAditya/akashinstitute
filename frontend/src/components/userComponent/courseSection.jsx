@@ -47,8 +47,8 @@ const courseSection = () => {
                         hover:-translate-y-2 hover:border-slate-300 transition-all 
                         duration-300 overflow-hidden w-full"
             >
-              {/* Thumbnail */}
-              <div className="relative mb-6 rounded-xl overflow-hidden bg-slate-900 aspect-16/9 aspect-video">
+              {/* Thumbnail 16, 9*/}
+              <div className="relative mb-6 rounded-xl overflow-hidden bg-slate-900 aspect-video">
                 <img
                   src={item.thumbnail}
                   alt={item.title}
