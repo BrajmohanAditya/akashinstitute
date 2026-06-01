@@ -32,9 +32,6 @@ const HeroSection = () => {
               <h2 className="text-lg font-bold text-slate-800">
                 Upcoming Exams
               </h2>
-              <button className="text-sm font-bold text-purple-700 hover:underline">
-                View More
-              </button>
             </div>
 
             {/* Exam Icons Grid (Responsive) */}
@@ -97,7 +94,7 @@ const HeroSection = () => {
                   <button
                     key={idx}
                     onClick={() => setCurrentBanner(idx)}
-                    className={`h-2 rounded-full transition-all duration-800 ${
+                    className={`h-2 rounded-full transition-all duration-2000 ${
                       currentBanner === idx
                         ? "w-8 bg-blue-500"
                         : "w-2 bg-white/50"
