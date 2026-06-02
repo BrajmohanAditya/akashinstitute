@@ -10,24 +10,39 @@ import {
   Upload,
   Save,
   Loader2,
+  Edit,
+  CheckCircle,
+  Trash2,
 } from "lucide-react";
+
 import { TabButton, RadioButton } from "@/components/ui/HeroButton";
 import { toast } from "sonner";
-import { useCreateHeroSectionHook } from "@/hooks/hero.hook";
+import {
+  useCreateHeroSectionHook,
+  useGetHeroSectionHook,
+  useDeleteHeroSectionHook,
+} from "@/hooks/hero.hook";
 
 const HeroSectionManagement = () => {
   const [activeTab, setActiveTab] = useState("create");
   const [type, setType] = useState("banner");
+
   const [title, setTitle] = useState("");
   const [image, setImage] = useState(null);
   const [logo, setLogo] = useState(null);
+  const { data, isLoading } = useGetHeroSectionHook();
+
   const { mutateAsync: createHero, isPending } = useCreateHeroSectionHook();
+  const { mutateAsync: deleteHero, isPending: isDeleting } =
+    useDeleteHeroSectionHook();
 
   const handleSave = async () => {
     // 1. Validation
     if (!title) return toast.error("Please enter a title");
-    if (type === "banner" && !image) return toast.error("Please upload a banner image");
-    if (type === "exam" && !logo) return toast.error("Please upload an exam logo");
+    if (type === "banner" && !image)
+      return toast.error("Please upload a banner image");
+    if (type === "exam" && !logo)
+      return toast.error("Please upload an exam logo");
 
     // 2. Prepare Data
     const formData = new FormData();
@@ -35,7 +50,7 @@ const HeroSectionManagement = () => {
     const backendType = type === "exam" ? "upcoming_exam" : "banner";
     formData.append("type", backendType);
     formData.append("title", title);
-    
+
     // Backend expects the file to be named 'image' in the form data
     if (type === "banner" && image) {
       formData.append("image", image);
@@ -50,7 +65,7 @@ const HeroSectionManagement = () => {
         setTitle("");
         setImage(null);
         setLogo(null);
-      }
+      },
     });
   };
 
@@ -128,7 +143,6 @@ const HeroSectionManagement = () => {
                     label="Upcoming Exam"
                   />
                 </div>
-
               </div>
 
               {/* 2. Title Input */}
@@ -220,8 +234,8 @@ const HeroSectionManagement = () => {
 
               {/* 5. Save Button */}
               <div className="pt-4 border-t border-slate-200">
-                <button 
-                  onClick={handleSave} 
+                <button
+                  onClick={handleSave}
                   disabled={isPending}
                   className="w-full flex cursor-pointer items-center justify-center px-6 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-all shadow-sm disabled:bg-indigo-400 disabled:cursor-not-allowed"
                 >
@@ -242,10 +256,93 @@ const HeroSectionManagement = () => {
           </div>
         )}
 
-        {/* Placeholders for the other tabs */}
+        {/* Banners Tab */}
         {activeTab === "banners" && (
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-8 text-center text-slate-500">
-            Banner list content will go here
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-200">
+                    <th className="p-4 font-semibold w-24">Image</th>
+                    <th className="p-4 font-semibold">Title</th>
+                    <th className="p-4 font-semibold">Status</th>
+                    <th className="p-4 font-semibold">Created</th>
+                    <th className="p-4 font-semibold text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {/* We will add the rows here in Step 2! */}
+                  {data?.banners?.map((banner) => (
+                    <tr
+                      key={banner._id}
+                      className="hover:bg-slate-50 transition-colors bg-white"
+                    >
+                      {/* Image Column */}
+                      <td className="p-4">
+                        <div className="w-16 h-12 bg-slate-100 rounded-md overflow-hidden flex items-center justify-center">
+                          <img
+                            src={banner.imageUrl}
+                            alt="Banner"
+                            className="max-w-full max-h-full object-contain"
+                          />
+                        </div>
+                      </td>
+
+                      {/* Title Column */}
+                      <td className="p-4">
+                        <p className="font-semibold text-slate-800">
+                          {banner.title || "Untitled"}
+                        </p>
+                        <p className="text-xs text-slate-500 mt-0.5">
+                          Banner Subtitle
+                        </p>
+                      </td>
+
+                      {/* Status Column */}
+                      <td className="p-4">
+                        <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                          <CheckCircle className="w-3 h-3 mr-1" />
+                          Published
+                        </span>
+                      </td>
+
+                      {/* Created Column */}
+                      <td className="p-4 text-sm text-slate-600">
+                        {new Date(
+                          banner.createdAt || Date.now(),
+                        ).toLocaleDateString()}
+                      </td>
+
+                      {/* Actions Column */}
+                      <td className="p-4 text-right">
+                        <div className="flex items-center justify-end space-x-3">
+                          <button
+                            className="text-green-600 hover:text-green-700 transition-colors"
+                            title="Edit"
+                          >
+                            <Edit className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => deleteHero(banner._id)}
+                            disabled={isDeleting}
+                            className="text-red-500 hover:text-red-600 transition-colors disabled:opacity-50"
+                            title="Delete"
+                          >
+                            {isDeleting ? (
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                              <Trash2 className="w-4 h-4" />
+                            )}
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+
+              {/* We will add the loading/empty states here in Step 3! */}
+            </div>
           </div>
         )}
 

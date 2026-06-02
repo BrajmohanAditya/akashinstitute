@@ -18,3 +18,10 @@ export const getHeroSectionApi = async () => {
     });
     return res.data;
 };
+
+export const deleteHeroSectionApi = async (id) => {
+    const res = await axios.delete(`${baseUrl}/hero/${id}`, {
+        withCredentials: true
+    });
+    return res.data;
+};
