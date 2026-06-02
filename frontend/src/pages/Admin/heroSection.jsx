@@ -5,14 +5,10 @@ import {
   Newspaper,
   FileText,
   AlignLeft,
-  Hash,
   Link as LinkIcon,
   Upload,
   Save,
   Loader2,
-  Edit,
-  CheckCircle,
-  Trash2,
 } from "lucide-react";
 
 import { TabButton, RadioButton } from "@/components/ui/HeroButton";
