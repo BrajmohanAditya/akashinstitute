@@ -2,6 +2,8 @@ import React from "react";
 import { CheckCircle, Edit, Trash2, Loader2 } from "lucide-react";
 
 const ExamsTable = ({ examsData, deleteHero, isDeleting }) => {
+    const [deletingId, setDeletingId] = React.useState(null);
+
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
       <div className="overflow-x-auto overflow-y-auto max-h-[500px]">
@@ -63,12 +65,15 @@ const ExamsTable = ({ examsData, deleteHero, isDeleting }) => {
                       <Edit className="w-4 h-4" />
                     </button>
                     <button
-                      onClick={() => deleteHero(exam._id)}
-                      disabled={isDeleting}
+                      onClick={() => {
+                        deleteHero(exam._id);
+                        setDeletingId(exam._id);
+                      }}
+                      disabled={isDeleting && deletingId === exam._id}
                       className="text-red-500 hover:text-red-600 transition-colors cursor-pointer disabled:opacity-50"
                       title="Delete"
                     >
-                      {isDeleting ? (
+                      {isDeleting && deletingId === exam._id ? (
                         <Loader2 className="w-4 h-4 animate-spin" />
                       ) : (
                         <Trash2 className="w-4 h-4" />
