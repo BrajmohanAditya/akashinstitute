@@ -2,20 +2,13 @@ import mongoose from "mongoose";
 
 const quizSchema = new mongoose.Schema(
   {
-    categoryName: {
-      type: String,
-      required: true,
-    },
-    numberOfQuestions: {
-      type: Number,
-      required: true,
-    },
-    quizCategory: {
+
+    nameOfExam: { // Banking, SSC , Railway
       type: String,
       required: true,
       trim: true,
     },
-    quizName: {
+    quizName: {   // Set 1 , Set 2
       type: String,
       required: true,
       trim: true,
@@ -24,12 +17,20 @@ const quizSchema = new mongoose.Schema(
       type: Number,
       required: true, // Duration in minutes
     },
-    categories: [categorySchema],
     negativeMark: {
       type: Number,
       required: true,
       default: 0, // e.g. 0.25
     },
+    section:{ // reasoning, english , math
+      type: [String],
+      required: true,
+    },
+    noOfQueation:{
+      type: Number,
+      required: true,
+    }
+
   },
   {
     timestamps: true,
