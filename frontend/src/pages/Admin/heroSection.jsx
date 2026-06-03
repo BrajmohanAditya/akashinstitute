@@ -31,8 +31,7 @@ const HeroSectionManagement = () => {
   const { data, isLoading } = useGetHeroSectionHook();
 
   const { mutateAsync: createHero, isPending } = useCreateHeroSectionHook();
-  const { mutateAsync: deleteHero, isPending: isDeleting } =
-    useDeleteHeroSectionHook();
+  const { mutateAsync: deleteHero, isPending:isDeleting } = useDeleteHeroSectionHook();
 
   const handleSave = async () => {
     // 1. Validation

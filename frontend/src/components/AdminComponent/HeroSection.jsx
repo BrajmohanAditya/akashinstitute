@@ -37,9 +37,7 @@ const ExamsTable = ({ examsData, deleteHero, isDeleting }) => {
                   <p className="font-semibold text-slate-800">
                     {exam.title || "Untitled"}
                   </p>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    Upcoming Exam
-                  </p>
+                  <p className="text-xs text-slate-500 mt-0.5">Upcoming Exam</p>
                 </td>
 
                 {/* Status Column */}
@@ -96,8 +94,8 @@ const ExamsTable = ({ examsData, deleteHero, isDeleting }) => {
 
 export default ExamsTable;
 
-
 export const BannerTable = ({ bannersData, deleteHero, isDeleting }) => {
+  const [deletingId, setDeletingId] = React.useState(null);
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
       <div className="overflow-x-auto overflow-y-auto max-h-[500px]">
@@ -144,7 +142,9 @@ export const BannerTable = ({ bannersData, deleteHero, isDeleting }) => {
                 </td>
 
                 <td className="p-4 text-sm text-slate-600">
-                  {new Date(banner.createdAt || Date.now()).toLocaleDateString()}
+                  {new Date(
+                    banner.createdAt || Date.now(),
+                  ).toLocaleDateString()}
                 </td>
 
                 <td className="p-4 text-right">
@@ -156,12 +156,15 @@ export const BannerTable = ({ bannersData, deleteHero, isDeleting }) => {
                       <Edit className="w-4 h-4" />
                     </button>
                     <button
-                      onClick={() => deleteHero(banner._id)}
-                      disabled={isDeleting}
+                      onClick={() => {
+                        deleteHero(banner._id);
+                        setDeletingId(banner._id);
+                      }}
+                      disabled={isDeleting && deletingId === banner._id}
                       className="text-red-500 hover:text-red-600 transition-colors cursor-pointer disabled:opacity-50"
                       title="Delete"
                     >
-                      {isDeleting ? (
+                      {isDeleting &&  deletingId === banner._id  ? (
                         <Loader2 className="w-4 h-4 animate-spin" />
                       ) : (
                         <Trash2 className="w-4 h-4" />
