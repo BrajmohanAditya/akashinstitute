@@ -69,27 +69,29 @@ const HeroSection = () => {
           {/* ========================================= */}
           {/* RIGHT SIDE: Offer Banner (50% width)      */}
           {/* ========================================= */}
-          <div className=" w-full lg:w-[50%] bg-slate-900 rounded-2xl overflow-hidden relative lg:h-[240px] min-h-[240px] flex items-center justify-center">
+          <div className=" w-full lg:w-[50%] bg-white shadow-sm border border-slate-200 rounded-2xl overflow-hidden relative lg:h-[240px] flex items-center justify-center p-3 lg:p-0">
             {isLoading ? (
-              <h2 className="text-white text-xl font-bold z-10">
+              <h2 className="text-slate-800 text-xl font-bold z-10">
                 Loading banner...
               </h2>
             ) : banners.length > 0 ? (
-              <img
-                key={banners[currentBanner]._id}
-                src={banners[currentBanner].imageUrl}
-                alt={banners[currentBanner].title || "Offer Banner"}
-                className="w-full h-full object-cover absolute inset-0 transition-opacity duration-500 ease-in-out"
-              />
+              <div className="relative w-full h-auto lg:h-full flex items-center justify-center">
+                <img
+                  key={banners[currentBanner]._id}
+                  src={banners[currentBanner].imageUrl}
+                  alt={banners[currentBanner].title || "Offer Banner"}
+                  className="w-full h-auto lg:h-full object-cover lg:absolute lg:inset-0 transition-opacity duration-500 ease-in-out rounded-xl lg:rounded-none"
+                />
+              </div>
             ) : (
-              <h2 className="text-white text-2xl font-bold z-10">
+              <h2 className="text-slate-800 text-2xl font-bold z-10">
                 Your Offer Banner Here
               </h2>
             )}
 
             {/* Carousel Dots */}
             {banners.length > 1 && (
-              <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
+              <div className="absolute bottom-1 lg:bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
                 {banners.map((_, idx) => (
                   <button
                     key={idx}
@@ -97,7 +99,7 @@ const HeroSection = () => {
                     className={`h-2 rounded-full transition-all duration-2000 ${
                       currentBanner === idx
                         ? "w-8 bg-blue-500"
-                        : "w-2 bg-white/50"
+                        : "w-2 bg-slate-300"
                     }`}
                   />
                 ))}
