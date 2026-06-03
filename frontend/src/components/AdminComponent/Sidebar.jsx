@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { ShoppingBag, X, Menu, Home, BarChart3, FileText ,Users} from "lucide-react";
+import {
+  ShoppingBag,
+  X,
+  Menu,
+  Home,
+  BarChart3,
+  FileText,
+  Users,
+  ClipboardList,
+} from "lucide-react";
 
 const DashboardSidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -21,6 +30,11 @@ const DashboardSidebar = () => {
       to: "/admindashboard/paidStudent",
       label: "Students",
       icon: Users,
+    },
+    {
+      to: "/admindashboard/QuizManagement",
+      label: "Quiz Management",
+      icon: ClipboardList,
     },
   ];
 

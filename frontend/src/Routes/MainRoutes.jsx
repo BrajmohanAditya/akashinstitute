@@ -14,6 +14,7 @@ import YourAllPurchasedCourse from "@/pages/User/yourAllPurchasedCourse";
 import SinglePurchasedCourse from "@/pages/User/SinglePurchasedCourse";
 import VerifyOtp from "@/pages/Auth/verifyOtp";
 import HeroSectionManagement from "@/pages/Admin/heroSection";
+import QuizManagement from "@/pages/Admin/Quiz.management";
 
 // UserLayout wraps routes that SHOULD have the top Navbar
 
@@ -82,6 +83,14 @@ const MainRoutes = () => {
           element={
             <ProtectedRoutes>
               <HeroSectionManagement />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="QuizManagement"
+          element={
+            <ProtectedRoutes>
+              <QuizManagement />
             </ProtectedRoutes>
           }
         />
