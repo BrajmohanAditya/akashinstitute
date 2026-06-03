@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { ShoppingBag, X, Menu, Home, BarChart3, FileText } from "lucide-react";
+import { ShoppingBag, X, Menu, Home, BarChart3, FileText ,Users} from "lucide-react";
 
 const DashboardSidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -16,6 +16,11 @@ const DashboardSidebar = () => {
       to: "/admindashboard/heroSection",
       label: "Banners & Upcomming Exams",
       icon: FileText,
+    },
+    {
+      to: "/admindashboard/paidStudent",
+      label: "Students",
+      icon: Users,
     },
   ];
 

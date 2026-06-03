@@ -1,4 +1,4 @@
-import DashboardSidebar from "../../components/AdminComponent/DashboardSidebar";
+import DashboardSidebar from "../../components/AdminComponent/Sidebar";
 
 
 import React from 'react'
