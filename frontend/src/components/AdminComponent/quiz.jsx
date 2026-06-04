@@ -209,3 +209,45 @@
 // };
 
 // export default CreateQuiz;
+
+import React, { useState } from "react";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Loader2, Plus, Trash2 } from "lucide-react";
+import { toast } from "sonner";
+import { useForm, useFieldArray } from "react-hook-form";
+
+const CreateQuiz = ({ children }) => {
+  // We need state to control whether the dialog is open or closed
+  const [isOpen, setIsOpen] = useState(false);
+  
+  // We need a loading state for when the form is submitting
+  const [isPending, setIsPending] = useState(false);
+
+  return (
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
+        {children}
+      </DialogTrigger>
+
+      <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>Add New Quiz</DialogTitle>
+          <DialogDescription>
+            {/* We will build the form here in the next step */}
+            Form goes here...
+          </DialogDescription>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default CreateQuiz;
+
