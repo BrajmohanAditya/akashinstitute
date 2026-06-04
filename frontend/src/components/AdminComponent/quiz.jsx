@@ -224,24 +224,134 @@ import { toast } from "sonner";
 import { useForm, useFieldArray } from "react-hook-form";
 
 const CreateQuiz = ({ children }) => {
-  // We need state to control whether the dialog is open or closed
   const [isOpen, setIsOpen] = useState(false);
-  
-  // We need a loading state for when the form is submitting
+
   const [isPending, setIsPending] = useState(false);
+
+  const { register, handleSubmit, reset, control } = useForm({
+    defaultValues: {
+      sections: [{ name: "", totalQuestions: "" }],
+    },
+  });
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "sections",
+  });
+
+  const createQuizHandler = (data) => {
+    setIsPending(true);
+
+    const formattedData = {
+      ...data,
+      duration: Number(data.duration),
+      negativeMark: Number(data.negativeMark),
+      totalNoOfQueation: Number(data.totalNoOfQueation), // your updated field
+      section: data.sections.map((s) => ({
+        name: s.name,
+        totalQuestions: Number(s.totalQuestions),
+      })),
+    };
+
+    console.log("Data to send to backend:", formattedData);
+
+    setTimeout(() => {
+      setIsPending(false);
+      toast.success("Quiz created successfully!");
+      setIsOpen(false); // Close the modal
+      reset(); // Clear out all form inputs back to default
+    }, 1000);
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        {children}
-      </DialogTrigger>
+      <DialogTrigger asChild>{children}</DialogTrigger>
 
       <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Add New Quiz</DialogTitle>
           <DialogDescription>
-            {/* We will build the form here in the next step */}
-            Form goes here...
+            <form
+              className="mt-6 space-y-4 text-left"
+              onSubmit={handleSubmit(createQuizHandler)}
+            >
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">
+                  Name of Exam
+                </label>
+                <input
+                  {...register("nameOfExam", { required: true })}
+                  placeholder="e.g. Banking, SSC, Railway"
+                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">
+                  Quiz Name / Set
+                </label>
+                <input
+                  {...register("quizName", { required: true })}
+                  placeholder="e.g. Set 1, Mock Test 2"
+                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                    Duration (mins)
+                  </label>
+                  <input
+                    type="number"
+                    {...register("duration", { required: true, min: 1 })}
+                    placeholder="e.g. 60"
+                    className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                    Total Questions
+                  </label>
+                  <input
+                    type="number"
+                    {...register("totalNoOfQueation", {
+                      required: true,
+                      min: 1,
+                    })}
+                    placeholder="e.g. 100"
+                    className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">
+                  Negative Marking
+                </label>
+                <input
+                  type="number"
+                  step="0.01"
+                  {...register("negativeMark", { required: true, min: 0 })}
+                  placeholder="e.g. 0.25"
+                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Our dynamic sections will go here next! */}
+
+              <button
+                disabled={isPending}
+                type="submit"
+                className="w-full py-3 mt-4 bg-blue-600 flex items-center justify-center text-white rounded-lg font-semibold hover:bg-blue-700 transition"
+              >
+                {isPending ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  "Create Quiz"
+                )}
+              </button>
+            </form>
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
@@ -250,4 +360,3 @@ const CreateQuiz = ({ children }) => {
 };
 
 export default CreateQuiz;
-
