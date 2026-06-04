@@ -13,3 +13,11 @@ export const createQuizApi = async (payload) => {
     );
     return res.data;
 };
+
+export const getQuizzesApi = async () => {
+    const res = await axios.get(`${baseUrl}/quiz/getQuizzes`, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true
+    });
+    return res.data;
+};

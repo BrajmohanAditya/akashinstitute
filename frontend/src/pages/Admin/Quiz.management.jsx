@@ -1,8 +1,23 @@
 import React from "react";
-import { FileQuestion, RefreshCw, BookOpen } from "lucide-react";
+import {
+  FileQuestion,
+  RefreshCw,
+  BookOpen,
+  Loader2,
+  Eye,
+  Edit,
+  Plus as PlusIcon,
+  Trash2,
+  Clock,
+  CheckCircle,
+} from "lucide-react";
 import CreateQuiz from "../../components/AdminComponent/quiz";
+import { useGetQuizzesHook } from "../../hooks/quiz.hook";
+import { format } from "date-fns";
 
 const QuizManagement = () => {
+  const { data, isLoading, isError } = useGetQuizzesHook();
+  const quizzes = data?.quizzes || [];
   return (
     <div className="min-h-screen p-4 sm:p-6 lg:p-8">
       {/* Header Section */}
@@ -35,7 +50,88 @@ const QuizManagement = () => {
 
       {/* Main Content Area (Placeholder for now) */}
       <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 sm:p-10 text-center min-h-[400px] flex flex-col items-center justify-center">
-        hi
+              {/* Main Content Area */}
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 sm:p-10 min-h-[400px]">
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center h-full">
+            <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+            <p className="text-slate-500 mt-2">Loading quizzes...</p>
+          </div>
+        ) : isError ? (
+          <div className="flex flex-col items-center justify-center h-full text-red-500">
+            <p>Failed to load quizzes.</p>
+          </div>
+        ) : quizzes.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-full">
+            <p className="text-slate-500">No quizzes found. Create one to get started!</p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead className="text-xs text-slate-500 uppercase bg-slate-50 border-b">
+                <tr>
+                  <th className="px-6 py-4 font-semibold">Quiz Name</th>
+                  <th className="px-6 py-4 font-semibold">Category</th>
+                  <th className="px-6 py-4 font-semibold">Duration</th>
+                  <th className="px-6 py-4 font-semibold">Questions</th>
+                  <th className="px-6 py-4 font-semibold">Negative Marking</th>
+                  <th className="px-6 py-4 font-semibold">Created</th>
+                  <th className="px-6 py-4 font-semibold text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {quizzes.map((quiz) => (
+                  <tr key={quiz._id} className="border-b hover:bg-slate-50/50 transition">
+                    <td className="px-6 py-4 font-medium text-slate-900 flex items-center gap-3">
+                      <div className="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
+                        <BookOpen className="w-4 h-4" />
+                      </div>
+                      {quiz.quizName}
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-semibold">
+                        {quiz.nameOfExam}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-slate-600 flex items-center gap-1.5 mt-2">
+                      <Clock className="w-4 h-4" /> {quiz.duration} mins
+                    </td>
+                    <td className="px-6 py-4 font-medium">
+                      {quiz.totalNoOfQueation} <span className="text-green-500 text-xs ml-1">+</span>
+                    </td>
+                    <td className="px-6 py-4">
+                      {quiz.negativeMark > 0 ? (
+                        <span className="flex items-center gap-1 text-red-500">
+                          <CheckCircle className="w-4 h-4" /> Yes ({quiz.negativeMark} marks)
+                        </span>
+                      ) : (
+                        <span className="text-slate-400">No</span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 text-slate-500">
+                      {format(new Date(quiz.createdAt), "MMM d, yyyy")}
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center justify-end gap-3">
+                        <button className="text-indigo-600 hover:text-indigo-800 transition">
+                          <Eye className="w-4 h-4" />
+                        </button>
+                        <button className="text-emerald-600 hover:text-emerald-800 transition">
+                          <Edit className="w-4 h-4" />
+                        </button>
+                        <button className="text-red-500 hover:text-red-700 transition">
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
       </div>
     </div>
   );
