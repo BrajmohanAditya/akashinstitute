@@ -1,5 +1,5 @@
 import express from "express";
-import { adminRoute, isLoggedIn } from "../middlewares/auth.middleware.js";
+import { isAdmin, isLoggedIn } from "../middlewares/auth.middleware.js";
 import upload from "../middlewares/multer.js";
 import {
   createCourse,
@@ -14,7 +14,7 @@ const courseRoute = express.Router();
 courseRoute.post(
   "/createCourse",
   isLoggedIn,
-  adminRoute,
+  isAdmin,
   upload.single("thumbnail"),
   createCourse,
 );
@@ -26,6 +26,6 @@ courseRoute.get(
   isLoggedIn,
   getSinglePurchasedCourse,
 );
-courseRoute.delete("/deleteCourse/:id", isLoggedIn, adminRoute, deleteCourse);
+courseRoute.delete("/deleteCourse/:id", isLoggedIn, isAdmin, deleteCourse);
 
 export default courseRoute;

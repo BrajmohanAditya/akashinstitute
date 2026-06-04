@@ -3,9 +3,9 @@ import { Quiz } from "../models/quiz.model.js";
 // Create a new quiz
 export const createQuiz = async (req, res) => {
   try {
-    const { nameOfExam, quizName, duration, negativeMark, section, noOfQueation } = req.body;
+    const { nameOfExam, quizName, duration, negativeMark, section, totalNoOfQueation } = req.body;
 
-    if (!nameOfExam || !quizName || !duration || !section || !noOfQueation) {
+    if (!nameOfExam || !quizName || !duration || !section || !totalNoOfQueation) {
       return res.status(400).json({
         success: false,
         message: "All fields are required",
@@ -18,7 +18,7 @@ export const createQuiz = async (req, res) => {
       duration,
       negativeMark: negativeMark || 0,
       section,
-      noOfQueation,
+      totalNoOfQueation,
     });
 
     await newQuiz.save();

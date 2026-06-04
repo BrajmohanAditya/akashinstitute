@@ -12,4 +12,5 @@ userRoute.post('/verify-otp',verifyOTP);
 userRoute.post("/google", googleLogin);
 
 
+
 export default userRoute;

@@ -32,7 +32,7 @@ export const isLoggedIn = async (req, res, next) => {
   }
 };
 
-export const adminRoute = async (req, res, next) => {
+export const isAdmin = async (req, res, next) => {
   try {
     if (req.user && req.user.role === "admin") {
       next();
