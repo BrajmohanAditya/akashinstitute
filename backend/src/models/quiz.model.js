@@ -22,11 +22,20 @@ const quizSchema = new mongoose.Schema(
       required: true,
       default: 0, // e.g. 0.25
     },
-    section:{ // reasoning, english , math
-      type: [String],
-      required: true,
-    },
-    noOfQueation:{
+    section: [
+      {
+        name: {
+          type: String,
+          required: true,
+          trim: true,
+        },
+        totalQuestions: {
+          type: Number,
+          required: true,
+        },
+      }
+    ],
+    totalNoOfQueation:{
       type: Number,
       required: true,
     }

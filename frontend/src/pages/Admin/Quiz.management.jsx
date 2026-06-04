@@ -1,5 +1,6 @@
 import React from "react";
 import { FileQuestion, RefreshCw, BookOpen } from "lucide-react";
+import CreateQuiz from "../../components/AdminComponent/quiz";
 
 const QuizManagement = () => {
   return (
@@ -23,28 +24,18 @@ const QuizManagement = () => {
             <RefreshCw className="w-4 h-4" />
             Refresh
           </button>
-          <button className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-lg text-sm font-semibold text-white hover:from-violet-700 hover:to-indigo-700 transition-all shadow-md shadow-violet-200">
-            <BookOpen className="w-4 h-4" />
-            Create Quiz
-          </button>
+          <CreateQuiz>
+            <button className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-lg text-sm font-semibold text-white hover:from-violet-700 hover:to-indigo-700 transition-all shadow-md shadow-violet-200">
+              <BookOpen className="w-4 h-4" />
+              Create Quiz
+            </button>
+          </CreateQuiz>
         </div>
       </div>
 
       {/* Main Content Area (Placeholder for now) */}
       <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 sm:p-10 text-center min-h-[400px] flex flex-col items-center justify-center">
-        <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mb-4">
-          <FileQuestion className="w-8 h-8 text-slate-400" />
-        </div>
-        <h3 className="text-lg font-semibold text-slate-900 mb-1">
-          No quizzes yet
-        </h3>
-        <p className="text-sm text-slate-500 max-w-sm mb-6">
-          Get started by creating your first quiz to evaluate your students.
-        </p>
-        <button className="flex items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-lg text-sm font-medium hover:bg-slate-800 transition-colors shadow-sm">
-          <BookOpen className="w-4 h-4" />
-          Create Your First Quiz
-        </button>
+        hi
       </div>
     </div>
   );
