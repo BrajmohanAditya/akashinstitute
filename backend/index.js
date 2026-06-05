@@ -9,6 +9,7 @@ import moduleRoute from './src/routes/module.route.js';
 import paymentRoute from "./src/routes/payment.route.js";
 import heroRoutes from './src/routes/hero.route.js';
 import quizRoute from './src/routes/quiz.route.js';
+import quizQuestionRoute from './src/routes/quiz.question.route.js';
 
 const app = express(); 
  
@@ -26,6 +27,7 @@ app.use('/api/module', moduleRoute)
 app.use('/api/payment', paymentRoute)
 app.use('/api/hero', heroRoutes);
 app.use('/api/quiz', quizRoute);
+app.use('/api/quizQuestion', quizQuestionRoute);
 
 app.get('/',(req,res) => {
     res.send('Hello World!')

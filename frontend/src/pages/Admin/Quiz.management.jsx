@@ -14,10 +14,20 @@ import {
 import CreateQuiz from "../../components/AdminComponent/quiz";
 import { useGetQuizzesHook } from "../../hooks/quiz.hook";
 import { format } from "date-fns";
+import QuizQuestionAdd from "../../components/AdminComponent/quiz.question.add";
 
 const QuizManagement = () => {
   const { data, isLoading, isError } = useGetQuizzesHook();
   const quizzes = data?.quizzes || [];
+  
+  const [isAddQuestionOpen, setIsAddQuestionOpen] = React.useState(false);
+  const [selectedQuizForAdd, setSelectedQuizForAdd] = React.useState(null);
+
+  const handleOpenAddQuestion = (quiz) => {
+    setSelectedQuizForAdd(quiz);
+    setIsAddQuestionOpen(true);
+  };
+
   return (
     <div className="min-h-screen p-4 sm:p-6 lg:p-8">
       {/* Header Section */}
@@ -131,7 +141,11 @@ const QuizManagement = () => {
                           <button className="text-red-500 hover:text-red-700 transition">
                             <Trash2 className="w-4 h-4" />
                           </button>
-                          <button className="text-blue-600 hover:text-blue-800 transition" title="Add Question">
+                          <button 
+                            className="text-blue-600 hover:text-blue-800 transition" 
+                            title="Add Question"
+                            onClick={() => handleOpenAddQuestion(quiz)}
+                          >
                             <PlusIcon className="w-4 h-4" />
                           </button>
                         </div>
@@ -143,6 +157,17 @@ const QuizManagement = () => {
             </div>
           )}
         </div>
+
+      {isAddQuestionOpen && (
+        <QuizQuestionAdd
+          isOpen={isAddQuestionOpen}
+          onClose={() => {
+            setIsAddQuestionOpen(false);
+            setSelectedQuizForAdd(null);
+          }}
+          quiz={selectedQuizForAdd}
+        />
+      )}
     </div>
   );
 };
