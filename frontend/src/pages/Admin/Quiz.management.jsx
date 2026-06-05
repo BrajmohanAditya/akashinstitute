@@ -113,12 +113,11 @@ const QuizManagement = () => {
                     </td>
                     <td className="px-6 py-4 font-medium">
                       {quiz.totalNoOfQueation}{" "}
-                      <span className="text-green-500 text-xs ml-1">+</span>
                     </td>
                     <td className="px-6 py-4">
                       {quiz.negativeMark > 0 ? (
                         <span className="flex items-center gap-1 text-red-500">
-                          <CheckCircle className="w-4 h-4" /> Yes (
+                          <CheckCircle className="w-4 h-4" />(
                           {quiz.negativeMark})
                         </span>
                       ) : (
@@ -130,9 +129,6 @@ const QuizManagement = () => {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center justify-end gap-3">
-                        <button className="text-indigo-600 hover:text-indigo-800 transition">
-                          <Eye className="w-4 h-4" />
-                        </button>
                         <button className="text-emerald-600 hover:text-emerald-800 transition">
                           <Edit className="w-4 h-4" />
                         </button>
