@@ -111,7 +111,7 @@ const QuizManagement = () => {
                         {quiz.negativeMark > 0 ? (
                           <span className="flex items-center gap-1 text-red-500">
                             <CheckCircle className="w-4 h-4" /> Yes (
-                            {quiz.negativeMark} marks)
+                            {quiz.negativeMark})
                           </span>
                         ) : (
                           <span className="text-slate-400">No</span>
@@ -130,6 +130,9 @@ const QuizManagement = () => {
                           </button>
                           <button className="text-red-500 hover:text-red-700 transition">
                             <Trash2 className="w-4 h-4" />
+                          </button>
+                          <button className="text-blue-600 hover:text-blue-800 transition" title="Add Question">
+                            <PlusIcon className="w-4 h-4" />
                           </button>
                         </div>
                       </td>
