@@ -8,7 +8,7 @@ const Home = () => {
     <div className="min-h-[88vh] bg-slate-50">
       <HeroSection />
       <CourseSection />
-       <FloatingWhatsApp />
+      <FloatingWhatsApp />
     </div>
   );
 };
