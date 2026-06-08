@@ -20,8 +20,8 @@ const QuizManagement = () => {
   const { data, isLoading, isError } = useGetQuizzesHook();
   const quizzes = data?.quizzes || [];
 
-  const [isAddQuestionOpen, setIsAddQuestionOpen] = useState(false);
   const [selectedQuizForAdd, setSelectedQuizForAdd] = useState(null);
+  const [isAddQuestionOpen, setIsAddQuestionOpen] = useState(false);
 
   const handleOpenAddQuestion = (quiz) => {
     setSelectedQuizForAdd(quiz);
