@@ -1,5 +1,6 @@
 import { Quiz } from "../models/quiz.model.js";
 import cloudinary from "../config/cloudinary.js";
+import { QuizQuestion } from "../models/quiz.question.model.js";
 
 // Create a new quiz
 export const createQuiz = async (req, res) => {
@@ -37,6 +38,7 @@ export const createQuiz = async (req, res) => {
     const base64 = `data:${req.file.mimetype};base64,${file.buffer.toString("base64")}`;
     const uploadRes = await cloudinary.uploader.upload(base64, {
       folder: "Akash_Academy",
+      timeout: 120000,
     });
 
     const newQuiz = new Quiz({
@@ -158,7 +160,10 @@ export const deleteQuiz = async (req, res) => {
         message: "Quiz not found",
       });
     }
-
+    if (deletedQuiz.logoId) {
+      await cloudinary.uploader.destroy(deletedQuiz.logoId);
+    }
+    await QuizQuestion.deleteMany({ quizId: quizId });
     return res.status(200).json({
       success: true,
       message: "Quiz deleted successfully",

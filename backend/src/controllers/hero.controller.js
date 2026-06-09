@@ -24,6 +24,7 @@ export const createHeroItem = async (req, res) => {
     const base64 = `data:${req.file.mimetype};base64,${file.buffer.toString("base64")}`;
     const uploadRes = await cloudinary.uploader.upload(base64, {
       folder: "Akash_Academy_Hero",
+       timeout: 120000,
     });
 
     const newHeroItem = new Hero({

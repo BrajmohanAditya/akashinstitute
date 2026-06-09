@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const quizSchema = new mongoose.Schema(
   {
-
-    nameOfExam: { // Banking, SSC , Railway
+    nameOfExam: {
+      // Banking, SSC , Railway
       type: String,
       required: true,
       trim: true,
@@ -11,9 +11,12 @@ const quizSchema = new mongoose.Schema(
     logoUrl: {
       type: String,
       required: true,
-      trim: true,
     },
-    quizName: {   // Set 1 , Set 2
+    logoId: {
+      type: String,
+    },
+    quizName: {
+      // Set 1 , Set 2
       type: String,
       required: true,
       trim: true,
@@ -38,13 +41,12 @@ const quizSchema = new mongoose.Schema(
           type: Number,
           required: true,
         },
-      }
+      },
     ],
-    totalNoOfQueation:{
+    totalNoOfQueation: {
       type: Number,
       required: true,
-    }
-
+    },
   },
   {
     timestamps: true,
