@@ -1,0 +1,210 @@
+import React from "react";
+import {
+  FileText,
+  ClipboardList,
+  Award,
+  CreditCard,
+  PlaySquare,
+  Calculator,
+  Brain,
+  Languages,
+  Globe,
+  FileCheck,
+  PenTool,
+  FileBox,
+  Calendar,
+  MessageCircle,
+  Camera,
+  Users,
+  Send,
+  BookOpen,
+  Video,
+  Target,
+  Megaphone,
+} from "lucide-react";
+
+const StudyMaterial = () => {
+  const cards = [
+    {
+      title: "Today Live Test",
+      bgColor: "bg-[#F3E8FF]", // Light purple
+      titleColor: "text-purple-700",
+      mainIcon: (
+        <div className="relative flex items-center justify-center w-20 h-20">
+          <div className="absolute w-8 h-8 bg-red-400 rounded-full animate-ping opacity-75"></div>
+          <div className="relative w-6 h-6 bg-red-500 rounded-full shadow-lg border-2 border-white"></div>
+        </div>
+      ),
+items:[]
+    },
+
+    {
+      title: "Video Classes",
+      bgColor: "bg-[#E6F8EA]", // Light green
+      titleColor: "text-emerald-700",
+      mainIcon: (
+        <Video
+          className="w-20 h-20 text-emerald-300 drop-shadow-md"
+          strokeWidth={1}
+        />
+      ),
+      items: [
+        {
+          name: "Quants",
+          icon: <Calculator className="w-5 h-5 text-purple-600" />,
+          iconBg: "bg-purple-100",
+        },
+        {
+          name: "Reasoning",
+          icon: <Brain className="w-5 h-5 text-orange-500" />,
+          iconBg: "bg-orange-100",
+        },
+        {
+          name: "English",
+          icon: <Languages className="w-5 h-5 text-amber-600" />,
+          iconBg: "bg-amber-100",
+        },
+        {
+          name: "GA Hustle",
+          icon: <Globe className="w-5 h-5 text-teal-600" />,
+          iconBg: "bg-teal-100",
+        },
+      ],
+    },
+
+    {
+      title: "Free Materials",
+      bgColor: "bg-[#E6EFFF]", // Light blue
+      titleColor: "text-blue-700",
+      mainIcon: (
+        <Target
+          className="w-20 h-20 text-blue-300 drop-shadow-md"
+          strokeWidth={1}
+        />
+      ),
+      items: [
+        {
+          name: "Free PDFs",
+          icon: <FileCheck className="w-5 h-5 text-blue-500" />,
+          iconBg: "bg-blue-100",
+        },
+        {
+          name: "Practice Quiz",
+          icon: <PenTool className="w-5 h-5 text-pink-500" />,
+          iconBg: "bg-pink-100",
+        },
+        {
+          name: "PYP",
+          icon: <FileBox className="w-5 h-5 text-emerald-600" />,
+          iconBg: "bg-emerald-100",
+        },
+        {
+          name: "Daily CA",
+          icon: <Calendar className="w-5 h-5 text-purple-600" />,
+          iconBg: "bg-purple-100",
+        },
+      ],
+    },
+    
+    {
+      title: "Follow Us",
+      bgColor: "bg-[#FFF4E5]", // Light orange/beige
+      titleColor: "text-orange-700",
+      mainIcon: (
+        <Megaphone
+          className="w-20 h-20 text-orange-300 drop-shadow-md"
+          strokeWidth={1}
+        />
+      ),
+      items: [
+        {
+          name: "WhatsApp",
+          icon: <MessageCircle className="w-5 h-5 text-green-500" />,
+          iconBg: "bg-green-100",
+        },
+        {
+          name: "Instagram",
+          icon: <Camera className="w-5 h-5 text-pink-600" />,
+          iconBg: "bg-pink-100",
+        },
+        {
+          name: "Group",
+          icon: <Users className="w-5 h-5 text-blue-500" />,
+          iconBg: "bg-blue-100",
+        },
+        {
+          name: "Channel",
+          icon: <Send className="w-5 h-5 text-sky-500" />,
+          iconBg: "bg-sky-100",
+        },
+      ],
+    },
+  ];
+
+  return (
+    <div className="p-8 min-h-screen bg-slate-50/50">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-4xl font-extrabold text-slate-800 mb-2 tracking-tight">
+          Study Dashboard
+        </h1>
+        <p className="text-slate-500 font-medium mb-10 text-lg">
+          Access your materials, tests, and community in one place.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8">
+          {cards.map((card, index) => (
+            <div
+              key={index}
+              className={`${card.bgColor} rounded-[2rem] p-6 relative overflow-hidden group cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-xl`}
+            >
+              {/* Large Background Icon */}
+              <div className="absolute right-4 top-4 opacity-40 group-hover:opacity-80 group-hover:scale-110 transition-all duration-500 pointer-events-none">
+                {card.mainIcon}
+              </div>
+
+              {/* Card Header */}
+              <div className="relative z-10 mb-8 min-h-[4rem]">
+                <h2 className={`text-2xl font-extrabold ${card.titleColor} mb-2`}>
+                  {card.title}
+                </h2>
+                {card.subtitle && (
+                  <p className="text-slate-600 font-medium text-sm leading-relaxed max-w-[85%]">
+                    {card.subtitle}
+                  </p>
+                )}
+              </div>
+
+              {/* Card Items Grid */}
+              {card.items && card.items.length > 0 ? (
+                <div className="grid grid-cols-2 gap-3 relative z-10">
+                  {card.items.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="flex flex-col items-center justify-center bg-white/40 backdrop-blur-md rounded-2xl p-4 hover:bg-white/80 transition-colors duration-300 border border-white/50 shadow-sm hover:shadow-md"
+                    >
+                      <div className={`${item.iconBg} p-3 rounded-xl mb-3 shadow-sm`}>
+                        {item.icon}
+                      </div>
+                      <span className="text-sm font-bold text-slate-700 text-center">
+                        {item.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="flex-grow flex items-center justify-center relative z-10 h-32 mt-4">
+                  <div className={`px-8 py-3 bg-white/60 backdrop-blur-md rounded-xl font-bold ${card.titleColor} border border-white/60 hover:bg-white transition-colors cursor-pointer shadow-sm w-full text-center flex items-center justify-center gap-2`}>
+                    <PlaySquare className="w-5 h-5" />
+                    Enter Now
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default StudyMaterial;
