@@ -85,7 +85,7 @@ const CreateQuiz = ({ children }) => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">
-                  Exam Logo
+                  Exam Logo <span className="text-xs font-normal text-slate-400 ml-1">(Recommended size: 1254x1254)</span>
                 </label>
                 <input
                   type="file"

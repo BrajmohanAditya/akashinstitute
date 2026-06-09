@@ -35,19 +35,29 @@ const StudyMaterial = () => {
         </div>
       ),
       items: quizzes.map((quiz, index) => {
-        const iconStyles = [
-          { icon: <Calculator className="w-5 h-5 text-purple-600" />, bg: "bg-purple-100" },
-          { icon: <Brain className="w-5 h-5 text-orange-500" />, bg: "bg-orange-100" },
-          { icon: <Languages className="w-5 h-5 text-amber-600" />, bg: "bg-amber-100" },
-          { icon: <Globe className="w-5 h-5 text-teal-600" />, bg: "bg-teal-100" },
+        // Keep rotating background colors for a nice UI
+        const bgStyles = [
+          "bg-purple-100",
+          "bg-orange-100",
+          "bg-amber-100",
+          "bg-teal-100",
         ];
         
-        const style = iconStyles[index % iconStyles.length];
+        const bg = bgStyles[index % bgStyles.length];
 
         return {
           name: quiz.nameOfExam || "Unknown Exam",
-          icon: style.icon,
-          iconBg: style.bg,
+          icon: quiz.logoUrl ? (
+            <img 
+              src={quiz.logoUrl} 
+              alt={quiz.nameOfExam || "Exam logo"} 
+              className="w-16 h-16 object-contain hover:scale-110 rounded-lg " 
+            />
+          ) : (
+            // Fallback icon just in case a quiz doesn't have a logo
+            <div className="w-16 h-16 rounded-full bg-slate-100 border border-slate-200" /> 
+          ),
+          iconBg: "", // Empty to prevent the colored background circle
         };
       }),
     },
@@ -196,13 +206,19 @@ const StudyMaterial = () => {
                   {card.items.map((item, idx) => (
                     <div
                       key={idx}
-                      className="flex flex-col items-center justify-center bg-white/40 backdrop-blur-md rounded-2xl p-4 hover:bg-white/80 transition-colors duration-300 border border-white/50 shadow-sm hover:shadow-md"
+                      className="flex flex-col items-center justify-center bg-white rounded-2xl p-4 transition-all duration-300 border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-1"
                     >
-                      <div
-                        className={`${item.iconBg} p-3 rounded-xl mb-3 shadow-sm`}
-                      >
-                        {item.icon}
-                      </div>
+                      {item.iconBg ? (
+                        <div
+                          className={`${item.iconBg} p-3 rounded-xl mb-3 shadow-sm flex items-center justify-center`}
+                        >
+                          {item.icon}
+                        </div>
+                      ) : (
+                        <div className="mb-2 flex items-center justify-center">
+                          {item.icon}
+                        </div>
+                      )}
                       <span className="text-sm font-bold text-slate-700 text-center">
                         {item.name}
                       </span>
