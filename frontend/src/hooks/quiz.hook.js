@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { createQuizApi, getQuizzesApi } from "../api/quiz.api.js";
+import { createQuizApi, getQuizzesApi, deleteQuizApi } from "../api/quiz.api.js";
+
 
 export const useCreateQuizHook = () => {
   return useMutation({
@@ -22,5 +23,23 @@ export const useGetQuizzesHook = () => {
   return useQuery({
     queryFn: getQuizzesApi,
     queryKey: ["getQuizzes"],
+  });
+};
+
+
+export const useDeleteQuizHook = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteQuizApi,
+    onSuccess: (data) => {
+      toast.success(data?.message || "Quiz deleted successfully");
+      // This immediately refreshes the table so the deleted quiz disappears!
+      queryClient.invalidateQueries(["getQuizzes"]); 
+    },
+    onError: (err) => {
+      const errorMessage = err.response?.data?.message || "Failed to delete quiz";
+      toast.error(errorMessage);
+    },
   });
 };

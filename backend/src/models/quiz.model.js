@@ -8,6 +8,11 @@ const quizSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    logoUrl: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     quizName: {   // Set 1 , Set 2
       type: String,
       required: true,

@@ -1,9 +1,5 @@
 import React from "react";
 import {
-  FileText,
-  ClipboardList,
-  Award,
-  CreditCard,
   PlaySquare,
   Calculator,
   Brain,
@@ -17,13 +13,16 @@ import {
   Camera,
   Users,
   Send,
-  BookOpen,
   Video,
   Target,
   Megaphone,
 } from "lucide-react";
-
+import { useGetQuizzesHook } from "@/hooks/quiz.hook";
 const StudyMaterial = () => {
+  const { data, isLoading, isError } = useGetQuizzesHook();
+
+  const quizzes = data?.quizzes || [];
+
   const cards = [
     {
       title: "Today Live Test",
@@ -35,7 +34,22 @@ const StudyMaterial = () => {
           <div className="relative w-6 h-6 bg-red-500 rounded-full shadow-lg border-2 border-white"></div>
         </div>
       ),
-items:[]
+      items: quizzes.map((quiz, index) => {
+        const iconStyles = [
+          { icon: <Calculator className="w-5 h-5 text-purple-600" />, bg: "bg-purple-100" },
+          { icon: <Brain className="w-5 h-5 text-orange-500" />, bg: "bg-orange-100" },
+          { icon: <Languages className="w-5 h-5 text-amber-600" />, bg: "bg-amber-100" },
+          { icon: <Globe className="w-5 h-5 text-teal-600" />, bg: "bg-teal-100" },
+        ];
+        
+        const style = iconStyles[index % iconStyles.length];
+
+        return {
+          name: quiz.nameOfExam || "Unknown Exam",
+          icon: style.icon,
+          iconBg: style.bg,
+        };
+      }),
     },
 
     {
@@ -105,7 +119,7 @@ items:[]
         },
       ],
     },
-    
+
     {
       title: "Follow Us",
       bgColor: "bg-[#FFF4E5]", // Light orange/beige
@@ -164,7 +178,9 @@ items:[]
 
               {/* Card Header */}
               <div className="relative z-10 mb-8 min-h-[4rem]">
-                <h2 className={`text-2xl font-extrabold ${card.titleColor} mb-2`}>
+                <h2
+                  className={`text-2xl font-extrabold ${card.titleColor} mb-2`}
+                >
                   {card.title}
                 </h2>
                 {card.subtitle && (
@@ -182,7 +198,9 @@ items:[]
                       key={idx}
                       className="flex flex-col items-center justify-center bg-white/40 backdrop-blur-md rounded-2xl p-4 hover:bg-white/80 transition-colors duration-300 border border-white/50 shadow-sm hover:shadow-md"
                     >
-                      <div className={`${item.iconBg} p-3 rounded-xl mb-3 shadow-sm`}>
+                      <div
+                        className={`${item.iconBg} p-3 rounded-xl mb-3 shadow-sm`}
+                      >
                         {item.icon}
                       </div>
                       <span className="text-sm font-bold text-slate-700 text-center">
@@ -193,7 +211,9 @@ items:[]
                 </div>
               ) : (
                 <div className="flex-grow flex items-center justify-center relative z-10 h-32 mt-4">
-                  <div className={`px-8 py-3 bg-white/60 backdrop-blur-md rounded-xl font-bold ${card.titleColor} border border-white/60 hover:bg-white transition-colors cursor-pointer shadow-sm w-full text-center flex items-center justify-center gap-2`}>
+                  <div
+                    className={`px-8 py-3 bg-white/60 backdrop-blur-md rounded-xl font-bold ${card.titleColor} border border-white/60 hover:bg-white transition-colors cursor-pointer shadow-sm w-full text-center flex items-center justify-center gap-2`}
+                  >
                     <PlaySquare className="w-5 h-5" />
                     Enter Now
                   </div>

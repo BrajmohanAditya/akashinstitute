@@ -1,6 +1,7 @@
 import { AlertCircle, Trash2, Loader2 } from "lucide-react";
 
 const DeleteAlertbox = ({ isOpen, itemName, onConfirm, onCancel, isDeleting }) => {
+
   if (!isOpen) return null; // Agar isOpen false hai, toh kuch mat dikhao
 
   return (

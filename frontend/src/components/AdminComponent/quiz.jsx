@@ -28,26 +28,38 @@ const CreateQuiz = ({ children }) => {
   });
 
   const createQuizHandler = (data) => {
-    const formattedData = {
-      ...data,
-      duration: Number(data.duration),
-      negativeMark: Number(data.negativeMark),
-      totalNoOfQueation: Number(data.totalNoOfQueation), // your updated field
-      section: data.sections.map((s) => ({
-        name: s.name,
-        totalQuestions: Number(s.totalQuestions),
-      })),
-    };
+    // 1. Create a new FormData object
+    const formData = new FormData();
 
-    console.log("Data to send to backend:", formattedData);
-    mutate(formattedData, {
+    // 2. Append all standard text fields
+    formData.append("nameOfExam", data.nameOfExam);
+    formData.append("quizName", data.quizName);
+    formData.append("duration", Number(data.duration));
+    formData.append("negativeMark", Number(data.negativeMark));
+    formData.append("totalNoOfQueation", Number(data.totalNoOfQueation));
+
+    // 3. Append complex objects (like sections array) as a JSON string
+    const sectionsData = data.sections.map((s) => ({
+      name: s.name,
+      totalQuestions: Number(s.totalQuestions),
+    }));
+    formData.append("section", JSON.stringify(sectionsData));
+
+    // 4. Append the uploaded file!
+    // react-hook-form stores files in an array (FileList), so we get index [0]
+    if (data.logo && data.logo[0]) {
+      formData.append("logo", data.logo[0]); 
+    }
+
+    // 5. Send this formData to the mutation
+    mutate(formData, {
       onSuccess: () => {
-        // We only close the modal and reset if the backend says SUCCESS!
         setIsOpen(false);
         reset();
       },
     });
   };
+
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -69,6 +81,17 @@ const CreateQuiz = ({ children }) => {
                   {...register("nameOfExam", { required: true })}
                   placeholder="e.g. Banking, SSC, Railway"
                   className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-1">
+                  Exam Logo
+                </label>
+                <input
+                  type="file"
+                  accept="image/png, image/jpeg, image/jpg, image/webp"
+                  {...register("logo", { required: true })}
+                  className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                 />
               </div>
 

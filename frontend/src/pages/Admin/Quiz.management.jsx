@@ -12,20 +12,26 @@ import {
   CheckCircle,
 } from "lucide-react";
 import CreateQuiz from "../../components/AdminComponent/quiz";
-import { useGetQuizzesHook } from "../../hooks/quiz.hook";
+import { useGetQuizzesHook, useDeleteQuizHook } from "../../hooks/quiz.hook";
 import { format } from "date-fns";
 import QuizQuestionAdd from "../../components/AdminComponent/quiz.question.add";
+import DeleteAlertbox from "../../components/ui/DeleteAlertbox";
 
 const QuizManagement = () => {
   const { data, isLoading, isError } = useGetQuizzesHook();
   const quizzes = data?.quizzes || [];
+  const { mutate: deleteQuiz, isPending: isDeleting } = useDeleteQuizHook();
 
   const [selectedQuizForAdd, setSelectedQuizForAdd] = useState(null);
   const [isAddQuestionOpen, setIsAddQuestionOpen] = useState(false);
+  const [quizToDelete, setQuizToDelete] = useState(null);
 
   const handleOpenAddQuestion = (quiz) => {
     setSelectedQuizForAdd(quiz);
     setIsAddQuestionOpen(true);
+  };
+  const handleDeleteQuiz = (quiz) => {
+    setQuizToDelete(quiz);
   };
 
   return (
@@ -132,9 +138,19 @@ const QuizManagement = () => {
                         <button className="text-emerald-600 hover:text-emerald-800 transition">
                           <Edit className="w-4 h-4" />
                         </button>
-                        <button className="text-red-500 hover:text-red-700 transition">
-                          <Trash2 className="w-4 h-4" />
+
+                        <button
+                          className="text-red-500 hover:text-red-700 transition disabled:opacity-50 cursor-pointer"
+                          onClick={() => handleDeleteQuiz(quiz)}
+                          disabled={isDeleting}
+                        >
+                          {isDeleting ? (
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                          ) : (
+                            <Trash2 className="w-4 h-4" />
+                          )}
                         </button>
+
                         <button
                           className="text-blue-600 hover:text-blue-800 transition"
                           title="Add Question"
@@ -162,6 +178,18 @@ const QuizManagement = () => {
           quiz={selectedQuizForAdd}
         />
       )}
+
+      <DeleteAlertbox
+        isOpen={!!quizToDelete}
+        itemName={quizToDelete?.quizName}
+        isDeleting={isDeleting}
+        onCancel={() => setQuizToDelete(null)}
+        onConfirm={() => {
+          deleteQuiz(quizToDelete?._id, {
+            onSuccess: () => setQuizToDelete(null),
+          });
+        }}
+      />
     </div>
   );
 };

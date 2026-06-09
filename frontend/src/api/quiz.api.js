@@ -7,7 +7,7 @@ export const createQuizApi = async (payload) => {
     const res = await axios.post(`${baseUrl}/quiz/create`, 
         payload, 
         {
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'multipart/form-data' },
             withCredentials: true
         }
     );
@@ -17,6 +17,13 @@ export const createQuizApi = async (payload) => {
 export const getQuizzesApi = async () => {
     const res = await axios.get(`${baseUrl}/quiz/getQuizzes`, {
         headers: { 'Content-Type': 'application/json' },
+        withCredentials: true
+    });
+    return res.data;
+};
+
+export const deleteQuizApi = async (id) => {
+    const res = await axios.delete(`${baseUrl}/quiz/delete/${id}`, {
         withCredentials: true
     });
     return res.data;

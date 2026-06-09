@@ -1,24 +1,53 @@
 import { Quiz } from "../models/quiz.model.js";
+import cloudinary from "../config/cloudinary.js";
 
 // Create a new quiz
 export const createQuiz = async (req, res) => {
   try {
-    const { nameOfExam, quizName, duration, negativeMark, section, totalNoOfQueation } = req.body;
+    const {
+      nameOfExam,
+      quizName,
+      duration,
+      negativeMark,
+      section,
+      totalNoOfQueation,
+    } = req.body;
 
-    if (!nameOfExam || !quizName || !duration || !section || !totalNoOfQueation) {
+    const file = req.file;
+
+    if (
+      !nameOfExam ||
+      !quizName ||
+      !duration ||
+      !section ||
+      !totalNoOfQueation
+    ) {
       return res.status(400).json({
         success: false,
         message: "All fields are required",
       });
     }
 
+    if (!req.file) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Logo file is required" });
+    }
+    // Upload to cloudinary (similar to course.controller.js)
+    const base64 = `data:${req.file.mimetype};base64,${file.buffer.toString("base64")}`;
+    const uploadRes = await cloudinary.uploader.upload(base64, {
+      folder: "Akash_Academy",
+    });
+
     const newQuiz = new Quiz({
       nameOfExam,
       quizName,
       duration,
       negativeMark: negativeMark || 0,
-      section,
+      section: JSON.parse(section),
       totalNoOfQueation,
+      logoUrl: uploadRes.secure_url,
+      logoId: uploadRes.public_id,
     });
 
     await newQuiz.save();
@@ -92,7 +121,7 @@ export const updateQuiz = async (req, res) => {
     const updatedQuiz = await Quiz.findByIdAndUpdate(
       quizId,
       { $set: updateData },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     );
 
     if (!updatedQuiz) {
