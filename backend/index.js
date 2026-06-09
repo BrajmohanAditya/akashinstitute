@@ -33,8 +33,24 @@ app.get('/',(req,res) => {
     res.send('Hello World!')
 });
 
-app.listen(ENV.PORT, () => {
-  console.log(`Server running on port ${ENV.PORT}`);
+
+// Global Error Handling Middleware
+
+app.use((err, req, res, next) => {
+    console.error(err.stack); // Log the error for debugging
+    const statusCode = err.statusCode || 500;
+    const message = err.message || 'Internal Server Error';
+    res.status(statusCode).json({
+        success: false,
+        message: message,
+        stack: ENV.NODE_ENV === 'development' ? err.stack : undefined 
+    });
+});
+
+
+
+app.listen(ENV.PORT || 10000, "0.0.0.0", () => {
+  console.log(`Server running on port ${ENV.PORT || 10000}`);
   connectDB();
 });
  
