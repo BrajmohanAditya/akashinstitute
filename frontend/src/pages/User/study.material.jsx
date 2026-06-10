@@ -1,4 +1,6 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   PlaySquare,
   Calculator,
@@ -17,9 +19,11 @@ import {
   Target,
   Megaphone,
 } from "lucide-react";
+
 import { useGetQuizzesHook } from "@/hooks/quiz.hook";
 const StudyMaterial = () => {
   const { data, isLoading, isError } = useGetQuizzesHook();
+  const navigate = useNavigate();
 
   const quizzes = data?.quizzes || [];
 
@@ -34,7 +38,7 @@ const StudyMaterial = () => {
           <div className="relative w-6 h-6 bg-red-500 rounded-full shadow-lg border-2 border-white"></div>
         </div>
       ),
-      items: quizzes.map((quiz, index) => {
+      items: quizzes.slice(0, 4).map((quiz, index) => {
         // Keep rotating background colors for a nice UI
         const bgStyles = [
           "bg-purple-100",
@@ -42,20 +46,24 @@ const StudyMaterial = () => {
           "bg-amber-100",
           "bg-teal-100",
         ];
-        
+
         const bg = bgStyles[index % bgStyles.length];
 
         return {
           name: quiz.nameOfExam || "Unknown Exam",
           icon: quiz.logoUrl ? (
-            <img 
-              src={quiz.logoUrl} 
-              alt={quiz.nameOfExam || "Exam logo"} 
-              className="w-16 h-16 object-contain hover:scale-110 rounded-lg " 
+            <img
+              src={quiz.logoUrl}
+              alt={quiz.nameOfExam || "Exam logo"}
+              className="w-12 h-12 object-contain hover:scale-110 rounded-lg cursor-pointer"
+              onClick={() => navigate("/mockTest")}
             />
           ) : (
             // Fallback icon just in case a quiz doesn't have a logo
-            <div className="w-16 h-16 rounded-full bg-slate-100 border border-slate-200" /> 
+            <div
+              className="w-12 h-12 rounded-full bg-slate-100 border border-slate-200 cursor-pointer"
+              onClick={() => navigate("/mockTest")}
+            />
           ),
           iconBg: "", // Empty to prevent the colored background circle
         };
@@ -219,7 +227,7 @@ const StudyMaterial = () => {
                           {item.icon}
                         </div>
                       )}
-                      <span className="text-sm font-bold text-slate-700 text-center">
+                      <span className="text-xs font-bold text-slate-700 text-center truncate w-full block px-1" title={item.name}>
                         {item.name}
                       </span>
                     </div>

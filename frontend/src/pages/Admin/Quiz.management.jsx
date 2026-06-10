@@ -82,9 +82,9 @@ const QuizManagement = () => {
             </p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left">
-              <thead className="text-xs text-slate-500 uppercase bg-slate-50 border-b">
+          <div className="overflow-auto max-h-[60vh] custom-scrollbar rounded-lg border border-slate-200">
+            <table className="w-full text-sm text-left relative">
+              <thead className="text-xs text-slate-500 uppercase bg-slate-100 sticky top-0 z-20 shadow-sm">
                 <tr>
                   <th className="px-6 py-4 font-semibold">Quiz Name</th>
                   <th className="px-6 py-4 font-semibold">Category</th>
@@ -142,9 +142,9 @@ const QuizManagement = () => {
                         <button
                           className="text-red-500 hover:text-red-700 transition disabled:opacity-50 cursor-pointer"
                           onClick={() => handleDeleteQuiz(quiz)}
-                          disabled={isDeleting}
+                          disabled={isDeleting  && quizToDelete?._id === quiz._id}
                         >
-                          {isDeleting ? (
+                          {isDeleting && quizToDelete?._id === quiz._id? (
                             <Loader2 className="w-4 h-4 animate-spin" />
                           ) : (
                             <Trash2 className="w-4 h-4" />
