@@ -47,6 +47,10 @@ const quizSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    totalMarks: {
+      type: Number,
+      required: true,
+    },
   },
   {
     timestamps: true,

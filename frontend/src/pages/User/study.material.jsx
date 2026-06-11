@@ -56,13 +56,13 @@ const StudyMaterial = () => {
               src={quiz.logoUrl}
               alt={quiz.nameOfExam || "Exam logo"}
               className="w-12 h-12 object-contain hover:scale-110 rounded-lg cursor-pointer"
-              onClick={() => navigate("/mockTest")}
+              onClick={() => navigate("/mockDetail")}
             />
           ) : (
             // Fallback icon just in case a quiz doesn't have a logo
             <div
               className="w-12 h-12 rounded-full bg-slate-100 border border-slate-200 cursor-pointer"
-              onClick={() => navigate("/mockTest")}
+              onClick={() => navigate("/mockDetail")}
             />
           ),
           iconBg: "", // Empty to prevent the colored background circle
@@ -227,7 +227,10 @@ const StudyMaterial = () => {
                           {item.icon}
                         </div>
                       )}
-                      <span className="text-xs font-bold text-slate-700 text-center truncate w-full block px-1" title={item.name}>
+                      <span
+                        className="text-xs font-bold text-slate-700 text-center truncate w-full block px-1"
+                        title={item.name}
+                      >
                         {item.name}
                       </span>
                     </div>

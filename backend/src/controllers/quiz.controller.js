@@ -12,6 +12,7 @@ export const createQuiz = async (req, res) => {
       negativeMark,
       section,
       totalNoOfQueation,
+      totalMarks,
     } = req.body;
 
     const file = req.file;
@@ -21,7 +22,8 @@ export const createQuiz = async (req, res) => {
       !quizName ||
       !duration ||
       !section ||
-      !totalNoOfQueation
+      !totalNoOfQueation ||
+      !totalMarks
     ) {
       return res.status(400).json({
         success: false,
@@ -48,6 +50,7 @@ export const createQuiz = async (req, res) => {
       negativeMark: negativeMark || 0,
       section: JSON.parse(section),
       totalNoOfQueation,
+      totalMarks,
       logoUrl: uploadRes.secure_url,
       logoId: uploadRes.public_id,
     });

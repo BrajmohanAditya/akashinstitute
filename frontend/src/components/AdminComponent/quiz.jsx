@@ -135,17 +135,30 @@ const CreateQuiz = ({ children }) => {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">
-                  Negative Marking
-                </label>
-                <input
-                  type="number"
-                  step="0.01"
-                  {...register("negativeMark", { required: true, min: 0 })}
-                  placeholder="e.g. 0.25"
-                  className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                    Negative Marking
+                  </label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    {...register("negativeMark", { required: true, min: 0 })}
+                    placeholder="e.g. 0.25"
+                    className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                    Total Marks
+                  </label>
+                  <input
+                    type="number"
+                    {...register("totalMarks", { required: true, min: 1 })}
+                    placeholder="e.g. 100"
+                    className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
               </div>
 
               {/* Our dynamic sections will go here next! */}

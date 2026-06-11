@@ -15,8 +15,8 @@ import SinglePurchasedCourse from "@/pages/User/SinglePurchasedCourse";
 import VerifyOtp from "@/pages/Auth/verifyOtp";
 import HeroSectionManagement from "@/pages/Admin/heroSection";
 import QuizManagement from "@/pages/Admin/Quiz.management";
-import MockInterface from "@/pages/User/mock/mock.interface";
-import MockDetail from "@/pages/User/mock/mock.detail";
+import MockInterface from "@/pages/User/quize/quize.interface";
+import MockDetail from "@/pages/User/quize/quize.detail";
 // UserLayout wraps routes that SHOULD have the top Navbar
 
 const MainRoutes = () => {
