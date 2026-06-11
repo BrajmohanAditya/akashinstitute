@@ -8,7 +8,7 @@ const MockDetail = () => {
   const quizzes = data?.quizzes || [];
 
   return (
-    <div className="p-8 min-h-screen bg-[#f8f9fa]">
+    <div className="p-8 h-full bg-[#f8f9fa]">
       <div className="max-w-7xl mx-auto">
         {isLoading && <p className="text-center text-slate-500">Loading quizzes...</p>}
         {isError && <p className="text-center text-red-500">Error loading quizzes.</p>}
@@ -48,7 +48,7 @@ const MockDetail = () => {
                   <span className="text-slate-300">|</span>
                   <span>{test.duration} Mins.</span>
                   <span className="text-slate-300">|</span>
-                  <span>{test.totalNoOfQueation} Marks</span>
+                  <span>{test.totalMarks} Marks</span>
                 </div>
 
                 {/* Schedule and Action Button */}

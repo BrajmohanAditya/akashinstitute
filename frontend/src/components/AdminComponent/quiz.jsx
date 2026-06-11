@@ -37,6 +37,8 @@ const CreateQuiz = ({ children }) => {
     formData.append("duration", Number(data.duration));
     formData.append("negativeMark", Number(data.negativeMark));
     formData.append("totalNoOfQueation", Number(data.totalNoOfQueation));
+    formData.append("totalMarks", Number(data.totalMarks));
+
 
     // 3. Append complex objects (like sections array) as a JSON string
     const sectionsData = data.sections.map((s) => ({
