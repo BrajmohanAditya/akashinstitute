@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { User, AlertTriangle, Maximize } from "lucide-react";
-import { useGetQuizzesHook } from "@/hooks/quiz.hook";
+import { useGetQuizByIdHook } from "@/hooks/quiz.hook";
 import QuestionUi from "@/components/userComponent/quizes/question.ui.jsx";
 import { useParams } from "react-router-dom";
 import { useGetQuizQuestionsHook } from "@/hooks/quiz.createQuest.hook.js";
 const QuizeInterface = () => {
   const { id } = useParams(); // 1. Get the ID from the URL!
-  const { data, isLoading, isError } = useGetQuizzesHook();
-  
-  // 2. Find the specific quiz using that ID
-  const currentQuiz = data?.quizzes?.find((quiz) => quiz._id === id);
+  // 2. Fetch only the specific quiz using that ID
+  const { data: quizData, isLoading, isError } = useGetQuizByIdHook(id);
+  const currentQuiz = quizData?.quiz;
   
   // 3. Automatically get questions for this ID
   const { data: questions } = useGetQuizQuestionsHook(id);
   
   const [activeSection, setActiveSection] = useState("");
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
   // 4. Automatically select the first section dynamically
   React.useEffect(() => {
@@ -22,6 +22,15 @@ const QuizeInterface = () => {
       setActiveSection(currentQuiz.section[0].name);
     }
   }, [currentQuiz, activeSection]);
+
+  // 5. Filter questions by active section and pick the current one
+  const sectionQuestions = questions?.questions?.filter((q) => q.sectionName === activeSection) || [];
+  const currentQuestion = sectionQuestions[currentQuestionIndex];
+
+  // Reset to first question whenever the user switches sections
+  React.useEffect(() => {
+    setCurrentQuestionIndex(0);
+  }, [activeSection]);
   return (
     <div className="h-screen flex flex-col bg-white text-sm font-sans select-none overflow-hidden">
       {/* Step 1: Top Header */}
@@ -67,8 +76,9 @@ const QuizeInterface = () => {
       </div>
 
       {/* Main Content Area Placeholder (To be built in the next steps) */}
-      <div className="flex-1 bg-slate-50 flex items-center justify-center text-slate-400">
-        <QuestionUi quizId={currentQuiz?._id} />
+      <div className="flex-1 bg-slate-50 flex text-slate-400">
+        {/* Render the Question UI and pass the actual current question to it! */}
+        <QuestionUi question={currentQuestion} questionNumber={currentQuestionIndex + 1} />
       </div>
     </div>
   );

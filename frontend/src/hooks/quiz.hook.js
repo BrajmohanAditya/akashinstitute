@@ -4,6 +4,7 @@ import {
   createQuizApi,
   getQuizzesApi,
   deleteQuizApi,
+  getQuizByIdApi,
 } from "../api/quiz.api.js";
 
 export const useCreateQuizHook = () => {
@@ -46,5 +47,14 @@ export const useDeleteQuizHook = () => {
         err.response?.data?.message || "Failed to delete quiz";
       toast.error(errorMessage);
     },
+  });
+};
+
+export const useGetQuizByIdHook = (id) => {
+  return useQuery({
+    queryFn: () => getQuizByIdApi(id),
+    queryKey: ["getQuizById", id],
+    enabled: !!id,
+    staleTime: 2 * 60 * 1000,
   });
 };

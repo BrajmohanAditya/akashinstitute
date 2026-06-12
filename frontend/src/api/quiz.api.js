@@ -28,3 +28,10 @@ export const deleteQuizApi = async (id) => {
     });
     return res.data;
 };
+
+export const getQuizByIdApi = async (id) => {
+    const res = await axios.get(`${baseUrl}/quiz/getQuiz/${id}`, {
+        withCredentials: true
+    });
+    return res.data;
+};

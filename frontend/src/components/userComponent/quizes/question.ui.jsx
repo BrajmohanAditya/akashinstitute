@@ -50,22 +50,19 @@ const QuestionUI = ({ children, question, questionNumber = 1 }) => {
 
       {/* 2. Main Question Body */}
       <div className="flex-1 flex flex-col overflow-y-auto custom-scrollbar p-8">
-        
         {/* Question Content */}
         <div className="mb-8">
-          <span className="underline italic font-bold text-slate-800 mb-4 inline-block">
-            Question:
-          </span>
           <div className="text-slate-800 text-[16px] leading-relaxed font-medium whitespace-pre-wrap">
-            {question?.questionText || "No question text provided yet. Start typing to see it here!"}
+            {question?.questionText ||
+              "No question text provided yet. Start typing to see it here!"}
           </div>
 
           {/* Question Image (If it exists in the database) */}
           {question?.questionImage && (
             <div className="mt-6 border border-slate-200 rounded-lg p-2 inline-block shadow-sm">
-              <img 
-                src={question.questionImage} 
-                alt="Question Figure" 
+              <img
+                src={question.questionImage}
+                alt="Question Figure"
                 className="max-w-full max-h-[300px] object-contain rounded"
               />
             </div>
@@ -73,10 +70,7 @@ const QuestionUI = ({ children, question, questionNumber = 1 }) => {
         </div>
 
         {/* 3. Options Container (This is where option.ui.jsx will go later) */}
-        <div className="mt-2 flex-1">
-          {children}
-        </div>
-
+        <div className="mt-2 flex-1">{children}</div>
       </div>
     </div>
   );
