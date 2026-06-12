@@ -1,18 +1,24 @@
 import React from "react";
 import { FileText, Clock, Globe, CircleDot } from "lucide-react";
-import {useGetQuizzesHook} from "@/hooks/quiz.hook";
+import { useGetQuizzesHook } from "@/hooks/quiz.hook";
+import { useNavigate } from "react-router-dom";
 
-const MockDetail = () => {
+const QuizeDetail = () => {
   const { data, isLoading, isError } = useGetQuizzesHook();
+  const navigate = useNavigate();
 
   const quizzes = data?.quizzes || [];
 
   return (
     <div className="p-8 h-full bg-[#f8f9fa]">
       <div className="max-w-7xl mx-auto">
-        {isLoading && <p className="text-center text-slate-500">Loading quizzes...</p>}
-        {isError && <p className="text-center text-red-500">Error loading quizzes.</p>}
-        
+        {isLoading && (
+          <p className="text-center text-slate-500">Loading quizzes...</p>
+        )}
+        {isError && (
+          <p className="text-center text-red-500">Error loading quizzes.</p>
+        )}
+
         {!isLoading && !isError && quizzes.length === 0 && (
           <p className="text-center text-slate-500">No quizzes found.</p>
         )}
@@ -58,7 +64,8 @@ const MockDetail = () => {
                     <span>Available Now</span>
                   </div>
                   <button
-                    className="px-5 py-2 rounded text-white text-sm font-semibold transition-colors shadow-sm bg-[#00c2e0] hover:bg-[#00a8c2]"
+                    onClick={() => navigate(`/quizeInterface/${test._id}`)}
+                    className="px-5 cursor-pointer py-2 rounded text-white text-sm font-semibold transition-colors shadow-sm bg-[#00c2e0] hover:bg-[#00a8c2]"
                   >
                     Start Now
                   </button>
@@ -82,4 +89,4 @@ const MockDetail = () => {
   );
 };
 
-export default MockDetail;
+export default QuizeDetail;

@@ -12,3 +12,12 @@ export const createQuizQuestionApi = async (payload) => {
     );
     return res.data;
 };
+
+export const getQuizQuestionsApi = async (quizId) => {
+    const res = await axios.get(`${baseUrl}/quizQuestion/get/${quizId}`, 
+        {
+            withCredentials: true
+        }
+    );
+    return res.data;
+};

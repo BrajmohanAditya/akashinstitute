@@ -51,7 +51,7 @@ const StudyMaterial = () => {
 
         return {
           name: quiz.nameOfExam || "Unknown Exam",
-          action: () => navigate("/mockDetail"),
+          action: () => navigate("/quizeDetail"),
           icon: quiz.logoUrl ? (
             <img
               src={quiz.logoUrl}

@@ -15,8 +15,8 @@ import SinglePurchasedCourse from "@/pages/User/SinglePurchasedCourse";
 import VerifyOtp from "@/pages/Auth/verifyOtp";
 import HeroSectionManagement from "@/pages/Admin/heroSection";
 import QuizManagement from "@/pages/Admin/Quiz.management";
-import MockInterface from "@/pages/User/quize/quize.interface";
-import MockDetail from "@/pages/User/quize/quize.detail";
+import QuizeInterface from "@/pages/User/quize/quize.interface";
+import QuizeDetail from "@/pages/User/quize/quize.detail";
 // UserLayout wraps routes that SHOULD have the top Navbar
 
 const MainRoutes = () => {
@@ -52,23 +52,25 @@ const MainRoutes = () => {
             </ProtectedRoutes>
           }
         />
-         <Route
-          path="/mockTest"
-          element={
-            <ProtectedRoutes>
-              <MockInterface />
-            </ProtectedRoutes>
-          }
-        />
         <Route
-          path="/mockDetail"
+          path="/quizeDetail"
           element={
             <ProtectedRoutes>
-              <MockDetail />
+              <QuizeDetail />
             </ProtectedRoutes>
           }
         />
       </Route>
+
+      {/* --- Full Screen Mock Test (No Navbar) --- */}
+      <Route
+        path="/quizeInterface/:id"
+        element={
+          <ProtectedRoutes>
+            <QuizeInterface />
+          </ProtectedRoutes>
+        }
+      />
 
       {/* --- Admin Routes (No Main Navbar) --- */}
       <Route
@@ -95,7 +97,7 @@ const MainRoutes = () => {
             </ProtectedRoutes>
           }
         />
-         <Route
+        <Route
           path="heroSection"
           element={
             <ProtectedRoutes>

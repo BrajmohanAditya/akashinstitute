@@ -61,22 +61,22 @@ export const createQuizQuestion = async (req, res) => {
   }
 };
 
-// // Get all questions for a specific quiz
-// export const getQuizQuestions = async (req, res) => {
-//   try {
-//     const { quizId } = req.params;
+// Get all questions for a specific quiz
+export const getQuizQuestions = async (req, res) => {
+  try {
+    const { quizId } = req.params;
 
-//     const questions = await QuizQuestion.find({ quizId });
+    const questions = await QuizQuestion.find({ quizId });
 
-//     return res.status(200).json({
-//       success: true,
-//       questions,
-//     });
-//   } catch (error) {
-//     console.error(`Error fetching quiz questions: ${error}`);
-//     return res.status(500).json({
-//       success: false,
-//       message: "Internal server error",
-//     });
-//   }
-// };
+    return res.status(200).json({
+      success: true,
+      questions,
+    });
+  } catch (error) {
+    console.error(`Error fetching quiz questions: ${error}`);
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+    });
+  }
+};
