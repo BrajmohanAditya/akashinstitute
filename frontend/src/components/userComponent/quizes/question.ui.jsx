@@ -32,14 +32,7 @@ const QuestionUI = ({ children, question, questionNumber = 1 }) => {
             </span>
           </div>
 
-          {/* Language Switcher */}
-          <div className="flex items-center gap-2">
-            <span className="text-slate-600 font-medium">View in</span>
-            <select className="border border-slate-300 rounded px-3 py-1.5 text-slate-700 bg-white outline-none focus:border-[#158993]">
-              <option>English</option>
-              <option>Hindi</option>
-            </select>
-          </div>
+
 
           {/* Report Button */}
           <button className="flex items-center gap-1.5 text-slate-500 hover:text-slate-800 font-medium transition">
