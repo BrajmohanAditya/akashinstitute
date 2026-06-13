@@ -88,10 +88,10 @@ const QuizeInterface = () => {
             <span className="text-slate-500 text-xs font-medium">Marks</span>
             <div className="flex gap-1 mt-0.5">
               <span className="bg-green-600 text-white px-1.5 rounded-sm text-xs font-bold">
-                +{currentQuestion?.marks || 1}
+                +{currentQuestion?.marks}
               </span>
               <span className="bg-red-500 text-white px-1.5 rounded-sm text-xs font-bold">
-                -0.25
+                -{currentQuiz?.negativeMark || 0}
               </span>
             </div>
           </div>
