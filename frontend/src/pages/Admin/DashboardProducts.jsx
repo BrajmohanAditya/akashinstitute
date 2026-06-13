@@ -1,10 +1,10 @@
-import CreateCourseDialog from "../../components/AdminComponent/CreateCourseDialog";
+import CreateCourseDialog from "../../components/Admin/CreateCourseDialog";
 import { useGetCourseHook, useDeleteCourseHook } from "../../hooks/course.hook";
 import { useNavigate } from "react-router-dom";
 import { Edit, Trash2, BookOpen, Video } from "lucide-react";
 import DeleteAlertbox from "@/components/ui/DeleteAlertbox";
 import { useState } from "react";
-      
+
 const DashboardProducts = () => {
   const { data } = useGetCourseHook();
   const navigate = useNavigate();

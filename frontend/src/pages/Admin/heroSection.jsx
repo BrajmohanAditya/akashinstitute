@@ -18,9 +18,7 @@ import {
   useGetHeroSectionHook,
   useDeleteHeroSectionHook,
 } from "@/hooks/hero.hook";
-import ExamsTable, {
-  BannerTable,
-} from "@/components/AdminComponent/HeroSection";
+import ExamsTable, { BannerTable } from "@/components/Admin/HeroSection";
 const HeroSectionManagement = () => {
   const [activeTab, setActiveTab] = useState("create");
   const [type, setType] = useState("banner");
@@ -31,7 +29,8 @@ const HeroSectionManagement = () => {
   const { data, isLoading } = useGetHeroSectionHook();
 
   const { mutateAsync: createHero, isPending } = useCreateHeroSectionHook();
-  const { mutateAsync: deleteHero, isPending:isDeleting } = useDeleteHeroSectionHook();
+  const { mutateAsync: deleteHero, isPending: isDeleting } =
+    useDeleteHeroSectionHook();
 
   const handleSave = async () => {
     // 1. Validation

@@ -63,11 +63,7 @@ export const createQuiz = async (req, res) => {
       quiz: newQuiz,
     });
   } catch (error) {
-    console.log(`Error from create quiz: ${error}`);
-    return res.status(500).json({
-      success: false,
-      message: "Internal server error",
-    });
+    next(error);
   }
 };
 
@@ -82,11 +78,7 @@ export const getQuizzes = async (req, res) => {
       count: quizzes.length,
     });
   } catch (error) {
-    console.log(`Error from get quizzes: ${error}`);
-    return res.status(500).json({
-      success: false,
-      message: "Internal server error",
-    });
+    next(error);
   }
 };
 
@@ -109,11 +101,7 @@ export const getQuizById = async (req, res) => {
       quiz,
     });
   } catch (error) {
-    console.log(`Error from get quiz by id: ${error}`);
-    return res.status(500).json({
-      success: false,
-      message: "Internal server error",
-    });
+    next(error);
   }
 };
 
@@ -142,11 +130,7 @@ export const updateQuiz = async (req, res) => {
       quiz: updatedQuiz,
     });
   } catch (error) {
-    console.log(`Error from update quiz: ${error}`);
-    return res.status(500).json({
-      success: false,
-      message: "Internal server error",
-    });
+    next(error);
   }
 };
 
@@ -172,10 +156,25 @@ export const deleteQuiz = async (req, res) => {
       message: "Quiz deleted successfully",
     });
   } catch (error) {
-    console.log(`Error from delete quiz: ${error}`);
-    return res.status(500).json({
-      success: false,
-      message: "Internal server error",
-    });
+    next(error);
   }
 };
+
+// Lock or unlock quiz
+export const toggleQuizLock = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const quiz = await Quiz.findById(id);
+    
+    if (!quiz) return res.status(404).json({ success: false, message: "Quiz not found" });
+
+    quiz.isLocked = !quiz.isLocked; // Status ko ulta kar do (true ko false, false ko true)
+    await quiz.save();
+
+    return res.status(200).json({ success: true, message: "Quiz status updated", quiz });
+  } catch (error) {
+    next(error);
+  }
+};
+
+

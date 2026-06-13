@@ -35,3 +35,10 @@ export const getQuizByIdApi = async (id) => {
     });
     return res.data;
 };
+
+export const toggleQuizLockApi = async (id) => {
+    const res = await axios.patch(`${baseUrl}/quiz/toggle-lock/${id}`, {}, {
+        withCredentials: true
+    });
+    return res.data;
+};

@@ -51,6 +51,10 @@ const quizSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    isLocked: {
+      type: Boolean,
+      default: true, // Default 'true' rakhein taaki test bante hi galti se live na ho jaye
+    },
   },
   {
     timestamps: true,

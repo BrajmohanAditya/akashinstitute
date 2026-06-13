@@ -1,5 +1,5 @@
 import React from "react";
-import CreateModuleDialog from "../../components/AdminComponent/CreateModuleDialog";
+import CreateModuleDialog from "../../components/Admin/CreateModuleDialog";
 import { useGetSingleCourseHook } from "../../hooks/course.hook";
 import { useParams } from "react-router-dom";
 
@@ -10,7 +10,6 @@ const ModulePage = () => {
 
   return (
     <div className="w-full h-[calc(100vh-80px)] flex flex-col overflow-hidden bg-slate-50">
-      
       {/* Fixed Header Section - Full Width Background */}
       <div className="px-8 py-6 shrink-0 bg-white border-b border-slate-200 z-10 sticky top-0">
         <div className="max-w-4xl mx-auto w-full">

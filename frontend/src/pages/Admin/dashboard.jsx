@@ -1,19 +1,17 @@
-import DashboardSidebar from "../../components/AdminComponent/Sidebar";
+import DashboardSidebar from "../../components/Admin/Sidebar";
 
-
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import React from "react";
+import { Outlet } from "react-router-dom";
 
 const Dashboard = () => {
   return (
-    <div className='flex flex-col lg:flex-row min-h-screen bg-slate-50'>
-
+    <div className="flex flex-col lg:flex-row min-h-screen bg-slate-50">
       <DashboardSidebar />
-      <main className='flex-1'>
+      <main className="flex-1">
         <Outlet />
       </main>
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

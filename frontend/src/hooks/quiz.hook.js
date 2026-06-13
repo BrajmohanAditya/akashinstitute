@@ -58,3 +58,20 @@ export const useGetQuizByIdHook = (id) => {
     staleTime: 2 * 60 * 1000,
   });
 };
+
+// Upar se toggleQuizLockApi import karna mat bhoolna!
+import { toggleQuizLockApi } from "../api/quiz.api";
+
+export const useToggleQuizLockHook = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: toggleQuizLockApi,
+    onSuccess: (data) => {
+      toast.success(data?.message || "Quiz status updated");
+      queryClient.invalidateQueries(["getQuizzes"]); // Table refresh karega
+    },
+    onError: (err) => {
+      toast.error(err.response?.data?.message || "Failed to update status");
+    },
+  });
+};

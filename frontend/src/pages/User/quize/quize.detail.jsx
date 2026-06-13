@@ -10,7 +10,7 @@ const QuizeDetail = () => {
   const quizzes = data?.quizzes || [];
 
   return (
-    <div className="p-8 h-full bg-[#f8f9fa]">
+    <div className="p-8 min-h-[calc(100vh-80px)] bg-[#f8f9fa] flex-1">
       <div className="max-w-7xl mx-auto">
         {isLoading && (
           <p className="text-center text-slate-500">Loading quizzes...</p>

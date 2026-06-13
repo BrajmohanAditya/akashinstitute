@@ -11,11 +11,16 @@ import {
   Clock,
   CheckCircle,
 } from "lucide-react";
-import CreateQuiz from "../../components/AdminComponent/quiz";
-import { useGetQuizzesHook, useDeleteQuizHook } from "../../hooks/quiz.hook";
+import CreateQuiz from "../../components/Admin/quiz";
+import {
+  useGetQuizzesHook,
+  useDeleteQuizHook,
+  useToggleQuizLockHook,
+} from "../../hooks/quiz.hook";
 import { format } from "date-fns";
-import QuizQuestionAdd from "../../components/AdminComponent/quiz.question.add";
+import QuizQuestionAdd from "../../components/Admin/quiz.question.add";
 import DeleteAlertbox from "../../components/ui/DeleteAlertbox";
+import { Lock, Unlock } from "lucide-react";
 
 const QuizManagement = () => {
   const { data, isLoading, isError } = useGetQuizzesHook();
@@ -30,9 +35,11 @@ const QuizManagement = () => {
     setSelectedQuizForAdd(quiz);
     setIsAddQuestionOpen(true);
   };
+
   const handleDeleteQuiz = (quiz) => {
     setQuizToDelete(quiz);
   };
+  const { mutate: toggleLock, isPending: isToggling } = useToggleQuizLockHook();
 
   return (
     <div className="min-h-screen p-4 sm:p-6 lg:p-8">
@@ -87,11 +94,11 @@ const QuizManagement = () => {
               <thead className="text-xs text-slate-500 uppercase bg-slate-100 sticky top-0 z-20 shadow-sm">
                 <tr>
                   <th className="px-6 py-4 font-semibold">Quiz Name</th>
-                  <th className="px-6 py-4 font-semibold">Category</th>
+                  <th className="px-6 py-4 font-semibold">Exam</th>
                   <th className="px-6 py-4 font-semibold">Duration</th>
                   <th className="px-6 py-4 font-semibold">Questions</th>
-                  <th className="px-6 py-4 font-semibold">Negative Marking</th>
                   <th className="px-6 py-4 font-semibold">Created</th>
+                  <th className="px-6 py-4 font-semibold">Status</th>
                   <th className="px-6 py-4 font-semibold text-right">
                     Actions
                   </th>
@@ -120,16 +127,7 @@ const QuizManagement = () => {
                     <td className="px-6 py-4 font-medium">
                       {quiz.totalNoOfQueation}{" "}
                     </td>
-                    <td className="px-6 py-4">
-                      {quiz.negativeMark > 0 ? (
-                        <span className="flex items-center gap-1 text-red-500">
-                          <CheckCircle className="w-4 h-4" />(
-                          {quiz.negativeMark})
-                        </span>
-                      ) : (
-                        <span className="text-slate-400">No</span>
-                      )}
-                    </td>
+
                     <td className="px-6 py-4 text-slate-500">
                       {format(new Date(quiz.createdAt), "MMM d, yyyy")}
                     </td>
@@ -142,9 +140,11 @@ const QuizManagement = () => {
                         <button
                           className="text-red-500 hover:text-red-700 transition disabled:opacity-50 cursor-pointer"
                           onClick={() => handleDeleteQuiz(quiz)}
-                          disabled={isDeleting  && quizToDelete?._id === quiz._id}
+                          disabled={
+                            isDeleting && quizToDelete?._id === quiz._id
+                          }
                         >
-                          {isDeleting && quizToDelete?._id === quiz._id? (
+                          {isDeleting && quizToDelete?._id === quiz._id ? (
                             <Loader2 className="w-4 h-4 animate-spin" />
                           ) : (
                             <Trash2 className="w-4 h-4" />

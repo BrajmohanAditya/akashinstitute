@@ -69,7 +69,7 @@ export const Register = async (req, res) => {
       user: { _id: newUser._id, email: newUser.email },
     });
   } catch (error) {
-    console.log(`error in register controller ${error}`);
+    next(error);
   }
 };
 
@@ -130,7 +130,7 @@ export const Login = async (req, res) => {
       user: userWithoutPassword,
     });
   } catch (error) {
-    console.log(`error in login controller ${error}`);
+    next(error);
   }
 };
 
@@ -151,7 +151,7 @@ export const getUser = async (req, res) => {
       user: user,
     });
   } catch (error) {
-    console.log(`error in get all users controller ${error}`);
+    next(error);
   }
 };
 
@@ -170,7 +170,7 @@ export const logout = async (req, res) => {
         success: true,
       });
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 
@@ -234,21 +234,18 @@ export const verifyOTP = async (req, res) => {
         user: userWithoutPassword,
       });
   } catch (error) {
-    console.log(`error in verify otp controller ${error}`);
-    return res
-      .status(500)
-      .json({ message: "Internal server error", success: false });
+    next(error);
   }
 };
 
 export const googleLogin = async (req, res) => {
   try {
     const { token } = req.body;
-    
+
     // 1. Verify the token with Google
     const ticket = await client.verifyIdToken({
       idToken: token,
-      audience:ENV.GOOGLE_CLIENT_ID,
+      audience: ENV.GOOGLE_CLIENT_ID,
     });
 
     // 2. Extract user info from Google's payload
@@ -258,11 +255,11 @@ export const googleLogin = async (req, res) => {
     let user = await User.findOne({ email });
 
     if (!user) {
-      // 4. If new user, create them. 
+      // 4. If new user, create them.
       // We give a random password and dummy mobile number to satisfy your schema requirements.
-      const randomPassword = Math.random().toString(36).slice(-8); 
+      const randomPassword = Math.random().toString(36).slice(-8);
       const hashPassword = await bcryptjs.hash(randomPassword, 10);
-      
+
       user = await User.create({
         name,
         email,
@@ -294,9 +291,9 @@ export const googleLogin = async (req, res) => {
         success: true,
         user: userWithoutPassword,
       });
-
   } catch (error) {
-    console.log(`error in google login controller ${error}`);
-    return res.status(500).json({ message: "Google login failed", success: false });
+    return res
+      .status(500)
+      .json({ message: "Google login failed", success: false });
   }
 };
