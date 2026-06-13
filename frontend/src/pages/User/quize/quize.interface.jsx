@@ -5,6 +5,7 @@ import QuestionUi from "@/components/userComponent/quizes/question.ui.jsx";
 import { useParams } from "react-router-dom";
 import { useGetQuizQuestionsHook } from "@/hooks/quiz.createQuest.hook.js";
 import OptionUI from "@/components/userComponent/quizes/option.ui.jsx";
+import QuestionButtonUI from "@/components/userComponent/quizes/question.button.jsx";
 const QuizeInterface = () => {
   const { id } = useParams(); // 1. Get the ID from the URL!
   // 2. Fetch only the specific quiz using that ID
@@ -111,14 +112,25 @@ const QuizeInterface = () => {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 bg-white flex text-slate-800">
-        <div className="flex-1 border-r border-slate-200 bg-white">
-          {/* Render the Question UI */}
+      <div className="flex-1 bg-white flex text-slate-800 overflow-hidden">
+        {/* Render the Question UI */}
+        <div className="flex-1 border-r border-slate-200 bg-white overflow-y-auto">
           <QuestionUi question={currentQuestion} />
         </div>
-        <div className="flex-1 bg-white">
-          {/* Render the Option UI */}
+        
+        {/* Render the Option UI */}
+        <div className="flex-1 border-r border-slate-200 bg-white overflow-y-auto">
           <OptionUI options={currentQuestion?.options} />
+        </div>
+        
+        {/* Render the Question Buttons Panel */}
+        <div className="w-[320px] shrink-0 bg-white h-full">
+          <QuestionButtonUI 
+            sectionName={activeSection} 
+            questions={sectionQuestions} 
+            currentQuestionIndex={currentQuestionIndex}
+            onQuestionClick={(index) => setCurrentQuestionIndex(index)}
+          />
         </div>
       </div>
     </div>
