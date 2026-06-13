@@ -36,7 +36,7 @@ const QuizeInterface = () => {
   return (
     <div className="h-screen flex flex-col bg-white text-sm font-sans select-none overflow-hidden">
       {/* Step 1: Top Header */}
-      <header className="h-14 border-b flex items-center justify-between px-4">
+      <header className="min-h-[56px] py-2 border-b flex flex-wrap items-center justify-between px-4 gap-3">
         <div className="font-semibold text-slate-700 text-base">
           {currentQuiz?.nameOfExam}
         </div>
@@ -57,7 +57,7 @@ const QuizeInterface = () => {
         </button>
       </header>
       {/* Sections Bar */}
-      <div className="h-11 border-b flex items-center px-4 bg-white gap-4">
+      <div className="min-h-[44px] border-b flex items-center px-4 bg-white gap-4 overflow-x-auto whitespace-nowrap pt-1">
         <span className="font-semibold text-slate-500 text-xs tracking-wider">
           SECTIONS
         </span>
@@ -77,7 +77,7 @@ const QuizeInterface = () => {
         ))}
       </div>
 
-      <div className="h-14 border-b border-slate-200 flex items-center justify-between px-6 bg-white shrink-0">
+      <div className="min-h-[56px] py-2 border-b border-slate-200 flex flex-wrap items-center justify-between px-4 md:px-6 bg-white shrink-0 gap-3">
         <div className="font-bold text-slate-800 text-base">
           Question No. {currentQuestionIndex + 1}
         </div>
@@ -112,19 +112,19 @@ const QuizeInterface = () => {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 bg-white flex text-slate-800 overflow-hidden">
+      <div className="flex-1 bg-white flex flex-col lg:flex-row text-slate-800 overflow-y-auto lg:overflow-hidden">
         {/* Render the Question UI */}
-        <div className="flex-1 border-r border-slate-200 bg-white overflow-y-auto">
+        <div className="lg:flex-1 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white lg:overflow-y-auto">
           <QuestionUi question={currentQuestion} />
         </div>
         
         {/* Render the Option UI */}
-        <div className="flex-1 border-r border-slate-200 bg-white overflow-y-auto">
+        <div className="lg:flex-1 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white lg:overflow-y-auto">
           <OptionUI options={currentQuestion?.options} />
         </div>
         
         {/* Render the Question Buttons Panel */}
-        <div className="w-[320px] shrink-0 bg-white h-full">
+        <div className="w-full lg:w-[320px] shrink-0 bg-white h-auto lg:h-full">
           <QuestionButtonUI 
             sectionName={activeSection} 
             questions={sectionQuestions} 
