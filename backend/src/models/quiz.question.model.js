@@ -30,6 +30,10 @@ const quizQuestionSchema = new mongoose.Schema(
     },
 
     // 4. The Options (We use an array of objects so you can have 4, 5, or however many options you want!)
+    optionsInstruction: {
+      type: String,
+      default: "", // E.g., "Choose the correct answer"
+    },
     options: [
       {
         text: {

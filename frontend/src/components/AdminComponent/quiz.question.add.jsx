@@ -46,6 +46,7 @@ const QuizQuestionAdd = ({ isOpen, onClose, quiz }) => {
     questionText: "",
     marks: 1,
     questionImage: null,
+    optionsInstruction: "",
     options: [
       { text: "", image: null },
       { text: "", image: null },
@@ -79,6 +80,7 @@ const QuizQuestionAdd = ({ isOpen, onClose, quiz }) => {
       sectionName: currentSection.name,
       questionText: formData.questionText,
       marks: formData.marks,
+      optionsInstruction: formData.optionsInstruction,
       options: formData.options.map((opt, idx) => ({
         text: opt.text || `Option ${['A', 'B', 'C', 'D'][idx]}`,
         isCorrect: formData.correctOptionIndex === idx,
@@ -111,6 +113,7 @@ const QuizQuestionAdd = ({ isOpen, onClose, quiz }) => {
       questionText: "",
       marks: 1,
       questionImage: null,
+      optionsInstruction: "",
       options: [
         { text: "", image: null },
         { text: "", image: null },
@@ -250,6 +253,17 @@ const QuizQuestionAdd = ({ isOpen, onClose, quiz }) => {
               <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
                 <div className="p-4 bg-indigo-50/50 text-indigo-700 rounded-xl text-sm font-medium border border-indigo-100">
                   <span className="text-indigo-500">Current Question:</span> <span className="font-semibold">{formData.questionText ? (formData.questionText.length > 60 ? formData.questionText.substring(0, 60) + '...' : formData.questionText) : 'No text provided'}</span>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-semibold text-slate-700 block">Instruction for Options (Optional)</label>
+                  <input
+                    type="text"
+                    value={formData.optionsInstruction || ""}
+                    onChange={(e) => setFormData({ ...formData, optionsInstruction: e.target.value })}
+                    placeholder="E.g. Select the most appropriate option..."
+                    className="w-full p-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-sm"
+                  />
                 </div>
 
                 <div className="space-y-4">

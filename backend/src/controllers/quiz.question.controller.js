@@ -9,6 +9,7 @@ export const createQuizQuestion = async (req, res) => {
       sectionName,
       questionText,
       marks,
+      optionsInstruction,
       options,
       solutionExplanation,
     } = req.body;
@@ -43,6 +44,7 @@ export const createQuizQuestion = async (req, res) => {
       sectionName,
       questionText,
       marks: marks || 1,
+      optionsInstruction,
       options, // Ensure the frontend sends options array with { text, isCorrect, image }
       solutionExplanation,
     });
