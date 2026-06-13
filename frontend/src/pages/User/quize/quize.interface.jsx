@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { useGetQuizQuestionsHook } from "@/hooks/quiz.createQuest.hook.js";
 import OptionUI from "@/components/userComponent/quizes/option.ui.jsx";
 import QuestionButtonUI from "@/components/userComponent/quizes/question.button.jsx";
+import SolutionUI from "@/components/userComponent/quizes/solution.jsx";
 const QuizeInterface = () => {
   const { id } = useParams(); // 1. Get the ID from the URL!
   // 2. Fetch only the specific quiz using that ID
@@ -53,7 +54,8 @@ const QuizeInterface = () => {
         </div>
 
         <button className="flex items-center gap-2 border border-[#158993] text-[#158993] px-4 py-1.5 rounded font-medium hover:bg-teal-50 transition">
-          <Maximize className="w-4 h-4" /> Switch Full Screen
+          <Maximize className="w-4 h-4" />
+          Full Screen
         </button>
       </header>
       {/* Sections Bar */}
@@ -112,22 +114,32 @@ const QuizeInterface = () => {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 bg-white flex flex-col lg:flex-row text-slate-800 overflow-y-auto lg:overflow-hidden">
+      <div className="flex-1 bg-white flex flex-col lg:flex-row text-slate-800 overflow-y-auto lg:overflow-hidden min-h-0">
         {/* Render the Question UI */}
-        <div className="lg:flex-1 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white lg:overflow-y-auto">
+        <div className="lg:flex-1 min-h-0 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white lg:overflow-y-auto custom-scrollbar">
           <QuestionUi question={currentQuestion} />
         </div>
-        
+
         {/* Render the Option UI */}
-        <div className="lg:flex-1 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white lg:overflow-y-auto">
-          <OptionUI options={currentQuestion?.options} />
+        <div className="lg:flex-1 min-h-0 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white lg:overflow-y-auto custom-scrollbar flex flex-col">
+          <OptionUI options={currentQuestion?.options}
+          
+          />
+
+          {/* Render the Solution UI below options */}
+          <div className="px-10 pb-10">
+            <SolutionUI
+              solutionText={currentQuestion?.solutionExplanation}
+              solutionImage={currentQuestion?.solutionImage}
+            />
+          </div>
         </div>
-        
+
         {/* Render the Question Buttons Panel */}
-        <div className="w-full lg:w-[320px] shrink-0 bg-white h-auto lg:h-full">
-          <QuestionButtonUI 
-            sectionName={activeSection} 
-            questions={sectionQuestions} 
+        <div className="w-full lg:w-[320px] shrink-0 bg-white h-auto lg:h-full lg:overflow-y-auto custom-scrollbar">
+          <QuestionButtonUI
+            sectionName={activeSection}
+            questions={sectionQuestions}
             currentQuestionIndex={currentQuestionIndex}
             onQuestionClick={(index) => setCurrentQuestionIndex(index)}
           />

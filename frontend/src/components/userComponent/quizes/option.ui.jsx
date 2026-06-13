@@ -18,21 +18,32 @@ const OptionUI = ({ options }) => {
             <input
               type="radio"
               name="quiz-option"
-              className="w-4 h-4 cursor-pointer accent-slate-500" // You can change accent color if needed
+              // Agar ye option select hua hai, toh isCorrect check karke accent color badlo
+              className={`w-4 h-4 cursor-pointer ${
+                selectedOption === index
+                  ? opt.isCorrect
+                    ? "accent-green-600"
+                    : "accent-red-500"
+                  : "accent-slate-500"
+              }`}
               checked={selectedOption === index}
               onChange={() => setSelectedOption(index)}
             />
-            <span className="text-slate-700 text-[15px]">{opt.text}</span>
+
+            {/* Text ka color bhi usi logic se badlo */}
+            <span
+              className={`text-[15px] ${
+                selectedOption === index
+                  ? opt.isCorrect
+                    ? "text-green-600 font-bold"
+                    : "text-red-500 font-bold"
+                  : "text-slate-700"
+              }`}
+            >
+              {opt.text}
+            </span>
           </label>
         ))}
-      </div>
-
-      {/* 3. View Solution Section */}
-      <div className="flex items-center space-x-3 pt-2">
-        <button className="flex items-center space-x-2 border border-[#22b3c1] text-[#22b3c1] px-4 py-1.5 rounded-sm hover:bg-cyan-50 transition-colors">
-          <Eye className="w-4 h-4" />
-          <span className="text-sm font-medium">View Solution</span>
-        </button>
       </div>
     </div>
   );
