@@ -2,7 +2,7 @@ import { QuizQuestion } from "../models/quiz.question.model.js";
 import { Quiz } from "../models/quiz.model.js";
 
 // Create a new quiz question
-export const createQuizQuestion = async (req, res) => {
+export const createQuizQuestion = async (req, res, next) => {
   try {
     const {
       quizId,
@@ -55,18 +55,29 @@ export const createQuizQuestion = async (req, res) => {
       question: newQuestion,
     });
   } catch (error) {
-    console.error(`Error from create quiz question: ${error}`);
-    return res.status(500).json({
-      success: false,
-      message: "Internal server error while creating question",
-    });
+    next(error);
+
   }
 };
 
 // Get all questions for a specific quiz
-export const getQuizQuestions = async (req, res) => {
+export const getQuizQuestions = async (req, res, next) => {
   try {
     const { quizId } = req.params;
+    const quiz = await Quiz.findById(quizId);
+
+    if (!quiz) {
+      return res.status(404).json({
+        success: false,
+        message: "Quiz not found",
+      });
+    }
+    if (quiz.isLocked) {
+      return res.status(403).json({
+        success: false,
+        message: " locked",
+      });
+    }
 
     const questions = await QuizQuestion.find({ quizId });
 
@@ -75,10 +86,6 @@ export const getQuizQuestions = async (req, res) => {
       questions,
     });
   } catch (error) {
-    console.error(`Error fetching quiz questions: ${error}`);
-    return res.status(500).json({
-      success: false,
-      message: "Internal server error",
-    });
+    next(error);
   }
 };

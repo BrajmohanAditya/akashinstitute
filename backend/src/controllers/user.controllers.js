@@ -7,7 +7,7 @@ import { sendEmail } from "../config/sendEmail.js";
 import { OAuth2Client } from "google-auth-library";
 const client = new OAuth2Client(ENV.GOOGLE_CLIENT_ID);
 
-export const Register = async (req, res) => {
+export const Register = async (req, res, next) => {
   try {
     const { name, email, password, mobileNo } = req.body;
 
@@ -73,7 +73,7 @@ export const Register = async (req, res) => {
   }
 };
 
-export const Login = async (req, res) => {
+export const Login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -134,7 +134,7 @@ export const Login = async (req, res) => {
   }
 };
 
-export const getUser = async (req, res) => {
+export const getUser = async (req, res, next) => {
   try {
     const userId = req.user._id;
     const user = await User.findById(userId).select("-password");
@@ -155,7 +155,7 @@ export const getUser = async (req, res) => {
   }
 };
 
-export const logout = async (req, res) => {
+export const logout = async (req, res, next) => {
   try {
     // Use clearCookie with the exact same options you used in Login/Register
     return res
@@ -174,7 +174,7 @@ export const logout = async (req, res) => {
   }
 };
 
-export const verifyOTP = async (req, res) => {
+export const verifyOTP = async (req, res, next) => {
   try {
     const { email, otp } = req.body;
 

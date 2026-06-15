@@ -3,7 +3,7 @@ import cloudinary from "../config/cloudinary.js";
 import { QuizQuestion } from "../models/quiz.question.model.js";
 
 // Create a new quiz
-export const createQuiz = async (req, res) => {
+export const createQuiz = async (req, res, next) => {
   try {
     const {
       nameOfExam,
@@ -68,7 +68,7 @@ export const createQuiz = async (req, res) => {
 };
 
 // Get all quizzes
-export const getQuizzes = async (req, res) => {
+export const getQuizzes = async (req, res, next) => {
   try {
     const quizzes = await Quiz.find({}).sort({ createdAt: -1 });
 
@@ -83,7 +83,7 @@ export const getQuizzes = async (req, res) => {
 };
 
 // Get single quiz by id
-export const getQuizById = async (req, res) => {
+export const getQuizById = async (req, res, next) => {
   try {
     const quizId = req.params.id;
 
@@ -106,7 +106,7 @@ export const getQuizById = async (req, res) => {
 };
 
 // Update quiz
-export const updateQuiz = async (req, res) => {
+export const updateQuiz = async (req, res, next) => {
   try {
     const quizId = req.params.id;
     const updateData = req.body;
@@ -135,7 +135,7 @@ export const updateQuiz = async (req, res) => {
 };
 
 // Delete quiz
-export const deleteQuiz = async (req, res) => {
+export const deleteQuiz = async (req, res, next) => {
   try {
     const quizId = req.params.id;
 
@@ -161,7 +161,7 @@ export const deleteQuiz = async (req, res) => {
 };
 
 // Lock or unlock quiz
-export const toggleQuizLock = async (req, res) => {
+export const toggleQuizLock = async (req, res, next) => {
   try {
     const { id } = req.params;
     const quiz = await Quiz.findById(id);

@@ -4,7 +4,7 @@ import { Order } from "../models/order.model.js";
 import { User } from "../models/user.model.js";
 import crypto from "crypto";
 
-export const createCheckOutSession = async (req, res) => {
+export const createCheckOutSession = async (req, res, next) => {
   try {
     const { products } = req.body;
 
@@ -47,13 +47,13 @@ export const createCheckOutSession = async (req, res) => {
 
     // FRONTEND URL = http://localhost:5173
   } catch (error) {
-    console.log(error, "from create checkout session");
+    next(error);
   }
 };
 
 // Ye file ke sabse upar import karna zaroori hai
 
-export const checkoutSuccess = async (req, res) => {
+export const checkoutSuccess = async (req, res, next) => {
   try {
     const { paymentId, orderId, signature } = req.body;
 
@@ -110,7 +110,6 @@ export const checkoutSuccess = async (req, res) => {
 
     return res.status(401).json({ message: "Payment failed at gateway" });
   } catch (error) {
-    console.log(error, "from checkout success");
-    return res.status(500).json({ message: "Internal server error" });
+    next(error);
   }
 };
