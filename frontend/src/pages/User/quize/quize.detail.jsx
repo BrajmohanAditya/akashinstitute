@@ -58,18 +58,18 @@ const QuizeDetail = () => {
                 </div>
 
                 {/* Schedule and Action Button */}
-                <div className="flex items-center justify-between mt-6">
-                  <div className="flex items-center gap-2 text-[13px] text-slate-500 font-medium">
-                    <Clock className="w-4 h-4 text-slate-400" />
-                    <span>Available Now</span>
-                  </div>
-                  <button
-                    onClick={() => navigate(`/quizeInterface/${test._id}`)}
-                    className="px-5 cursor-pointer py-2 rounded text-white text-sm font-semibold transition-colors shadow-sm bg-[#00c2e0] hover:bg-[#00a8c2]"
-                  >
-                    Start Now
-                  </button>
-                </div>
+
+                <button
+                  onClick={() => navigate(`/quizeInterface/${test._id}`)}
+                  disabled={test.isLocked}
+                  className={`px-5 py-2 rounded text-white text-sm font-semibold transition-colors shadow-sm ${
+                    test.isLocked
+                      ? "bg-slate-300 cursor-not-allowed opacity-70"
+                      : "bg-[#00c2e0] hover:bg-[#00a8c2] cursor-pointer"
+                  }`}
+                >
+                  {test.isLocked ? "Locked" : "Start Now"}
+                </button>
               </div>
 
               {/* Footer */}

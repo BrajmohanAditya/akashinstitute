@@ -98,7 +98,6 @@ const QuizManagement = () => {
                   <th className="px-6 py-4 font-semibold">Duration</th>
                   <th className="px-6 py-4 font-semibold">Questions</th>
                   <th className="px-6 py-4 font-semibold">Created</th>
-                  <th className="px-6 py-4 font-semibold">Status</th>
                   <th className="px-6 py-4 font-semibold text-right">
                     Actions
                   </th>
@@ -131,6 +130,7 @@ const QuizManagement = () => {
                     <td className="px-6 py-4 text-slate-500">
                       {format(new Date(quiz.createdAt), "MMM d, yyyy")}
                     </td>
+
                     <td className="px-6 py-4">
                       <div className="flex items-center justify-end gap-3">
                         <button className="text-emerald-600 hover:text-emerald-800 transition">
@@ -157,6 +157,23 @@ const QuizManagement = () => {
                           onClick={() => handleOpenAddQuestion(quiz)}
                         >
                           <PlusIcon className="w-4 h-4" />
+                        </button>
+
+                        <button
+                          className={`${
+                            quiz.isLocked
+                              ? "text-amber-500 hover:text-amber-700 bg-amber-50 border-amber-200"
+                              : "text-emerald-500 hover:text-emerald-700 bg-emerald-50 border-emerald-200"
+                          } border p-2 rounded-full transition disabled:opacity-50 cursor-pointer flex items-center justify-center`}
+                          title={quiz.isLocked ? "Unlock Quiz" : "Lock Quiz"}
+                          onClick={() => toggleLock(quiz._id)}
+                          disabled={isToggling}
+                        >
+                          {quiz.isLocked ? (
+                            <Lock className="w-4 h-4" />
+                          ) : (
+                            <Unlock className="w-4 h-4" />
+                          )}
                         </button>
                       </div>
                     </td>
