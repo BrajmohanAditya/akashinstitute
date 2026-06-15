@@ -34,7 +34,7 @@ const StudyMaterial = () => {
       titleColor: "text-purple-700",
       mainIcon: (
         <div className="relative flex items-center justify-center w-20 h-20">
-          <div className="absolute w-8 h-8 bg-red-400 rounded-full animate-ping opacity-75"></div>
+          <div className="absolute w-8 h-8 bg-red-400 rounded-full animate-pulse opacity-60"></div>
           <div className="relative w-6 h-6 bg-red-500 rounded-full shadow-lg border-2 border-white"></div>
         </div>
       ),

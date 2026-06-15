@@ -12,7 +12,7 @@ const HeroSection = () => {
     if (banners.length > 1) {
       const interval = setInterval(() => {
         setCurrentBanner((prev) => (prev + 1) % banners.length);
-      }, 2000);
+      }, 5000);
       return () => clearInterval(interval);
     }
   }, [banners.length]);
@@ -80,7 +80,7 @@ const HeroSection = () => {
                   key={banners[currentBanner]._id}
                   src={banners[currentBanner].imageUrl}
                   alt={banners[currentBanner].title || "Offer Banner"}
-                  className="w-full h-auto lg:h-full object-cover lg:absolute lg:inset-0 transition-opacity duration-500 ease-in-out rounded-xl lg:rounded-none"
+                  className="w-full h-auto lg:h-full object-cover lg:absolute lg:inset-0 transition-opacity duration-500 ease-in-out rounded-xl lg:rounded-none will-change-auto"
                 />
               </div>
             ) : (

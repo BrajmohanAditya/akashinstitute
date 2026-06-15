@@ -16,7 +16,7 @@ const FloatingWhatsApp = () => {
       aria-label="Chat with us on WhatsApp"
     >
       {/* RADIATING PING EFFECT */}
-      <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 animate-ping"></span>
+      <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-50 animate-pulse"></span>
       
       {/* WhatsApp SVG Logo */}
       <svg

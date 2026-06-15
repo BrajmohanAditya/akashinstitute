@@ -24,6 +24,8 @@ export const useGetHeroSectionHook = () => {
   return useQuery({
     queryFn: getHeroSectionApi,
     queryKey: ["getHeroSections"],
+    staleTime: 2 * 60 * 1000,
+    refetchOnWindowFocus: false,
   });
 };
 

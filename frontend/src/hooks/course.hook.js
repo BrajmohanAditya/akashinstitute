@@ -27,6 +27,8 @@ export const useGetCourseHook = (search) => {
   return useQuery({
     queryFn: () => getCourseApi(search),
     queryKey: ["getCourse", search],
+    staleTime: 2 * 60 * 1000,
+    refetchOnWindowFocus: false,
   });
 };
 
@@ -48,6 +50,8 @@ export const useGetAllPurchasedCourseHook = () => {
   return useQuery({
     queryFn: getAllPurchasedCourseApi,
     queryKey: ["getAllPurchasedCourseApi"],
+    staleTime: 2 * 60 * 1000,
+    refetchOnWindowFocus: false,
   });
 };
 
