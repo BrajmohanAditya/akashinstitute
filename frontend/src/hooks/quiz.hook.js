@@ -5,6 +5,8 @@ import {
   getQuizzesApi,
   deleteQuizApi,
   getQuizByIdApi,
+  toggleQuizLockApi,
+  toggleQuizTypeApi,
 } from "../api/quiz.api.js";
 
 export const useCreateQuizHook = () => {
@@ -60,7 +62,6 @@ export const useGetQuizByIdHook = (id) => {
 };
 
 // Upar se toggleQuizLockApi import karna mat bhoolna!
-import { toggleQuizLockApi } from "../api/quiz.api";
 
 export const useToggleQuizLockHook = () => {
   const queryClient = useQueryClient();
@@ -72,6 +73,20 @@ export const useToggleQuizLockHook = () => {
     },
     onError: (err) => {
       toast.error(err.response?.data?.message || "Failed to update status");
+    },
+  });
+};
+
+export const useToggleQuizTypeHook = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: toggleQuizTypeApi,
+    onSuccess: (data) => {
+      toast.success(data?.message || "Quiz type changed successfully");
+      queryClient.invalidateQueries(["getQuizzes"]); // Table refresh karega
+    },
+    onError: (err) => {
+      toast.error(err.response?.data?.message || "Failed to change quiz type");
     },
   });
 };

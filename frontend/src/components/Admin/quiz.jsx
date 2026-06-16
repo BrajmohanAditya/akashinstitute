@@ -39,7 +39,6 @@ const CreateQuiz = ({ children }) => {
     formData.append("totalNoOfQueation", Number(data.totalNoOfQueation));
     formData.append("totalMarks", Number(data.totalMarks));
 
-
     // 3. Append complex objects (like sections array) as a JSON string
     const sectionsData = data.sections.map((s) => ({
       name: s.name,
@@ -50,7 +49,7 @@ const CreateQuiz = ({ children }) => {
     // 4. Append the uploaded file!
     // react-hook-form stores files in an array (FileList), so we get index [0]
     if (data.logo && data.logo[0]) {
-      formData.append("logo", data.logo[0]); 
+      formData.append("logo", data.logo[0]);
     }
 
     // 5. Send this formData to the mutation
@@ -61,7 +60,6 @@ const CreateQuiz = ({ children }) => {
       },
     });
   };
-
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -87,7 +85,10 @@ const CreateQuiz = ({ children }) => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">
-                  Exam Logo <span className="text-xs font-normal text-slate-400 ml-1">(Recommended size: 1254x1254)</span>
+                  Exam Logo{" "}
+                  <span className="text-xs font-normal text-slate-400 ml-1">
+                    (Recommended size: 1254x1254)
+                  </span>
                 </label>
                 <input
                   type="file"

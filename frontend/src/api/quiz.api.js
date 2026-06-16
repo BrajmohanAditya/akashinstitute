@@ -42,3 +42,10 @@ export const toggleQuizLockApi = async (id) => {
     });
     return res.data;
 };
+
+export const toggleQuizTypeApi = async (id) => {
+    const res = await axios.patch(`${baseUrl}/quiz/quizType/${id}`, {}, {
+        withCredentials: true
+    });
+    return res.data;
+};

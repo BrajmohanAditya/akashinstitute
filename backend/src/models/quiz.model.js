@@ -55,6 +55,12 @@ const quizSchema = new mongoose.Schema(
       type: Boolean,
       default: true, // Default 'true' rakhein taaki test bante hi galti se live na ho jaye
     },
+    quizType: {
+      type: String,
+      enum: ["Free", "Paid"],
+      default: "Free",
+      required: true,
+    },
   },
   {
     timestamps: true,

@@ -16,6 +16,7 @@ import {
   useGetQuizzesHook,
   useDeleteQuizHook,
   useToggleQuizLockHook,
+  useToggleQuizTypeHook,
 } from "../../hooks/quiz.hook";
 import { format } from "date-fns";
 import QuizQuestionAdd from "../../components/Admin/quiz.question.add";
@@ -39,7 +40,10 @@ const QuizManagement = () => {
   const handleDeleteQuiz = (quiz) => {
     setQuizToDelete(quiz);
   };
+
   const { mutate: toggleLock, isPending: isToggling } = useToggleQuizLockHook();
+  const { mutate: toggleQuizType, isPending: isTogglingType } =
+    useToggleQuizTypeHook();
 
   return (
     <div className="min-h-screen p-4 sm:p-6 lg:p-8">
@@ -174,6 +178,23 @@ const QuizManagement = () => {
                           ) : (
                             <Unlock className="w-4 h-4" />
                           )}
+                        </button>
+
+                        <button
+                          className={`${
+                            quiz.quizType === "Paid"
+                              ? "text-amber-600 hover:text-amber-800 bg-amber-50 border-amber-200"
+                              : "text-emerald-600 hover:text-emerald-800 bg-emerald-50 border-emerald-200"
+                          } border px-3 py-1.5 rounded-full text-xs font-bold transition disabled:opacity-50 cursor-pointer flex items-center justify-center`}
+                          title={
+                            quiz.quizType === "Paid"
+                              ? "Make it Free"
+                              : "Make it Paid"
+                          }
+                          onClick={() => toggleQuizType(quiz._id)}
+                          disabled={isTogglingType}
+                        >
+                          {quiz.quizType === "Paid" ? "Paid" : "Free"}
                         </button>
                       </div>
                     </td>

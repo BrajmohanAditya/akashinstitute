@@ -23,7 +23,7 @@ export const createQuiz = async (req, res, next) => {
       !duration ||
       !section ||
       !totalNoOfQueation ||
-      !totalMarks
+      !totalMarks 
     ) {
       return res.status(400).json({
         success: false,
@@ -165,16 +165,42 @@ export const toggleQuizLock = async (req, res, next) => {
   try {
     const { id } = req.params;
     const quiz = await Quiz.findById(id);
-    
-    if (!quiz) return res.status(404).json({ success: false, message: "Quiz not found" });
+
+    if (!quiz)
+      return res
+        .status(404)
+        .json({ success: false, message: "Quiz not found" });
 
     quiz.isLocked = !quiz.isLocked; // Status ko ulta kar do (true ko false, false ko true)
     await quiz.save();
 
-    return res.status(200).json({ success: true, message: "Quiz status updated", quiz });
+    return res
+      .status(200)
+      .json({ success: true, message: "Quiz status updated", quiz });
   } catch (error) {
     next(error);
   }
 };
 
 
+// Toggle Free/Paid quiz type
+export const toggleQuizType = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const quiz = await Quiz.findById(id);
+    
+    if (!quiz) return res.status(404).json({ success: false, message: "Quiz not found" });
+
+    // Toggle between 'Free' and 'Paid'
+    quiz.quizType = quiz.quizType === "Paid" ? "Free" : "Paid";
+    await quiz.save();
+
+    return res.status(200).json({ 
+      success: true, 
+      message: `Quiz changed to ${quiz.quizType}`, 
+      quiz 
+    });
+  } catch (error) {
+    next(error);
+  }
+};
