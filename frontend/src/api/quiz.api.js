@@ -14,8 +14,14 @@ export const createQuizApi = async (payload) => {
     return res.data;
 };
 
-export const getQuizzesApi = async () => {
-    const res = await axios.get(`${baseUrl}/quiz/getQuizzes`, {
+export const getQuizzesApi = async (quizType) => {
+    // Construct the URL with query parameters if quizType is provided
+    let url = `${baseUrl}/quiz/getQuizzes`;
+    if (quizType) {
+        url += `?quizType=${quizType}`;
+    }
+
+    const res = await axios.get(url, {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true
     });

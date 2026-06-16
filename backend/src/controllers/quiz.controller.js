@@ -70,7 +70,15 @@ export const createQuiz = async (req, res, next) => {
 // Get all quizzes
 export const getQuizzes = async (req, res, next) => {
   try {
-    const quizzes = await Quiz.find({}).sort({ createdAt: -1 });
+    const { quizType } = req.query;
+    
+    // Create a filter object. Default is empty (fetch all).
+    const filter = {};
+    if (quizType) {
+      filter.quizType = quizType; // 'Free' or 'Paid'
+    }
+
+    const quizzes = await Quiz.find(filter).sort({ createdAt: -1 });
 
     return res.status(200).json({
       success: true,

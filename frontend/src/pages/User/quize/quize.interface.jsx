@@ -122,8 +122,9 @@ const QuizeInterface = () => {
 
         {/* Render the Option UI */}
         <div className="lg:flex-1 min-h-0 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white lg:overflow-y-auto custom-scrollbar flex flex-col">
-          <OptionUI options={currentQuestion?.options}
-          
+          <OptionUI 
+            key={currentQuestion?._id || currentQuestionIndex}
+            options={currentQuestion?.options}
           />
 
           {/* Render the Solution UI below options */}

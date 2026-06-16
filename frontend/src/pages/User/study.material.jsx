@@ -18,14 +18,21 @@ import {
   Video,
   Target,
   Megaphone,
+  Crown,
 } from "lucide-react";
 
 import { useGetQuizzesHook } from "@/hooks/quiz.hook";
 const StudyMaterial = () => {
-  const { data, isLoading, isError } = useGetQuizzesHook();
   const navigate = useNavigate();
 
-  const quizzes = data?.quizzes || [];
+  // (The old 'quizzes' variable was removed because 'data' is no longer defined)
+  // Fetch Free Quizzes
+  const { data: freeData, isLoading: isFreeLoading } = useGetQuizzesHook("Free");
+  const freeQuizzes = freeData?.quizzes || [];
+  // Fetch Paid Quizzes
+  const { data: paidData, isLoading: isPaidLoading } = useGetQuizzesHook("Paid");
+  const paidQuizzes = paidData?.quizzes || [];
+  // ... rest of your code
 
   const cards = [
     {
@@ -38,7 +45,7 @@ const StudyMaterial = () => {
           <div className="relative w-6 h-6 bg-red-500 rounded-full shadow-lg border-2 border-white"></div>
         </div>
       ),
-      items: quizzes.slice(0, 4).map((quiz, index) => {
+      items: freeQuizzes.slice(0, 4).map((quiz, index) => {
         // Keep rotating background colors for a nice UI
         const bgStyles = [
           "bg-purple-100",
@@ -70,37 +77,33 @@ const StudyMaterial = () => {
     },
 
     {
-      title: "Video Classes",
+      title: "Premium Test",
       bgColor: "bg-[#E6F8EA]", // Light green
       titleColor: "text-emerald-700",
       mainIcon: (
-        <Video
+        <Crown
           className="w-20 h-20 text-emerald-300 drop-shadow-md"
           strokeWidth={1}
         />
       ),
-      items: [
-        {
-          name: "Quants",
-          icon: <Calculator className="w-5 h-5 text-purple-600" />,
-          iconBg: "bg-purple-100",
-        },
-        {
-          name: "Reasoning",
-          icon: <Brain className="w-5 h-5 text-orange-500" />,
-          iconBg: "bg-orange-100",
-        },
-        {
-          name: "English",
-          icon: <Languages className="w-5 h-5 text-amber-600" />,
-          iconBg: "bg-amber-100",
-        },
-        {
-          name: "GA Hustle",
-          icon: <Globe className="w-5 h-5 text-teal-600" />,
-          iconBg: "bg-teal-100",
-        },
-      ],
+      items: paidQuizzes.slice(0, 4).map((quiz, index) => {
+        return {
+          name: quiz.nameOfExam || "Unknown Exam",
+          action: () => navigate("/quizeDetail"), 
+          icon: quiz.logoUrl ? (
+            <img
+              src={quiz.logoUrl}
+              alt={quiz.nameOfExam || "Exam logo"}
+              className="w-12 h-12 object-contain hover:scale-110 rounded-lg"
+            />
+          ) : (
+            <div
+              className="w-12 h-12 rounded-full bg-slate-100 border border-slate-200"
+            />
+          ),
+          iconBg: "", // Empty to prevent the colored background circle
+        };
+      }),
     },
 
     {
