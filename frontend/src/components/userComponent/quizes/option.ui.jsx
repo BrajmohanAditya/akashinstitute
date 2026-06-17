@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import { Eye } from "lucide-react";
 
-const OptionUI = ({ options }) => {
+const OptionUI = ({ options, instruction }) => {
   const displayOptions = options || [];
 
   const [selectedOption, setSelectedOption] = useState(null);
 
   return (
-    <div className="flex flex-col space-y-10 pl-10 pt-10 w-full max-w-xl font-sans">
-      {/* 1. Options List */}
+    <div className="flex flex-col pl-10 pt-10 w-full max-w-xl font-sans">
+      {/* --- ADD THIS INSTRUCTION BLOCK --- */}
+      {instruction && (
+        <div className="text-slate-500 font-medium italic text-[15px] mb-6 p-3 rounded-md border border-slate-100">
+          {instruction}
+        </div>
+      )}
+
       <div className="space-y-8">
         {displayOptions.map((opt, index) => (
           <label

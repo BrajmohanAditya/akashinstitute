@@ -27,10 +27,12 @@ const StudyMaterial = () => {
 
   // (The old 'quizzes' variable was removed because 'data' is no longer defined)
   // Fetch Free Quizzes
-  const { data: freeData, isLoading: isFreeLoading } = useGetQuizzesHook("Free");
+  const { data: freeData, isLoading: isFreeLoading } =
+    useGetQuizzesHook("Free");
   const freeQuizzes = freeData?.quizzes || [];
   // Fetch Paid Quizzes
-  const { data: paidData, isLoading: isPaidLoading } = useGetQuizzesHook("Paid");
+  const { data: paidData, isLoading: isPaidLoading } =
+    useGetQuizzesHook("Paid");
   const paidQuizzes = paidData?.quizzes || [];
   // ... rest of your code
 
@@ -63,13 +65,11 @@ const StudyMaterial = () => {
             <img
               src={quiz.logoUrl}
               alt={quiz.nameOfExam || "Exam logo"}
-              className="w-12 h-12 object-contain hover:scale-110 rounded-lg"
+              className="w-18 h-18 object-contain hover:scale-110 rounded-lg"
             />
           ) : (
             // Fallback icon just in case a quiz doesn't have a logo
-            <div
-              className="w-12 h-12 rounded-full bg-slate-100 border border-slate-200"
-            />
+            <div className="w-16 h-16 rounded-full bg-slate-100 border border-slate-200" />
           ),
           iconBg: "", // Empty to prevent the colored background circle
         };
@@ -89,17 +89,15 @@ const StudyMaterial = () => {
       items: paidQuizzes.slice(0, 4).map((quiz, index) => {
         return {
           name: quiz.nameOfExam || "Unknown Exam",
-          action: () => navigate("/quizeDetail"), 
+          action: () => navigate("/quizeDetail"),
           icon: quiz.logoUrl ? (
             <img
               src={quiz.logoUrl}
               alt={quiz.nameOfExam || "Exam logo"}
-              className="w-12 h-12 object-contain hover:scale-110 rounded-lg"
+              className="w-18 h-18 object-contain hover:scale-110 rounded-lg"
             />
           ) : (
-            <div
-              className="w-12 h-12 rounded-full bg-slate-100 border border-slate-200"
-            />
+            <div className="w-16 h-16 rounded-full bg-slate-100 border border-slate-200" />
           ),
           iconBg: "", // Empty to prevent the colored background circle
         };
@@ -217,7 +215,7 @@ const StudyMaterial = () => {
                     <div
                       key={idx}
                       onClick={item.action}
-                      className={`flex flex-col items-center justify-center bg-white rounded-2xl p-4 transition-all duration-300 border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-1 ${item.action ? 'cursor-pointer' : ''}`}
+                      className={`flex flex-col items-center justify-center bg-white rounded-2xl p-1 transition-all duration-300 border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-1 ${item.action ? "cursor-pointer" : ""}`}
                     >
                       {item.iconBg ? (
                         <div
@@ -226,7 +224,7 @@ const StudyMaterial = () => {
                           {item.icon}
                         </div>
                       ) : (
-                        <div className="mb-2 flex items-center justify-center">
+                        <div className=" flex items-center justify-center">
                           {item.icon}
                         </div>
                       )}

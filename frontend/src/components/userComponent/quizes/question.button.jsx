@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
-const QuestionButtonUI = ({ 
-  sectionName = "Unknown Section", 
-  questions = [], 
-  currentQuestionIndex = 0, 
-  onQuestionClick 
+const QuestionButtonUI = ({
+  sectionName = "Unknown Section",
+  questions = [],
+  currentQuestionIndex = 0,
+  onQuestionClick,
 }) => {
   return (
     <div className="w-full bg-[#dcf0fa] flex flex-col font-sans h-full border-l border-slate-200 min-h-0">
@@ -30,6 +30,13 @@ const QuestionButtonUI = ({
             </button>
           );
         })}
+      </div>
+
+      {/* Footer / Action Buttons */}
+      <div className="shrink-0 flex flex-col gap-2 p-3 border-t border-[#bce0f2]">
+        <button className="w-full bg-[#24bcd4] hover:bg-[#1ba8be] text-white py-2 rounded-sm text-sm font-medium transition-colors shadow-sm">
+          Submit Test
+        </button>
       </div>
     </div>
   );

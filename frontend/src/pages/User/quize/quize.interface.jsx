@@ -18,6 +18,39 @@ const QuizeInterface = () => {
   const [activeSection, setActiveSection] = useState("");
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
+  // --- ADD THESE NEW LINES ---
+  const [timeLeft, setTimeLeft] = useState(0);
+
+  // 1. Initialize the timer when the quiz data loads
+  React.useEffect(() => {
+    if (currentQuiz?.duration) {
+      // Multiply by 60 because duration is in minutes, but we need seconds
+      setTimeLeft(currentQuiz.duration * 60);
+    }
+  }, [currentQuiz]);
+
+  // 2. The actual countdown logic
+  React.useEffect(() => {
+    if (timeLeft <= 0) return; // Stop if timer hits 0
+
+    const timerId = setInterval(() => {
+      setTimeLeft((prevTime) => prevTime - 1);
+    }, 1000);
+
+    // Cleanup interval so it doesn't leak memory
+    return () => clearInterval(timerId);
+  }, [timeLeft]);
+
+  // 3. Helper function to turn seconds into MM:SS format
+  const formatTime = (totalSeconds) => {
+    const minutes = Math.floor(totalSeconds / 60)
+      .toString()
+      .padStart(2, "0");
+    const seconds = (totalSeconds % 60).toString().padStart(2, "0");
+    return `${minutes}:${seconds}`;
+  };
+  // ---------------------------
+
   // 4. Automatically select the first section dynamically
   React.useEffect(() => {
     if (currentQuiz?.section?.length > 0 && !activeSection) {
@@ -98,14 +131,6 @@ const QuizeInterface = () => {
             </div>
           </div>
 
-          {/* Time Limit placeholder */}
-          <div className="flex flex-col items-center justify-center leading-tight">
-            <span className="text-slate-500 text-xs font-medium">Time</span>
-            <span className="font-mono text-sm font-semibold text-slate-700">
-              00:00
-            </span>
-          </div>
-
           {/* Report Button */}
           <button className="flex items-center gap-1.5 text-slate-500 hover:text-slate-800 font-medium transition">
             <AlertTriangle className="w-4 h-4" /> Report
@@ -114,29 +139,43 @@ const QuizeInterface = () => {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 bg-white flex flex-col lg:flex-row text-slate-800 overflow-y-auto lg:overflow-hidden min-h-0">
-        {/* Render the Question UI */}
-        <div className="lg:flex-1 min-h-0 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white lg:overflow-y-auto custom-scrollbar">
-          <QuestionUi question={currentQuestion} />
-        </div>
+      <div className="flex-1 bg-white flex flex-col lg:flex-row text-slate-800 overflow-hidden min-h-0">
+        {/* Left Side (Questions + Options + Bottom Bar) */}
+        <div className="flex-1 flex flex-col min-w-0 lg:border-r border-slate-200 overflow-hidden">
+          {/* Questions and Options Row */}
+          <div className="flex-1 flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden min-h-0">
+            {/* Render the Question UI */}
+            <div className="lg:flex-1 min-h-0 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white lg:overflow-y-auto custom-scrollbar">
+              <QuestionUi question={currentQuestion} />
+            </div>
 
-        {/* Render the Option UI */}
-        <div className="lg:flex-1 min-h-0 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white lg:overflow-y-auto custom-scrollbar flex flex-col">
-          <OptionUI 
-            key={currentQuestion?._id || currentQuestionIndex}
-            options={currentQuestion?.options}
-          />
+            {/* Render the Option UI */}
+            <div className="lg:flex-1 min-h-0 border-b lg:border-b-0 border-slate-200 bg-white lg:overflow-y-auto custom-scrollbar flex flex-col">
+              <OptionUI
+                key={currentQuestion?._id || currentQuestionIndex}
+                options={currentQuestion?.options}
+                instruction={currentQuestion?.optionsInstruction}
+              />
 
-          {/* Render the Solution UI below options */}
-          <div className="px-10 pb-10">
-            <SolutionUI
-              solutionText={currentQuestion?.solutionExplanation}
-              solutionImage={currentQuestion?.solutionImage}
-            />
+              {/* Render the Solution UI below options */}
+              <div className="px-10 pb-10">
+                <SolutionUI
+                  solutionText={currentQuestion?.solutionExplanation}
+                  solutionImage={currentQuestion?.solutionImage}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* --- BOTTOM BAR --- */}
+          <div className="bg-gray-50 border-t border-slate-200 flex items-center px-4 py-3 gap-2 shrink-0 w-full z-10 shadow-[0_-2px_5px_rgba(0,0,0,0.02)]">
+            <button className="bg-[#24bcd4] hover:bg-[#1ba8be] text-white px-5 py-2 rounded text-sm font-medium transition-colors shadow-sm">
+              Save & Next
+            </button>
           </div>
         </div>
 
-        {/* Render the Question Buttons Panel */}
+        {/* Right Side - Question Buttons Panel */}
         <div className="w-full lg:w-[320px] shrink-0 bg-white h-auto lg:h-full lg:overflow-y-auto custom-scrollbar">
           <QuestionButtonUI
             sectionName={activeSection}
