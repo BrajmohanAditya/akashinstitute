@@ -19,19 +19,32 @@ const QuizeInterface = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
   // --- ADD THESE NEW LINES ---
-  const [timeLeft, setTimeLeft] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(null); // Use null to know if it's been initialized
+  const [userAnswers, setUserAnswers] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // 1. Initialize the timer when the quiz data loads
+  const handleSubmitTest = () => {
+    // We will do the marks calculation here later
+    console.log("Test Submitted! Final Answers: ", userAnswers);
+    setIsSubmitted(true);
+    setTimeLeft(0); 
+  };
+
+  // 1. Initialize the timer ONCE when the quiz data loads
   React.useEffect(() => {
-    if (currentQuiz?.duration) {
-      // Multiply by 60 because duration is in minutes, but we need seconds
+    if (currentQuiz?.duration && timeLeft === null) {
       setTimeLeft(currentQuiz.duration * 60);
     }
-  }, [currentQuiz]);
+  }, [currentQuiz?.duration, timeLeft]);
 
   // 2. The actual countdown logic
   React.useEffect(() => {
-    if (timeLeft <= 0) return; // Stop if timer hits 0
+    if (timeLeft === null || isSubmitted) return;
+
+    if (timeLeft === 0) {
+      handleSubmitTest();
+      return;
+    }
 
     const timerId = setInterval(() => {
       setTimeLeft((prevTime) => prevTime - 1);
@@ -39,7 +52,7 @@ const QuizeInterface = () => {
 
     // Cleanup interval so it doesn't leak memory
     return () => clearInterval(timerId);
-  }, [timeLeft]);
+  }, [timeLeft, isSubmitted]);
 
   // 3. Helper function to turn seconds into MM:SS format
   const formatTime = (totalSeconds) => {
@@ -76,12 +89,12 @@ const QuizeInterface = () => {
         </div>
 
         <div className="flex items-center gap-3 bg-slate-100 px-4 py-1.5 rounded-md shadow-sm">
-          <span className="font-bold text-slate-800">Total Time:</span>
+          <span className="font-bold text-slate-800">Time Left:</span>
           <div className="flex gap-1.5 text-white font-mono font-bold">
-            <span className="bg-slate-500 px-2 py-0.5 rounded text-sm shadow-inner">
-              {currentQuiz?.duration
-                ? `${currentQuiz.duration} Mins`
-                : "0 Mins"}
+            <span
+              className={`px-2 py-0.5 rounded text-sm shadow-inner  ${timeLeft !== null && timeLeft < 60 ? "bg-red-500 " : "bg-slate-500"}`}
+            >
+              {timeLeft !== null ? formatTime(timeLeft) : "00:00"}
             </span>
           </div>
         </div>
@@ -148,22 +161,29 @@ const QuizeInterface = () => {
             <div className="lg:flex-1 min-h-0 border-b lg:border-b-0 lg:border-r border-slate-200 bg-white lg:overflow-y-auto custom-scrollbar">
               <QuestionUi question={currentQuestion} />
             </div>
-
+            {/* {console.log(currentQuestion)} */}
             {/* Render the Option UI */}
             <div className="lg:flex-1 min-h-0 border-b lg:border-b-0 border-slate-200 bg-white lg:overflow-y-auto custom-scrollbar flex flex-col">
               <OptionUI
                 key={currentQuestion?._id || currentQuestionIndex}
                 options={currentQuestion?.options}
                 instruction={currentQuestion?.optionsInstruction}
+                selectedOption={userAnswers[currentQuestion?._id]}
+                onSelectOption={(index) => {
+                  setUserAnswers((prev) => ({
+                    ...prev,
+                    [currentQuestion?._id]: index,
+                  }));
+                }}
               />
 
               {/* Render the Solution UI below options */}
-              <div className="px-10 pb-10">
+              {/* <div className="px-10 pb-10">
                 <SolutionUI
                   solutionText={currentQuestion?.solutionExplanation}
                   solutionImage={currentQuestion?.solutionImage}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -182,6 +202,7 @@ const QuizeInterface = () => {
             questions={sectionQuestions}
             currentQuestionIndex={currentQuestionIndex}
             onQuestionClick={(index) => setCurrentQuestionIndex(index)}
+            onSubmitTest={handleSubmitTest}
           />
         </div>
       </div>

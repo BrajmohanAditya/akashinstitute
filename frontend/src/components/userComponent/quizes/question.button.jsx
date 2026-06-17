@@ -5,6 +5,7 @@ const QuestionButtonUI = ({
   questions = [],
   currentQuestionIndex = 0,
   onQuestionClick,
+  onSubmitTest,
 }) => {
   return (
     <div className="w-full bg-[#dcf0fa] flex flex-col font-sans h-full border-l border-slate-200 min-h-0">
@@ -34,7 +35,9 @@ const QuestionButtonUI = ({
 
       {/* Footer / Action Buttons */}
       <div className="shrink-0 flex flex-col gap-2 p-3 border-t border-[#bce0f2]">
-        <button className="w-full bg-[#24bcd4] hover:bg-[#1ba8be] text-white py-2 rounded-sm text-sm font-medium transition-colors shadow-sm">
+        <button 
+        onClick={onSubmitTest}
+        className="w-full cursor-pointer  bg-[#24bcd4] hover:bg-[#1ba8be] text-white py-2 rounded-sm text-sm font-medium transition-colors shadow-sm">
           Submit Test
         </button>
       </div>

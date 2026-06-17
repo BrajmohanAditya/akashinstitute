@@ -1,6 +1,6 @@
-import { Quiz } from "../models/quiz.model.js";
+import { Quiz } from "../models/quiz/quiz.model.js";
 import cloudinary from "../config/cloudinary.js";
-import { QuizQuestion } from "../models/quiz.question.model.js";
+import { QuizQuestion } from "../models/quiz/quiz.question.model.js";
 
 // Create a new quiz
 export const createQuiz = async (req, res, next) => {

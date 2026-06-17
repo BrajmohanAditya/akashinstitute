@@ -1,5 +1,5 @@
-import { QuizQuestion } from "../models/quiz.question.model.js";
-import { Quiz } from "../models/quiz.model.js";
+import { QuizQuestion } from "../models/quiz/quiz.question.model.js";
+import { Quiz } from "../models/quiz/quiz.model.js";
 
 // Create a new quiz question
 export const createQuizQuestion = async (req, res, next) => {
