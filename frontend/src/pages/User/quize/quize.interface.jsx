@@ -7,6 +7,8 @@ import { useGetQuizQuestionsHook } from "@/hooks/quiz.createQuest.hook.js";
 import OptionUI from "@/components/userComponent/quizes/option.ui.jsx";
 import QuestionButtonUI from "@/components/userComponent/quizes/question.button.jsx";
 import SolutionUI from "@/components/userComponent/quizes/solution.jsx";
+import { useSubmitQuizHook, useGetMyQuizResultsHook } from "@/hooks/quizResult.hook.js";
+
 const QuizeInterface = () => {
   const { id } = useParams(); // 1. Get the ID from the URL!
   // 2. Fetch only the specific quiz using that ID
@@ -21,13 +23,32 @@ const QuizeInterface = () => {
   // --- ADD THESE NEW LINES ---
   const [timeLeft, setTimeLeft] = useState(null); // Use null to know if it's been initialized
   const [userAnswers, setUserAnswers] = useState({});
+
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  const { mutate: submitQuiz, isPending: isSubmitting } = useSubmitQuizHook();
+  const { data: previousResultData } = useGetMyQuizResultsHook(id);
+  const alreadySubmitted = previousResultData?.count > 0;
+
+  // --- ADD THIS EFFECT ---
+  React.useEffect(() => {
+    if (alreadySubmitted) {
+      setIsSubmitted(true);
+      setTimeLeft(0);
+    }
+  }, [alreadySubmitted]);
+
+
+
   const handleSubmitTest = () => {
-    // We will do the marks calculation here later
-    console.log("Test Submitted! Final Answers: ", userAnswers);
     setIsSubmitted(true);
     setTimeLeft(0); 
+
+    // Call the backend API
+    submitQuiz({
+      quizId: id,
+      userAnswers: userAnswers,
+    });
   };
 
   // 1. Initialize the timer ONCE when the quiz data loads
@@ -203,6 +224,8 @@ const QuizeInterface = () => {
             currentQuestionIndex={currentQuestionIndex}
             onQuestionClick={(index) => setCurrentQuestionIndex(index)}
             onSubmitTest={handleSubmitTest}
+            isSubmitted={isSubmitted}
+             isSubmitting={isSubmitting} 
           />
         </div>
       </div>

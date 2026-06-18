@@ -1,4 +1,5 @@
 import React from "react";
+import { Loader2 } from "lucide-react";
 
 const QuestionButtonUI = ({
   sectionName = "Unknown Section",
@@ -6,6 +7,8 @@ const QuestionButtonUI = ({
   currentQuestionIndex = 0,
   onQuestionClick,
   onSubmitTest,
+  isSubmitted,
+  isSubmitting
 }) => {
   return (
     <div className="w-full bg-[#dcf0fa] flex flex-col font-sans h-full border-l border-slate-200 min-h-0">
@@ -35,11 +38,27 @@ const QuestionButtonUI = ({
 
       {/* Footer / Action Buttons */}
       <div className="shrink-0 flex flex-col gap-2 p-3 border-t border-[#bce0f2]">
-        <button 
-        onClick={onSubmitTest}
-        className="w-full cursor-pointer  bg-[#24bcd4] hover:bg-[#1ba8be] text-white py-2 rounded-sm text-sm font-medium transition-colors shadow-sm">
-          Submit Test
-        </button>
+     <button 
+       onClick={onSubmitTest}
+       disabled={isSubmitted || isSubmitting}
+       className={`w-full py-2 rounded-sm text-sm font-medium transition-colors shadow-sm flex items-center justify-center gap-2 ${
+         isSubmitted || isSubmitting 
+           ? "bg-slate-300 text-slate-500 cursor-not-allowed" // Looks disabled and grey
+           : "cursor-pointer bg-[#24bcd4] hover:bg-[#1ba8be] text-white" // Normal teal color
+       }`}
+     >
+       {isSubmitting ? (
+         <>
+           <Loader2 className="w-4 h-4 animate-spin" />
+           Submitting...
+         </>
+       ) : isSubmitted ? (
+         "Test Submitted"
+       ) : (
+         "Submit Test"
+       )}
+     </button>
+
       </div>
     </div>
   );
