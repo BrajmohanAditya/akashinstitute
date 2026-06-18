@@ -27,6 +27,7 @@ const QuizeInterface = () => {
   // --- ADD THESE NEW LINES ---
   const [timeLeft, setTimeLeft] = useState(null); // Use null to know if it's been initialized
   const [userAnswers, setUserAnswers] = useState({});
+  const [revealedQuestions, setRevealedQuestions] = useState({});
 
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -45,8 +46,7 @@ const QuizeInterface = () => {
   }, [alreadySubmitted, previousResultData]);
 
   const handleSubmitTest = () => {
-    setIsSubmitted(true);
-    setTimeLeft(0);
+    if (isSubmitting) return; // Prevent multiple clicks
 
     // Call the backend API
     submitQuiz({
@@ -72,7 +72,9 @@ const QuizeInterface = () => {
     if (timeLeft === null || isSubmitted) return;
 
     if (timeLeft === 0) {
-      handleSubmitTest();
+      if (!isSubmitting) {
+        handleSubmitTest();
+      }
       return;
     }
 
@@ -82,7 +84,7 @@ const QuizeInterface = () => {
 
     // Cleanup interval so it doesn't leak memory
     return () => clearInterval(timerId);
-  }, [timeLeft, isSubmitted]);
+  }, [timeLeft, isSubmitted, isSubmitting]);
 
   // 3. Helper function to turn seconds into MM:SS format
   const formatTime = (totalSeconds) => {
@@ -212,8 +214,14 @@ const QuizeInterface = () => {
                 instruction={currentQuestion?.optionsInstruction}
                 selectedOption={userAnswers[currentQuestion?._id]}
                 isSubmitted={isSubmitted}
+                isRevealed={revealedQuestions[currentQuestion?._id]}
                 onSelectOption={(index) => {
-                  if (!isSubmitted) {
+                  if (isSubmitted) {
+                    setRevealedQuestions((prev) => ({
+                      ...prev,
+                      [currentQuestion?._id]: true,
+                    }));
+                  } else {
                     setUserAnswers((prev) => ({
                       ...prev,
                       [currentQuestion?._id]: index,
