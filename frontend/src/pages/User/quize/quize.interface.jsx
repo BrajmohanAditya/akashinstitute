@@ -7,7 +7,10 @@ import { useGetQuizQuestionsHook } from "@/hooks/quiz.createQuest.hook.js";
 import OptionUI from "@/components/userComponent/quizes/option.ui.jsx";
 import QuestionButtonUI from "@/components/userComponent/quizes/question.button.jsx";
 import SolutionUI from "@/components/userComponent/quizes/solution.jsx";
-import { useSubmitQuizHook, useGetMyQuizResultsHook } from "@/hooks/quizResult.hook.js";
+import {
+  useSubmitQuizHook,
+  useGetMyQuizResultsHook,
+} from "@/hooks/quizResult.hook.js";
 
 const QuizeInterface = () => {
   const { id } = useParams(); // 1. Get the ID from the URL!
@@ -28,7 +31,8 @@ const QuizeInterface = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const { mutate: submitQuiz, isPending: isSubmitting } = useSubmitQuizHook();
-  const { data: previousResultData , isLoading: isCheckingResult} = useGetMyQuizResultsHook(id);
+  const { data: previousResultData, isLoading: isCheckingResult } =
+    useGetMyQuizResultsHook(id);
   const alreadySubmitted = previousResultData?.count > 0;
 
   // --- ADD THIS EFFECT ---
@@ -36,14 +40,13 @@ const QuizeInterface = () => {
     if (alreadySubmitted) {
       setIsSubmitted(true);
       setTimeLeft(0);
+      setUserAnswers(previousResultData?.results?.[0]?.userAnswers || {});
     }
-  }, [alreadySubmitted]);
-
-
+  }, [alreadySubmitted, previousResultData]);
 
   const handleSubmitTest = () => {
     setIsSubmitted(true);
-    setTimeLeft(0); 
+    setTimeLeft(0);
 
     // Call the backend API
     submitQuiz({
@@ -54,10 +57,15 @@ const QuizeInterface = () => {
 
   // 1. Initialize the timer ONCE when the quiz data loads
   React.useEffect(() => {
-    if (currentQuiz?.duration && timeLeft === null && !isCheckingResult && !alreadySubmitted) {
+    if (
+      currentQuiz?.duration &&
+      timeLeft === null &&
+      !isCheckingResult &&
+      !alreadySubmitted
+    ) {
       setTimeLeft(currentQuiz.duration * 60);
     }
-  }, [currentQuiz?.duration, timeLeft, alreadySubmitted]);
+  }, [currentQuiz?.duration, timeLeft, alreadySubmitted, isCheckingResult]);
 
   // 2. The actual countdown logic
   React.useEffect(() => {
@@ -203,22 +211,27 @@ const QuizeInterface = () => {
                 options={currentQuestion?.options}
                 instruction={currentQuestion?.optionsInstruction}
                 selectedOption={userAnswers[currentQuestion?._id]}
+                isSubmitted={isSubmitted}
                 onSelectOption={(index) => {
-                  setUserAnswers((prev) => ({
-                    ...prev,
-                    [currentQuestion?._id]: index,
-                  }));
+                  if (!isSubmitted) {
+                    setUserAnswers((prev) => ({
+                      ...prev,
+                      [currentQuestion?._id]: index,
+                    }));
+                  }
                 }}
               />
 
-              {isSubmitted && (currentQuestion?.solutionExplanation || currentQuestion?.solutionImage) && (
-                <div className="px-10 pb-10">
-                  <SolutionUI
-                    solutionText={currentQuestion?.solutionExplanation}
-                    solutionImage={currentQuestion?.solutionImage}
-                  />
-                </div>
-              )}
+              {isSubmitted &&
+                (currentQuestion?.solutionExplanation ||
+                  currentQuestion?.solutionImage) && (
+                  <div className="px-10 pb-10">
+                    <SolutionUI
+                      solutionText={currentQuestion?.solutionExplanation}
+                      solutionImage={currentQuestion?.solutionImage}
+                    />
+                  </div>
+                )}
             </div>
           </div>
 
@@ -236,11 +249,12 @@ const QuizeInterface = () => {
             sectionName={activeSection}
             questions={sectionQuestions}
             currentQuestionIndex={currentQuestionIndex}
+            userAnswers={userAnswers}
             onQuestionClick={(index) => setCurrentQuestionIndex(index)}
             onSubmitTest={handleSubmitTest}
             onViewResult={() => navigate(`/quiz-result/${id}`)}
             isSubmitted={isSubmitted}
-             isSubmitting={isSubmitting} 
+            isSubmitting={isSubmitting}
           />
         </div>
       </div>
