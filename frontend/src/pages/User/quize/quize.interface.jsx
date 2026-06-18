@@ -211,13 +211,14 @@ const QuizeInterface = () => {
                 }}
               />
 
-              {/* Render the Solution UI below options */}
-              {/* <div className="px-10 pb-10">
-                <SolutionUI
-                  solutionText={currentQuestion?.solutionExplanation}
-                  solutionImage={currentQuestion?.solutionImage}
-                />
-              </div> */}
+              {isSubmitted && (currentQuestion?.solutionExplanation || currentQuestion?.solutionImage) && (
+                <div className="px-10 pb-10">
+                  <SolutionUI
+                    solutionText={currentQuestion?.solutionExplanation}
+                    solutionImage={currentQuestion?.solutionImage}
+                  />
+                </div>
+              )}
             </div>
           </div>
 

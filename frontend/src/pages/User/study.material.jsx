@@ -60,7 +60,7 @@ const StudyMaterial = () => {
 
         return {
           name: quiz.nameOfExam || "Unknown Exam",
-          action: () => navigate("/quizeDetail"),
+          action: () => navigate("/quizeDetail?type=Free"),
           icon: quiz.logoUrl ? (
             <img
               src={quiz.logoUrl}
@@ -89,7 +89,7 @@ const StudyMaterial = () => {
       items: paidQuizzes.slice(0, 4).map((quiz, index) => {
         return {
           name: quiz.nameOfExam || "Unknown Exam",
-          action: () => navigate("/quizeDetail"),
+          action: () => navigate("/quizeDetail?type=Paid"),
           icon: quiz.logoUrl ? (
             <img
               src={quiz.logoUrl}

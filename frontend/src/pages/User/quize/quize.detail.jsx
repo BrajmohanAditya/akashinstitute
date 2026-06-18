@@ -1,12 +1,14 @@
 import React from "react";
-import { FileText, Clock, Globe, CircleDot } from "lucide-react";
+import { FileText, Clock, Globe, CircleDot, Crown } from "lucide-react";
 import { useGetQuizzesHook } from "@/hooks/quiz.hook";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useGetMyQuizResultsHook } from "@/hooks/quizResult.hook.js";
 import PageLoader from "@/components/ui/PageLoader";
 
 const QuizeDetail = () => {
-  const { data, isLoading, isError } = useGetQuizzesHook();
+  const [searchParams] = useSearchParams();
+  const quizType = searchParams.get("type"); // Will be "Free" or "Paid" or null
+  const { data, isLoading, isError } = useGetQuizzesHook(quizType);
   const navigate = useNavigate();
 
   const { data: myResultsData, isLoading: isResultsLoading } =
@@ -35,15 +37,24 @@ const QuizeDetail = () => {
                 >
                   <div className="p-5 flex-grow">
                     {/* Badges */}
-                    <div className="flex gap-2 mb-4">
-                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded border border-[#ff1053] text-[#ff1053] text-[11px] font-bold tracking-wide">
-                        <CircleDot className="w-2.5 h-2.5 fill-[#ff1053]" />
-                        LIVE TEST
-                      </span>
+                    <div className="flex gap-2 mb-4 min-h-[24px]">
+                      {test.quizType === "Free" ? (
+                        <>
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded border border-[#ff1053] text-[#ff1053] text-[11px] font-bold tracking-wide">
+                            <CircleDot className="w-2.5 h-2.5 fill-[#ff1053]" />
+                            LIVE TEST
+                          </span>
 
-                      <span className="inline-flex items-center px-2.5 py-1 rounded bg-[#2dd46c] text-white text-[11px] font-bold tracking-wide">
-                        FREE
-                      </span>
+                          <span className="inline-flex items-center px-2.5 py-1 rounded bg-[#2dd46c] text-white text-[11px] font-bold tracking-wide">
+                            FREE
+                          </span>
+                        </>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-white text-[11px] font-bold tracking-wider shadow-sm border border-amber-300">
+                          <Crown className="w-3 h-3 text-white" strokeWidth={2.5} />
+                          PREMIUM
+                        </span>
+                      )}
                     </div>
 
                     {/* Title */}
