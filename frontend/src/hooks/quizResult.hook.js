@@ -10,8 +10,7 @@ export const useSubmitQuizHook = () => {
     mutationFn: submitQuizApi,
     onSuccess: (data) => {
       toast.success(data?.message || "Quiz submitted successfully");
-      // Redirect to a result page or show a success modal
-      // navigate(`/quiz-result/${data.result._id}`); // Example redirection
+      navigate(`/quiz-result/${data.result.quiz}`);
     },
     onError: (err) => {
       const errorMessage = err.response?.data?.message || "Failed to submit quiz";

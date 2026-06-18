@@ -8,7 +8,8 @@ const QuestionButtonUI = ({
   onQuestionClick,
   onSubmitTest,
   isSubmitted,
-  isSubmitting
+  isSubmitting,
+  onViewResult
 }) => {
   return (
     <div className="w-full bg-[#dcf0fa] flex flex-col font-sans h-full border-l border-slate-200 min-h-0">
@@ -39,10 +40,10 @@ const QuestionButtonUI = ({
       {/* Footer / Action Buttons */}
       <div className="shrink-0 flex flex-col gap-2 p-3 border-t border-[#bce0f2]">
      <button 
-       onClick={onSubmitTest}
-       disabled={isSubmitted || isSubmitting}
+       onClick={isSubmitted ? onViewResult : onSubmitTest}
+       disabled={isSubmitting}
        className={`w-full py-2 rounded-sm text-sm font-medium transition-colors shadow-sm flex items-center justify-center gap-2 ${
-         isSubmitted || isSubmitting 
+         isSubmitting 
            ? "bg-slate-300 text-slate-500 cursor-not-allowed" // Looks disabled and grey
            : "cursor-pointer bg-[#24bcd4] hover:bg-[#1ba8be] text-white" // Normal teal color
        }`}
@@ -53,7 +54,7 @@ const QuestionButtonUI = ({
            Submitting...
          </>
        ) : isSubmitted ? (
-         "Test Submitted"
+         "View Result"
        ) : (
          "Submit Test"
        )}

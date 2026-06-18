@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { User, AlertTriangle, Maximize } from "lucide-react";
 import { useGetQuizByIdHook } from "@/hooks/quiz.hook";
 import QuestionUi from "@/components/userComponent/quizes/question.ui.jsx";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useGetQuizQuestionsHook } from "@/hooks/quiz.createQuest.hook.js";
 import OptionUI from "@/components/userComponent/quizes/option.ui.jsx";
 import QuestionButtonUI from "@/components/userComponent/quizes/question.button.jsx";
@@ -11,6 +11,7 @@ import { useSubmitQuizHook, useGetMyQuizResultsHook } from "@/hooks/quizResult.h
 
 const QuizeInterface = () => {
   const { id } = useParams(); // 1. Get the ID from the URL!
+  const navigate = useNavigate(); // For redirecting to result page
   // 2. Fetch only the specific quiz using that ID
   const { data: quizData, isLoading, isError } = useGetQuizByIdHook(id);
   const currentQuiz = quizData?.quiz;
@@ -27,7 +28,7 @@ const QuizeInterface = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const { mutate: submitQuiz, isPending: isSubmitting } = useSubmitQuizHook();
-  const { data: previousResultData } = useGetMyQuizResultsHook(id);
+  const { data: previousResultData , isLoading: isCheckingResult} = useGetMyQuizResultsHook(id);
   const alreadySubmitted = previousResultData?.count > 0;
 
   // --- ADD THIS EFFECT ---
@@ -53,10 +54,10 @@ const QuizeInterface = () => {
 
   // 1. Initialize the timer ONCE when the quiz data loads
   React.useEffect(() => {
-    if (currentQuiz?.duration && timeLeft === null) {
+    if (currentQuiz?.duration && timeLeft === null && !isCheckingResult && !alreadySubmitted) {
       setTimeLeft(currentQuiz.duration * 60);
     }
-  }, [currentQuiz?.duration, timeLeft]);
+  }, [currentQuiz?.duration, timeLeft, alreadySubmitted]);
 
   // 2. The actual countdown logic
   React.useEffect(() => {
@@ -98,9 +99,21 @@ const QuizeInterface = () => {
   const currentQuestion = sectionQuestions[currentQuestionIndex];
 
   // Reset to first question whenever the user switches sections
+  // Reset to first question whenever the user switches sections
   React.useEffect(() => {
     setCurrentQuestionIndex(0);
   }, [activeSection]);
+
+  // --- ADD THIS BLOCK RIGHT HERE (before the main return) ---
+  if (isCheckingResult || isLoading) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <p className="text-slate-500 text-sm">Loading quiz, please wait...</p>
+      </div>
+    );
+  }
+  // ----------------------------------------------------------
+
   return (
     <div className="h-screen flex flex-col bg-white text-sm font-sans select-none overflow-hidden">
       {/* Step 1: Top Header */}
@@ -224,6 +237,7 @@ const QuizeInterface = () => {
             currentQuestionIndex={currentQuestionIndex}
             onQuestionClick={(index) => setCurrentQuestionIndex(index)}
             onSubmitTest={handleSubmitTest}
+            onViewResult={() => navigate(`/quiz-result/${id}`)}
             isSubmitted={isSubmitted}
              isSubmitting={isSubmitting} 
           />
