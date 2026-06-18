@@ -244,11 +244,27 @@ const QuizeInterface = () => {
           </div>
 
           {/* --- BOTTOM BAR --- */}
+
+                    {/* --- BOTTOM BAR --- */}
           <div className="bg-gray-50 border-t border-slate-200 flex items-center px-4 py-3 gap-2 shrink-0 w-full z-10 shadow-[0_-2px_5px_rgba(0,0,0,0.02)]">
-            <button className="bg-[#24bcd4] hover:bg-[#1ba8be] text-white px-5 py-2 rounded text-sm font-medium transition-colors shadow-sm">
-              Save & Next
+            <button 
+              onClick={() => {
+                // Check if it's not the last question in the current section
+                if (currentQuestionIndex < sectionQuestions.length - 1) {
+                  setCurrentQuestionIndex((prev) => prev + 1);
+                }
+              }}
+              disabled={currentQuestionIndex === sectionQuestions.length - 1} // Disable on last question
+              className={`px-5 py-2 rounded text-sm font-medium transition-colors shadow-sm ${
+                currentQuestionIndex === sectionQuestions.length - 1 
+                ? "bg-slate-300 text-slate-500 cursor-not-allowed" // Disabled look for last question
+                : "bg-[#24bcd4] hover:bg-[#1ba8be] text-white cursor-pointer"
+              }`}
+            >
+              {currentQuestionIndex === sectionQuestions.length - 1 ? "Last Question" : "Save & Next"}
             </button>
           </div>
+
         </div>
 
         {/* Right Side - Question Buttons Panel */}
