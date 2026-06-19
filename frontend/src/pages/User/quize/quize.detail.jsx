@@ -1,8 +1,8 @@
 import React from "react";
 import { FileText, Clock, Globe, CircleDot, Crown } from "lucide-react";
-import { useGetQuizzesHook } from "@/hooks/quiz.hook";
+import { useGetQuizzesHook } from "@/hooks/quiz/quiz.hook";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useGetMyQuizResultsHook } from "@/hooks/quizResult.hook.js";
+import { useGetMyQuizResultsHook } from "@/hooks/quiz/quizResult.hook.js";
 import PageLoader from "@/components/ui/PageLoader";
 
 const QuizeDetail = () => {
@@ -51,7 +51,10 @@ const QuizeDetail = () => {
                         </>
                       ) : (
                         <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-white text-[11px] font-bold tracking-wider shadow-sm border border-amber-300">
-                          <Crown className="w-3 h-3 text-white" strokeWidth={2.5} />
+                          <Crown
+                            className="w-3 h-3 text-white"
+                            strokeWidth={2.5}
+                          />
                           PREMIUM
                         </span>
                       )}

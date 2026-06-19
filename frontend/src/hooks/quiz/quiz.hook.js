@@ -7,7 +7,7 @@ import {
   getQuizByIdApi,
   toggleQuizLockApi,
   toggleQuizTypeApi,
-} from "../api/quiz.api.js";
+} from "../../api/quiz.api.js";
 
 export const useCreateQuizHook = () => {
   return useMutation({
@@ -30,7 +30,7 @@ export const useGetQuizzesHook = (quizType) => {
     queryFn: () => getQuizzesApi(quizType),
     queryKey: ["getQuizzes", quizType], // Include quizType in queryKey for proper caching
     staleTime: 2 * 60 * 1000,
-     refetchOnWindowFocus: false,
+    refetchOnWindowFocus: false,
   });
 };
 

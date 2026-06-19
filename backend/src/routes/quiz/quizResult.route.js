@@ -1,6 +1,9 @@
 import express from "express";
-import { isLoggedIn } from "../middlewares/auth.middleware.js";
-import { submitQuiz, getMyResults } from "../controllers/quiz.result.controller.js";
+import { isLoggedIn } from "../../middlewares/auth.middleware.js";
+import {
+  submitQuiz,
+  getMyResults,
+} from "../../controllers/quiz.result.controller.js";
 
 const quizResultRoute = express.Router();
 

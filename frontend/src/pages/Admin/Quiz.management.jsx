@@ -17,7 +17,7 @@ import {
   useDeleteQuizHook,
   useToggleQuizLockHook,
   useToggleQuizTypeHook,
-} from "../../hooks/quiz.hook";
+} from "../../hooks/quiz/quiz.hook";
 import { format } from "date-fns";
 import QuizQuestionAdd from "../../components/Admin/quiz.question.add";
 import DeleteAlertbox from "../../components/ui/DeleteAlertbox";

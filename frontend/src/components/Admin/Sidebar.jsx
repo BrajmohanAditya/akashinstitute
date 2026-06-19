@@ -27,8 +27,8 @@ const DashboardSidebar = () => {
       icon: FileText,
     },
     {
-      to: "/admindashboard/paidStudent",
-      label: "Students",
+      to: "/admindashboard/PremiumStudent",
+      label: "Premium Students",
       icon: Users,
     },
     {

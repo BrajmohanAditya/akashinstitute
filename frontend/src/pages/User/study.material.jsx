@@ -21,7 +21,7 @@ import {
   Crown,
 } from "lucide-react";
 
-import { useGetQuizzesHook } from "@/hooks/quiz.hook";
+import { useGetQuizzesHook } from "@/hooks/quiz/quiz.hook";
 const StudyMaterial = () => {
   const navigate = useNavigate();
 

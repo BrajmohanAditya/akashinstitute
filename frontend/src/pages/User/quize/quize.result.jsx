@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useGetMyQuizResultsHook } from "@/hooks/quizResult.hook.js";
-import { useGetQuizByIdHook } from "@/hooks/quiz.hook";
+import { useGetMyQuizResultsHook } from "@/hooks/quiz/quizResult.hook.js";
+import { useGetQuizByIdHook } from "@/hooks/quiz/quiz.hook";
 import PageLoader from "@/components/ui/PageLoader";
 import { CheckCircle, XCircle, MinusCircle, Trophy } from "lucide-react";
 
@@ -31,10 +31,13 @@ const QuizResult = () => {
   const quiz = quizData?.quiz;
 
   return (
-    <PageLoader isLoading={loading} isError={isError} errorMessage="Failed to load your result.">
+    <PageLoader
+      isLoading={loading}
+      isError={isError}
+      errorMessage="Failed to load your result."
+    >
       <div className="min-h-[calc(100vh-80px)] bg-[#f8f9fa] flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl shadow-lg border border-slate-100 w-full max-w-md p-6 text-center">
-
           {/* Trophy Icon */}
           <div className="flex justify-center mb-3">
             <div className="w-12 h-12 rounded-full bg-[#e6f7f8] flex items-center justify-center">
@@ -46,7 +49,9 @@ const QuizResult = () => {
           <h1 className="text-xl font-bold text-slate-800 mb-0.5">
             {quiz?.nameOfExam}
           </h1>
-          <p className="text-slate-400 text-xs mb-5">Your result has been saved</p>
+          <p className="text-slate-400 text-xs mb-5">
+            Your result has been saved
+          </p>
 
           {/* Score Card */}
           <div className="bg-[#158993] rounded-xl p-4 mb-5 text-white">
@@ -67,7 +72,9 @@ const QuizResult = () => {
               <span className="text-lg font-bold text-green-600">
                 {result?.correctCount ?? "—"}
               </span>
-              <span className="text-[10px] text-green-700 font-medium uppercase tracking-wider">Correct</span>
+              <span className="text-[10px] text-green-700 font-medium uppercase tracking-wider">
+                Correct
+              </span>
             </div>
 
             {/* Wrong */}
@@ -76,7 +83,9 @@ const QuizResult = () => {
               <span className="text-lg font-bold text-red-500">
                 {result?.wrongCount ?? "—"}
               </span>
-              <span className="text-[10px] text-red-700 font-medium uppercase tracking-wider">Wrong</span>
+              <span className="text-[10px] text-red-700 font-medium uppercase tracking-wider">
+                Wrong
+              </span>
             </div>
 
             {/* Unattempted */}
@@ -85,13 +94,14 @@ const QuizResult = () => {
               <span className="text-lg font-bold text-slate-500">
                 {result?.unattemptedCount ?? "—"}
               </span>
-              <span className="text-[10px] text-slate-600 font-medium uppercase tracking-wider">Skipped</span>
+              <span className="text-[10px] text-slate-600 font-medium uppercase tracking-wider">
+                Skipped
+              </span>
             </div>
           </div>
 
           {/* Buttons */}
           <div className="flex gap-3">
-
             <button
               onClick={() => navigate(`/quizeInterface/${id}`)}
               className="flex-1 py-2.5 rounded-lg bg-[#158993] text-white text-sm font-semibold hover:bg-teal-700 transition-colors shadow-sm"

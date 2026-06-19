@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { User, AlertTriangle, Maximize } from "lucide-react";
-import { useGetQuizByIdHook } from "@/hooks/quiz.hook";
+import { useGetQuizByIdHook } from "@/hooks/quiz/quiz.hook";
 import QuestionUi from "@/components/userComponent/quizes/question.ui.jsx";
 import { useParams, useNavigate } from "react-router-dom";
-import { useGetQuizQuestionsHook } from "@/hooks/quiz.createQuest.hook.js";
+import { useGetQuizQuestionsHook } from "@/hooks/quiz/quiz.createQuest.hook.js";
 import OptionUI from "@/components/userComponent/quizes/option.ui.jsx";
 import QuestionButtonUI from "@/components/userComponent/quizes/question.button.jsx";
 import SolutionUI from "@/components/userComponent/quizes/solution.jsx";
 import {
   useSubmitQuizHook,
   useGetMyQuizResultsHook,
-} from "@/hooks/quizResult.hook.js";
+} from "@/hooks/quiz/quizResult.hook.js";
 
 const QuizeInterface = () => {
   const { id } = useParams(); // 1. Get the ID from the URL!
@@ -245,9 +245,9 @@ const QuizeInterface = () => {
 
           {/* --- BOTTOM BAR --- */}
 
-                    {/* --- BOTTOM BAR --- */}
+          {/* --- BOTTOM BAR --- */}
           <div className="bg-gray-50 border-t border-slate-200 flex items-center px-4 py-3 gap-2 shrink-0 w-full z-10 shadow-[0_-2px_5px_rgba(0,0,0,0.02)]">
-            <button 
+            <button
               onClick={() => {
                 // Check if it's not the last question in the current section
                 if (currentQuestionIndex < sectionQuestions.length - 1) {
@@ -256,15 +256,16 @@ const QuizeInterface = () => {
               }}
               disabled={currentQuestionIndex === sectionQuestions.length - 1} // Disable on last question
               className={`px-5 py-2 rounded text-sm font-medium transition-colors shadow-sm ${
-                currentQuestionIndex === sectionQuestions.length - 1 
-                ? "bg-slate-300 text-slate-500 cursor-not-allowed" // Disabled look for last question
-                : "bg-[#24bcd4] hover:bg-[#1ba8be] text-white cursor-pointer"
+                currentQuestionIndex === sectionQuestions.length - 1
+                  ? "bg-slate-300 text-slate-500 cursor-not-allowed" // Disabled look for last question
+                  : "bg-[#24bcd4] hover:bg-[#1ba8be] text-white cursor-pointer"
               }`}
             >
-              {currentQuestionIndex === sectionQuestions.length - 1 ? "Last Question" : "Save & Next"}
+              {currentQuestionIndex === sectionQuestions.length - 1
+                ? "Last Question"
+                : "Save & Next"}
             </button>
           </div>
-
         </div>
 
         {/* Right Side - Question Buttons Panel */}

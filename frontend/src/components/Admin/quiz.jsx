@@ -10,7 +10,7 @@ import {
 import { Loader2, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { useForm, useFieldArray } from "react-hook-form";
-import { useCreateQuizHook } from "../../hooks/quiz.hook";
+import { useCreateQuizHook } from "../../hooks/quiz/quiz.hook";
 
 const CreateQuiz = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);

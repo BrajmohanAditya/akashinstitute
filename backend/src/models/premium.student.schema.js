@@ -42,4 +42,4 @@ const paidStudentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const PaidStudent = mongoose.model("PaidStudent", paidStudentSchema);
+export const PremiumStudent = mongoose.model("PremiumStudent", paidStudentSchema);

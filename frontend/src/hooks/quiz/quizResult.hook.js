@@ -1,6 +1,9 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { submitQuizApi, getMyQuizResultsApi } from "../api/quizResult.api.js";
+import {
+  submitQuizApi,
+  getMyQuizResultsApi,
+} from "../../api/quizResult.api.js";
 import { useNavigate } from "react-router-dom";
 
 export const useSubmitQuizHook = () => {
@@ -13,7 +16,8 @@ export const useSubmitQuizHook = () => {
       navigate(`/quiz-result/${data.result.quiz}`);
     },
     onError: (err) => {
-      const errorMessage = err.response?.data?.message || "Failed to submit quiz";
+      const errorMessage =
+        err.response?.data?.message || "Failed to submit quiz";
       toast.error(errorMessage);
     },
   });
