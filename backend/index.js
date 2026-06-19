@@ -12,6 +12,7 @@ import quizRoute from "./src/routes/quiz/quiz.route.js";
 import quizQuestionRoute from "./src/routes/quiz/quiz.question.route.js";
 import quizResultRoute from "./src/routes/quiz/quizResult.route.js";
 import premiumStudentRoute from "./src/routes/premium.student.route.js";
+import successBoardRoute from "./src/routes/success.board.route.js";
 
 const app = express();
 
@@ -24,7 +25,7 @@ app.use(
     credentials: true,
   }),
 );
-
+   
 app.use("/api", userRoute);
 app.use("/api/course", courseRoute);
 app.use("/api/module", moduleRoute);
@@ -34,6 +35,7 @@ app.use("/api/quiz", quizRoute);
 app.use("/api/quizQuestion", quizQuestionRoute);
 app.use("/api/quizResult", quizResultRoute);
 app.use("/api/premiumStudent", premiumStudentRoute);
+app.use("/api/successBoard", successBoardRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

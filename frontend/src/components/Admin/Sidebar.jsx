@@ -15,7 +15,7 @@ const DashboardSidebar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const navItems = [
     { to: "/", label: "Home", icon: Home },
-    { to: "/dashboard", label: "Analytics", icon: BarChart3 },
+    { to: "/", label: "Analytics", icon: BarChart3 },
     {
       to: "/admindashboard/dashboardProduct",
       label: "Courses",
@@ -35,6 +35,11 @@ const DashboardSidebar = () => {
       to: "/admindashboard/QuizManagement",
       label: "Quiz Management",
       icon: ClipboardList,
+    },
+    {
+      to: "/admindashboard/selectedStudent",
+      label: "Selected Student",
+      icon: Users,
     },
   ];
 

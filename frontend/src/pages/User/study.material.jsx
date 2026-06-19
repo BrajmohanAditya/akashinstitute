@@ -174,7 +174,7 @@ const StudyMaterial = () => {
   ];
 
   return (
-    <div className="p-8 min-h-screen bg-slate-50/50">
+    <div className="p-8 pb-16 bg-slate-50/50">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-4xl font-extrabold text-slate-800 mb-2 tracking-tight">
           Study Dashboard

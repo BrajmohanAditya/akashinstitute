@@ -19,6 +19,7 @@ import QuizeInterface from "@/pages/User/quize/quize.interface";
 import QuizeDetail from "@/pages/User/quize/quize.detail";
 import QuizResult from "@/pages/User/quize/quize.result";
 import PremiumStudent from "@/pages/Admin/premiumStudent";
+import SuccessBoard from "@/pages/Admin/Success.board";
 // UserLayout wraps routes that SHOULD have the top Navbar
 
 const MainRoutes = () => {
@@ -128,6 +129,14 @@ const MainRoutes = () => {
           element={
             <ProtectedRoutes>
               <PremiumStudent />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="selectedStudent"
+          element={
+            <ProtectedRoutes>
+              <SuccessBoard />
             </ProtectedRoutes>
           }
         />
